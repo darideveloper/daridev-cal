@@ -23,7 +23,13 @@ class CompanyProfile(models.Model):
     google_calendar_id = models.CharField(_("Google Calendar ID"), max_length=255, blank=True, null=True)
     logo = models.ImageField(_("logo"), upload_to="logos/", blank=True, null=True)
 
-    currency = models.CharField(_("currency"), max_length=10, default="USD", help_text=_("The brand's operating currency."))
+    currency = models.CharField(
+        _("currency"), 
+        max_length=10, 
+        choices=[("MXN", _("MXN")), ("USD", _("USD")), ("EUR", _("EUR"))],
+        default="USD",
+        help_text=_("The brand's operating currency.")
+    )
 
     class Meta:
         verbose_name = _("Company Profile")
@@ -34,6 +40,14 @@ class CompanyProfile(models.Model):
 
 class BusinessHours(models.Model):
     """Normalized storage for default weekly operating hours."""
+    company_profile = models.ForeignKey(
+        CompanyProfile, 
+        on_delete=models.CASCADE, 
+        related_name="business_hours", 
+        verbose_name=_("company profile"),
+        null=True, # For migration safety with existing data
+        blank=True
+    )
     weekday = models.IntegerField(_("weekday"), choices=[
         (0, _("Monday")), (1, _("Tuesday")), (2, _("Wednesday")),
         (3, _("Thursday")), (4, _("Friday")), (5, _("Saturday")), (6, _("Sunday"))
@@ -77,7 +91,6 @@ class Event(models.Model):
     detailed_description = models.TextField(_("detailed description"), blank=True, null=True)
     price = models.DecimalField(_("price"), max_digits=10, decimal_places=2, null=True, blank=True)
     duration_minutes = models.PositiveIntegerField(_("duration (minutes)"), default=30)
-    format_category = models.CharField(_("format category"), max_length=50, blank=True, null=True)
 
     class Meta:
         verbose_name = _("Event")

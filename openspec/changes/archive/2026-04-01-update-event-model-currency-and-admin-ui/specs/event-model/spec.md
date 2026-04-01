@@ -1,8 +1,7 @@
-# event-model Specification
+# spec.md (event-model)
 
-## Purpose
-TBD - created by archiving change refactor-booking-event-models. Update Purpose after archive.
-## Requirements
+## MODIFIED Requirements
+
 ### Requirement: Create Specific Event Model
 A new `Event` model MUST be created to represent a specific, bookable service.
 
@@ -11,4 +10,3 @@ A new `Event` model MUST be created to represent a specific, bookable service.
 - **WHEN** they create an `Event` with title "Masterclass: Lifting de Pestañas", link it to the "Masterclass" `EventType`, and provide details like an image, description, price of 150, and duration of 960 minutes.
 - **AND** they select a **currency** from the allowed list: `MXN`, `USD`, `EUR`.
 - **THEN** the system saves a new `Event` record.
-

@@ -58,8 +58,10 @@ The project SHALL provide translated names for models, fields, choices, and vali
 ### Requirement: Tenant Admin Integration
 The Tenant Admin Integration SHALL be implemented. Register models with `django-unfold`.
 
-#### Scenario: Admin Classes Inheritance
-- Inherit from `project.admin.ModelAdminUnfoldBase` for all model admin classes in the `scheduler` app (`CompanyProfileAdmin`, `EventTypeAdmin`, `BookingAdmin`).
+#### MODIFIED Scenario: Settings Hub (CompanyProfileAdmin)
+- **GIVEN** I am in `scheduler/admin.py`
+- **WHEN** I edit the `CompanyProfile` singleton
+- **THEN** a `logo_preview` SHALL NOT be displayed.
 
 ### Requirement: Tenant-based Branding Logic
 The admin interface MUST display the specific branding (Title, Header, Logo) based on the current active tenant.

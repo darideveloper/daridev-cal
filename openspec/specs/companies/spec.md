@@ -35,8 +35,10 @@ The project SHALL provide translated names for models and fields in the `compani
 ### Requirement: Shared Admin Integration
 The Shared Admin Integration SHALL be implemented. Register `Client` and `Domain` models with `django-unfold` admin.
 
-#### Scenario: `ClientAdmin` with `TenantAdminMixin`
-- Inherit from `TenantAdminMixin` and `project.admin.ModelAdminUnfoldBase`.
-- `list_display`: `('schema_name', 'name', 'created_on', 'is_active')`.
-- Search fields: `('schema_name', 'name')`.
+#### ADDED Scenario: `Domain` as Inline for `Client`
+- **GIVEN** I am in `companies/admin.py`
+- **WHEN** I edit a `Client` record
+- **THEN** a `DomainInline` SHALL be displayed at the bottom.
+- **AND** the inline SHALL be `unfold.admin.TabularInline`.
+- **AND** it SHALL allow adding/editing domains for that tenant.
 

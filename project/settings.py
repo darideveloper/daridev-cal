@@ -367,13 +367,6 @@ UNFOLD = {
                         "permission": lambda request: request.tenant.schema_name
                         == "public",
                     },
-                    {
-                        "title": _("Domains"),
-                        "icon": "public",
-                        "link": safe_reverse_lazy("admin:companies_domain_changelist"),
-                        "permission": lambda request: request.tenant.schema_name
-                        == "public",
-                    },
                 ],
             },
             {
@@ -384,12 +377,6 @@ UNFOLD = {
                         "title": _("Bookings"),
                         "icon": "calendar_month",
                         "link": safe_reverse_lazy("admin:scheduler_booking_changelist"),
-                        "permission": lambda request: request.tenant.schema_name != "public",
-                    },
-                    {
-                        "title": _("Business Hours"),
-                        "icon": "schedule",
-                        "link": safe_reverse_lazy("admin:scheduler_businesshours_changelist"),
                         "permission": lambda request: request.tenant.schema_name != "public",
                     },
                     {
@@ -414,18 +401,6 @@ UNFOLD = {
                         "title": _("Event Types"),
                         "icon": "category",
                         "link": safe_reverse_lazy("admin:scheduler_eventtype_changelist"),
-                        "permission": lambda request: request.tenant.schema_name != "public",
-                    },
-                    {
-                        "title": _("Availability Rules"),
-                        "icon": "event_available",
-                        "link": safe_reverse_lazy("admin:scheduler_eventavailability_changelist"),
-                        "permission": lambda request: request.tenant.schema_name != "public",
-                    },
-                    {
-                        "title": _("Availability Slots"),
-                        "icon": "more_time",
-                        "link": safe_reverse_lazy("admin:scheduler_availabilityslot_changelist"),
                         "permission": lambda request: request.tenant.schema_name != "public",
                     },
                 ],
