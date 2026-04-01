@@ -6,7 +6,17 @@ from django.shortcuts import redirect
 from django.urls import reverse
 from unfold.forms import AdminPasswordChangeForm, UserChangeForm, UserCreationForm
 from unfold.admin import ModelAdmin
+from unfold.sites import UnfoldAdminSite
 from unfold.decorators import action
+
+class PublicAdminSite(UnfoldAdminSite):
+    pass
+
+class TenantAdminSite(UnfoldAdminSite):
+    pass
+
+public_admin_site = PublicAdminSite(name="admin")
+tenant_admin_site = TenantAdminSite(name="admin")
 
 try:
     admin.site.unregister(User)
@@ -26,13 +36,14 @@ class ModelAdminUnfoldBase(ModelAdmin):
     def edit(self, request, object_id):
         return redirect(reverse(f"admin:{self.model._meta.app_label}_{self.model._meta.model_name}_change", args=[object_id]))
 
-@admin.register(User)
 class UserAdmin(BaseUserAdmin, ModelAdminUnfoldBase):
     # Forms loaded from `unfold.forms`
     form = UserChangeForm
     add_form = UserCreationForm
     change_password_form = AdminPasswordChangeForm
 
-@admin.register(Group)
 class GroupAdmin(BaseGroupAdmin, ModelAdminUnfoldBase):
     pass
+
+public_admin_site.register(User, UserAdmin)
+public_admin_site.register(Group, GroupAdmin)

@@ -78,7 +78,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
+PUBLIC_SCHEMA_URLCONF = 'project.urls_public'
 ROOT_URLCONF = 'project.urls'
 
 TEMPLATES = [
@@ -261,8 +261,17 @@ EMAILS_NOTIFICATIONS = os.getenv("EMAILS_NOTIFICATIONS", "").split(",")
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 from django.templatetags.static import static
-from django.urls import reverse_lazy
+from django.urls import reverse, NoReverseMatch
+from django.utils.functional import lazy
 from django.utils.translation import gettext_lazy as _
+
+def safe_reverse(viewname, *args, **kwargs):
+    try:
+        return reverse(viewname, *args, **kwargs)
+    except NoReverseMatch:
+        return "#"
+
+safe_reverse_lazy = lazy(safe_reverse, str)
 
 UNFOLD = {
     "SITE_TITLE": "DARI DEV CAL",
@@ -310,12 +319,14 @@ UNFOLD = {
                     {
                         "title": _("Users"),
                         "icon": "person",
-                        "link": reverse_lazy("admin:auth_user_changelist"),
+                        "link": safe_reverse_lazy("admin:auth_user_changelist"),
+                        "permission": lambda request: request.tenant.schema_name == "public",
                     },
                     {
                         "title": _("Groups"),
                         "icon": "group",
-                        "link": reverse_lazy("admin:auth_group_changelist"),
+                        "link": safe_reverse_lazy("admin:auth_group_changelist"),
+                        "permission": lambda request: request.tenant.schema_name == "public",
                     },
                 ],
             },
@@ -327,12 +338,14 @@ UNFOLD = {
                     {
                         "title": _("Clients (Tenants)"),
                         "icon": "corporate_fare",
-                        "link": reverse_lazy("admin:companies_client_changelist"),
+                        "link": safe_reverse_lazy("admin:companies_client_changelist"),
+                        "permission": lambda request: request.tenant.schema_name == "public",
                     },
                     {
                         "title": _("Domains"),
                         "icon": "public",
-                        "link": reverse_lazy("admin:companies_domain_changelist"),
+                        "link": safe_reverse_lazy("admin:companies_domain_changelist"),
+                        "permission": lambda request: request.tenant.schema_name == "public",
                     },
                 ],
             },
@@ -344,17 +357,20 @@ UNFOLD = {
                     {
                         "title": _("Company Profile"),
                         "icon": "settings",
-                        "link": reverse_lazy("admin:scheduler_companyprofile_changelist"),
+                        "link": safe_reverse_lazy("admin:scheduler_companyprofile_changelist"),
+                        "permission": lambda request: request.tenant.schema_name != "public",
                     },
                     {
                         "title": _("Event Types"),
                         "icon": "event_note",
-                        "link": reverse_lazy("admin:scheduler_eventtype_changelist"),
+                        "link": safe_reverse_lazy("admin:scheduler_eventtype_changelist"),
+                        "permission": lambda request: request.tenant.schema_name != "public",
                     },
                     {
                         "title": _("Bookings"),
                         "icon": "calendar_month",
-                        "link": reverse_lazy("admin:scheduler_booking_changelist"),
+                        "link": safe_reverse_lazy("admin:scheduler_booking_changelist"),
+                        "permission": lambda request: request.tenant.schema_name != "public",
                     },
                 ],
             },

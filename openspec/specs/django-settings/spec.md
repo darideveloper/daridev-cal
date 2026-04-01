@@ -64,6 +64,8 @@ The project SHALL configure `django-unfold` in `settings.py` with custom brandin
 - **Given** `UNFOLD["SIDEBAR"]` is configured
 - **When** I check the `navigation`
 - **Then** it SHALL use `reverse_lazy` for model links and Material Symbols for icons.
+- **Then** global items (System, Multi-Tenancy) SHALL enforce a `permission` check restricting them to `schema_name == 'public'`.
+- **Then** tenant items (Booking App) SHALL enforce a `permission` check restricting them to `schema_name != 'public'`.
 
 ### Requirement: App Integration
 Unfold and its extensions SHALL be integrated into `INSTALLED_APPS`.
@@ -72,4 +74,12 @@ Unfold and its extensions SHALL be integrated into `INSTALLED_APPS`.
 - **Given** I am in `project/settings.py`
 - **When** I add Unfold apps
 - **Then** `unfold`, `unfold.contrib.filters`, `unfold.contrib.forms`, and `unfold.contrib.inlines` SHALL be listed BEFORE `django.contrib.admin`.
+
+### Requirement: Multi-Tenant Schema Routing
+The `settings.py` SHALL define distinct routing configurations to isolate the public schema from the tenant schemas.
+
+#### Scenario: Multi-Tenant Router
+- **Given** I am in `project/settings.py`
+- **When** the URLs are configured
+- **Then** it SHALL define `PUBLIC_SCHEMA_URLCONF` for public domain traffic and `ROOT_URLCONF` for tenant domain traffic.
 
