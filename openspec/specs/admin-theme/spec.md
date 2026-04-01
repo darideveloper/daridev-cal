@@ -62,3 +62,9 @@ The `django-unfold` interface SHALL dynamically reflect the active tenant's bran
 - **Then** they SHALL return the result of `request.tenant.name` from the tenant schema via a callback, and `SITE_LOGO` MUST remain undefined so the text displays.
 - **And** `SITE_ICON` SHALL return the URL of `request.tenant.companyprofile.logo` via a callback if a profile and logo exist, otherwise fallback to the default global icon.
 
+#### Scenario: Dynamic Brand Color
+- **Given** I am rendering the admin template as a tenant
+- **When** a custom `brand_color` is configured in the `CompanyProfile`
+- **Then** the global CSS variables `--color-primary-400`, `--color-primary-500`, and `--color-primary-600` MUST be overridden in the template.
+- **And** the UI (buttons, active states, markdown highlights) MUST update to reflect this color palette dynamically.
+
