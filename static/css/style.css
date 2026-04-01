@@ -1,1 +1,9 @@
 /* Custom styles for DariDevCal */
+#page #main {
+  position: relative;
+}
+
+#page #main > div:last-child {
+  position: absolute;
+  bottom: 0;
+}

@@ -6,11 +6,11 @@ from dotenv import load_dotenv
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Load .env first to get ENV value
-load_dotenv(BASE_DIR / '.env')
-ENV = os.getenv('ENV', 'dev')
+load_dotenv(BASE_DIR / ".env")
+ENV = os.getenv("ENV", "dev")
 
 # Load environment-specific file
-load_dotenv(BASE_DIR / f'.env.{ENV}')
+load_dotenv(BASE_DIR / f".env.{ENV}")
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("SECRET_KEY")
@@ -25,41 +25,41 @@ ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
 
 # Shared Apps (Public Schema)
 SHARED_APPS = (
-    
-    'unfold', # Modern admin theme
-    'unfold.contrib.filters',
-    'unfold.contrib.forms',
-    'unfold.contrib.inlines',
-    
-    'django_tenants',  # mandatory
-    'companies',       # your public app
-
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    
+    # unfold
+    "unfold",  # Modern admin theme
+    "unfold.contrib.filters",
+    "unfold.contrib.forms",
+    "unfold.contrib.inlines",
+    # Multi-tenant apps
+    "django_tenants",  # mandatory
+    "companies",  # your public app
     # Third party apps
-    'corsheaders',
-    'rest_framework',
-    'solo',
-    'storages',
+    "corsheaders",
+    "rest_framework",
+    "solo",
+    "storages",
+    # Django
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
 )
 
 # Tenant Apps (Isolated Schemas)
 TENANT_APPS = (
     # The following Django apps are required in TENANT_APPS
-    'django.contrib.contenttypes',
-    
+    "django.contrib.contenttypes",
     # Isolated apps
-    'scheduler',
-    'booking',
+    "scheduler",
+    "booking",
 )
 
 # Combined INSTALLED_APPS for Django
-INSTALLED_APPS = list(SHARED_APPS) + [app for app in TENANT_APPS if app not in SHARED_APPS]
+INSTALLED_APPS = list(SHARED_APPS) + [
+    app for app in TENANT_APPS if app not in SHARED_APPS
+]
 
 # Tenancy Settings
 TENANT_MODEL = "companies.Client"
@@ -67,43 +67,44 @@ TENANT_DOMAIN_MODEL = "companies.Domain"
 DATABASE_ROUTERS = ("django_tenants.routers.TenantSyncRouter",)
 
 MIDDLEWARE = [
-    'django_tenants.middleware.main.TenantMainMiddleware', # Mandatory first
-    'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware', # Static file serving
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware', # CORS handling
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django_tenants.middleware.main.TenantMainMiddleware",  # Mandatory first
+    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",  # Static file serving
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",  # CORS handling
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
-PUBLIC_SCHEMA_URLCONF = 'project.urls_public'
-ROOT_URLCONF = 'project.urls'
+PUBLIC_SCHEMA_URLCONF = "project.urls_public"
+ROOT_URLCONF = "project.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / "project" / "templates"],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [BASE_DIR / "project" / "templates"],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'project.wsgi.application'
+WSGI_APPLICATION = "project.wsgi.application"
 
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 import sys
+
 IS_TESTING = len(sys.argv) > 1 and sys.argv[1] == "test"
 
 if IS_TESTING:
@@ -120,7 +121,7 @@ else:
             "init_command": "SET sql_mode='STRICT_TRANS_TABLES'",
             "charset": "utf8mb4",
         }
-    
+
     DATABASES = {
         "default": {
             "ENGINE": os.environ.get("DB_ENGINE", "django.db.backends.sqlite3"),
@@ -139,16 +140,16 @@ else:
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
@@ -156,7 +157,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = "en-us"
 
 TIME_ZONE = "America/Mexico_City"
 
@@ -168,7 +169,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = "static/"
 MEDIA_URL = "/media/"
 
 STATICFILES_DIRS = [
@@ -188,7 +189,7 @@ if STORAGE_AWS:
     AWS_S3_REGION_NAME = os.getenv("AWS_S3_REGION_NAME")
     AWS_S3_ENDPOINT_URL = os.getenv("AWS_S3_ENDPOINT_URL")
     AWS_PROJECT_FOLDER = os.getenv("AWS_PROJECT_FOLDER")
-    
+
     STATIC_LOCATION = "static"
     PUBLIC_MEDIA_LOCATION = "media"
     PRIVATE_MEDIA_LOCATION = "private"
@@ -219,13 +220,17 @@ else:
 cors_allowed = os.getenv("CORS_ALLOWED_ORIGINS")
 if cors_allowed and cors_allowed != "None":
     CORS_ALLOWED_ORIGINS = [
-        origin.strip().rstrip("/") for origin in cors_allowed.split(",") if origin.strip()
+        origin.strip().rstrip("/")
+        for origin in cors_allowed.split(",")
+        if origin.strip()
     ]
 
 csrf_trusted = os.getenv("CSRF_TRUSTED_ORIGINS")
 if csrf_trusted and csrf_trusted != "None":
     CSRF_TRUSTED_ORIGINS = [
-        origin.strip().rstrip("/") for origin in csrf_trusted.split(",") if origin.strip()
+        origin.strip().rstrip("/")
+        for origin in csrf_trusted.split(",")
+        if origin.strip()
     ]
 
 # Django REST Framework Setup
@@ -258,12 +263,13 @@ EMAILS_NOTIFICATIONS = os.getenv("EMAILS_NOTIFICATIONS", "").split(",")
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 from django.templatetags.static import static
 from django.urls import reverse, NoReverseMatch
 from django.utils.functional import lazy
 from django.utils.translation import gettext_lazy as _
+
 
 def safe_reverse(viewname, *args, **kwargs):
     try:
@@ -271,15 +277,15 @@ def safe_reverse(viewname, *args, **kwargs):
     except NoReverseMatch:
         return "#"
 
+
 safe_reverse_lazy = lazy(safe_reverse, str)
 
 UNFOLD = {
-    "SITE_TITLE": "DARI DEV CAL",
-    "SITE_HEADER": "DARI DEV",
-    "SITE_SUBHEADER": "Appointment System",
+    "SITE_TITLE": "utils.callbacks.site_title_callback",
+    "SITE_HEADER": "utils.callbacks.site_header_callback",
+    "SITE_SUBHEADER": "utils.callbacks.site_subheader_callback",
     "SITE_URL": "/",
-    "SITE_ICON": lambda request: static("logo.png"),
-    "SITE_LOGO": lambda request: static("logo.png"),
+    "SITE_ICON": "utils.callbacks.site_icon_callback",
     "SITE_SYMBOL": "calendar_today",
     "SITE_FAVICONS": [
         {
@@ -320,13 +326,15 @@ UNFOLD = {
                         "title": _("Users"),
                         "icon": "person",
                         "link": safe_reverse_lazy("admin:auth_user_changelist"),
-                        "permission": lambda request: request.tenant.schema_name == "public",
+                        "permission": lambda request: request.tenant.schema_name
+                        == "public",
                     },
                     {
                         "title": _("Groups"),
                         "icon": "group",
                         "link": safe_reverse_lazy("admin:auth_group_changelist"),
-                        "permission": lambda request: request.tenant.schema_name == "public",
+                        "permission": lambda request: request.tenant.schema_name
+                        == "public",
                     },
                 ],
             },
@@ -339,13 +347,15 @@ UNFOLD = {
                         "title": _("Clients (Tenants)"),
                         "icon": "corporate_fare",
                         "link": safe_reverse_lazy("admin:companies_client_changelist"),
-                        "permission": lambda request: request.tenant.schema_name == "public",
+                        "permission": lambda request: request.tenant.schema_name
+                        == "public",
                     },
                     {
                         "title": _("Domains"),
                         "icon": "public",
                         "link": safe_reverse_lazy("admin:companies_domain_changelist"),
-                        "permission": lambda request: request.tenant.schema_name == "public",
+                        "permission": lambda request: request.tenant.schema_name
+                        == "public",
                     },
                 ],
             },
@@ -357,20 +367,27 @@ UNFOLD = {
                     {
                         "title": _("Company Profile"),
                         "icon": "settings",
-                        "link": safe_reverse_lazy("admin:scheduler_companyprofile_changelist"),
-                        "permission": lambda request: request.tenant.schema_name != "public",
+                        "link": safe_reverse_lazy(
+                            "admin:scheduler_companyprofile_changelist"
+                        ),
+                        "permission": lambda request: request.tenant.schema_name
+                        != "public",
                     },
                     {
                         "title": _("Event Types"),
                         "icon": "event_note",
-                        "link": safe_reverse_lazy("admin:scheduler_eventtype_changelist"),
-                        "permission": lambda request: request.tenant.schema_name != "public",
+                        "link": safe_reverse_lazy(
+                            "admin:scheduler_eventtype_changelist"
+                        ),
+                        "permission": lambda request: request.tenant.schema_name
+                        != "public",
                     },
                     {
                         "title": _("Bookings"),
                         "icon": "calendar_month",
                         "link": safe_reverse_lazy("admin:scheduler_booking_changelist"),
-                        "permission": lambda request: request.tenant.schema_name != "public",
+                        "permission": lambda request: request.tenant.schema_name
+                        != "public",
                     },
                 ],
             },
