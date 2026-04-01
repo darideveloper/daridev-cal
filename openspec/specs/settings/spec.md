@@ -1,7 +1,8 @@
-# Spec Delta: Settings Configuration for `django-tenants`
+# settings Specification
 
-## MODIFIED Requirements
-
+## Purpose
+TBD - created by archiving change register-multi-tenant-models. Update Purpose after archive.
+## Requirements
 ### Requirement: Database Engine Update 
 The Database Engine SHALL be updated.
 Update `DATABASES['default']` to use `django_tenants.postgresql_backend`.
@@ -36,3 +37,4 @@ Split `INSTALLED_APPS` into `SHARED_APPS` and `TENANT_APPS`.
 #### Scenario: `TENANT_MODEL` and `TENANT_DOMAIN_MODEL`
 - `TENANT_MODEL = 'companies.Client'`.
 - `TENANT_DOMAIN_MODEL = 'companies.Domain'`.
+

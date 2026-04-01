@@ -7,6 +7,10 @@ python-dotenv>=1.0.1      # Environment variable management
 
 # db
 psycopg>=3.2.3             # PostgreSQL database adapter
+django-tenants==3.10.1      # Multi-tenant support
+
+# multi-tenant
+django-cryptography-5==2.0.3 # Encryption for company secrets (Django 5.x support)
 
 # images
 pillow>=11.1.0             # Image processing library

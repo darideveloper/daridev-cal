@@ -1,6 +1,6 @@
 # Spec Delta: `django-unfold` Admin UI & Dynamic Branding
 
-## MODIFIED Requirements
+## ADDED Requirements
 
 ### Requirement: Admin Sidebar Navigation Update SHALL be applied.
 The Admin Sidebar Navigation SHALL be updated.

@@ -23,11 +23,17 @@ ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
 
 # Application definition
 
-INSTALLED_APPS = [
+# Shared Apps (Public Schema)
+SHARED_APPS = (
+    
     'unfold', # Modern admin theme
     'unfold.contrib.filters',
     'unfold.contrib.forms',
     'unfold.contrib.inlines',
+    
+    'django_tenants',  # mandatory
+    'companies',       # your public app
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,12 +46,28 @@ INSTALLED_APPS = [
     'rest_framework',
     'solo',
     'storages',
+)
+
+# Tenant Apps (Isolated Schemas)
+TENANT_APPS = (
+    # The following Django apps are required in TENANT_APPS
+    'django.contrib.contenttypes',
     
-    # Local apps
+    # Isolated apps
+    'scheduler',
     'booking',
-]
+)
+
+# Combined INSTALLED_APPS for Django
+INSTALLED_APPS = list(SHARED_APPS) + [app for app in TENANT_APPS if app not in SHARED_APPS]
+
+# Tenancy Settings
+TENANT_MODEL = "companies.Client"
+TENANT_DOMAIN_MODEL = "companies.Domain"
+DATABASE_ROUTERS = ("django_tenants.routers.TenantSyncRouter",)
 
 MIDDLEWARE = [
+    'django_tenants.middleware.main.TenantMainMiddleware', # Mandatory first
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware', # Static file serving
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -62,7 +84,7 @@ ROOT_URLCONF = 'project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / "templates"],
+        'DIRS': [BASE_DIR / "project" / "templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -248,10 +270,13 @@ UNFOLD = {
     "SITE_SUBHEADER": "Appointment System",
     "SITE_URL": "/",
     "SITE_ICON": lambda request: static("logo.png"),
+    "SITE_LOGO": lambda request: static("logo.png"),
     "SITE_SYMBOL": "calendar_today",
     "SITE_FAVICONS": [
         {
             "rel": "icon",
+            "sizes": "32x32",
+            "type": "image/png",
             "href": lambda request: static("favicon.ico"),
         },
     ],
@@ -295,11 +320,42 @@ UNFOLD = {
                 ],
             },
             {
+                "title": _("Multi-Tenancy"),
+                "separator": True,
+                "collapsible": True,
+                "items": [
+                    {
+                        "title": _("Clients (Tenants)"),
+                        "icon": "corporate_fare",
+                        "link": reverse_lazy("admin:companies_client_changelist"),
+                    },
+                    {
+                        "title": _("Domains"),
+                        "icon": "public",
+                        "link": reverse_lazy("admin:companies_domain_changelist"),
+                    },
+                ],
+            },
+            {
                 "title": _("Booking App"),
                 "separator": True,
                 "collapsible": True,
                 "items": [
-                    # Add your booking models here as they are created
+                    {
+                        "title": _("Company Profile"),
+                        "icon": "settings",
+                        "link": reverse_lazy("admin:scheduler_companyprofile_changelist"),
+                    },
+                    {
+                        "title": _("Event Types"),
+                        "icon": "event_note",
+                        "link": reverse_lazy("admin:scheduler_eventtype_changelist"),
+                    },
+                    {
+                        "title": _("Bookings"),
+                        "icon": "calendar_month",
+                        "link": reverse_lazy("admin:scheduler_booking_changelist"),
+                    },
                 ],
             },
         ],

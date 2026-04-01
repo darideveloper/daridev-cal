@@ -1,24 +1,24 @@
 # Tasks: Register Multi-Tenant Models
 
-- [ ] **Infrastructure Setup**
+- [x] **Infrastructure Setup**
   - Add `django-tenants==3.10.1` and `django-cryptography-5==2.0.3` to `requirements.txt`.
   - Install dependencies via `pip install`.
   - Configure `project/settings.py` (DATABASES, MIDDLEWARE, DATABASE_ROUTERS, SHARED_APPS, TENANT_APPS, etc.).
-- [ ] **Create Public Models (Shared App: `companies`)**
+- [x] **Create Public Models (Shared App: `companies`)**
   - Create `companies` app using `python manage.py startapp companies`.
   - Define `Client` (TenantMixin) and `Domain` (DomainMixin) in `companies/models.py`.
   - Register `Client` and `Domain` in `companies/admin.py` using `TenantAdminMixin` and `unfold.admin.ModelAdmin`.
-- [ ] **Create Tenant Models (Isolated App: `scheduler`)**
+- [x] **Create Tenant Models (Isolated App: `scheduler`)**
   - Create `scheduler` app using `python manage.py startapp scheduler`.
   - Define `CompanyProfile`, `EventType`, and `Booking` in `scheduler/models.py`.
   - Implement `Booking.clean()` for conflict validation based on `allow_overlap`.
-  - Register `scheduler` models in `scheduler/admin.py` using `unfold.admin.ModelAdmin`.
-- [ ] **Migrations & Initial Setup**
+  - Register `scheduler` models in `scheduler.admin.py` using `unfold.admin.ModelAdmin`.
+- [x] **Migrations & Initial Setup**
   - Run `python manage.py makemigrations`.
   - Run `python manage.py migrate_schemas --shared` to create the public schema.
   - (Post-apply) Provide instructions for creating the public tenant and initial company tenants.
-- [ ] **UI Refinement**
+- [x] **UI Refinement**
   - Update `UNFOLD` settings in `project/settings.py` to include `scheduler` and `companies` items in the sidebar.
   - Verify `django-unfold` styling for the new models.
-- [ ] **Validation**
+- [x] **Validation**
   - Verify that `Booking` conflict checks correctly prevent double-bookings when `allow_overlap` is `False`.
