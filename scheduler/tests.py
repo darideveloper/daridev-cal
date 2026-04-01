@@ -16,11 +16,11 @@ class BookingServiceTest(TestCase):
             price=100.00
         )
         
-        # 2. Weekday definition (Monday is 0)
+        # 2. Weekday definition (Monday, 2026-04-06)
         self.monday = datetime(2026, 4, 6, 10, 0) # A Monday
 
     def test_business_hours_fallback(self):
-        # Monday 9-17
+        # Global business hours: Monday 9-17
         BusinessHours.objects.create(weekday=0, start_time=time(9, 0), end_time=time(17, 0))
         
         # Valid booking at 10-11
@@ -36,8 +36,7 @@ class BookingServiceTest(TestCase):
         BusinessHours.objects.create(weekday=0, start_time=time(9, 0), end_time=time(17, 0))
         
         # Event availability: Monday only 14-16
-        ea = EventAvailability.objects.create(event=self.event)
-        AvailabilitySlot.objects.create(event_availability=ea, weekday=0, start_time=time(14, 0), end_time=time(16, 0))
+        AvailabilitySlot.objects.create(event=self.event, weekday=0, start_time=time(14, 0), end_time=time(16, 0))
         
         # Booking at 10-11 (within business hours but outside event availability)
         with self.assertRaisesRegex(ValidationError, "outside allowed event availability"):
@@ -49,9 +48,8 @@ class BookingServiceTest(TestCase):
 
     def test_multiple_slots_per_day(self):
         # Event availability: Morning (9-11) and Afternoon (14-16)
-        ea = EventAvailability.objects.create(event=self.event)
-        AvailabilitySlot.objects.create(event_availability=ea, weekday=0, start_time=time(9, 0), end_time=time(11, 0))
-        AvailabilitySlot.objects.create(event_availability=ea, weekday=0, start_time=time(14, 0), end_time=time(16, 0))
+        AvailabilitySlot.objects.create(event=self.event, weekday=0, start_time=time(9, 0), end_time=time(11, 0))
+        AvailabilitySlot.objects.create(event=self.event, weekday=0, start_time=time(14, 0), end_time=time(16, 0))
         
         # Booking 10-11 (fits morning slot)
         create_booking(self.event, "Morning", "m@ex.com", self.monday)
@@ -69,3 +67,21 @@ class BookingServiceTest(TestCase):
         # Book 10:30-11:30 (overlaps)
         with self.assertRaisesRegex(ValidationError, "time slot is already booked"):
             create_booking(self.event, "Second", "second@ex.com", self.monday + timedelta(minutes=30))
+
+    def test_date_range_intersection(self):
+        # Set slots for Mondays 9-17
+        AvailabilitySlot.objects.create(event=self.event, weekday=0, start_time=time(9, 0), end_time=time(17, 0))
+        
+        # Set active range: April 1st to April 15th, 2026
+        EventAvailability.objects.create(
+            event=self.event, 
+            start_date=datetime(2026, 4, 1).date(), 
+            end_date=datetime(2026, 4, 15).date()
+        )
+        
+        # Valid: Monday April 6th (within range)
+        create_booking(self.event, "Inside", "in@ex.com", self.monday)
+        
+        # Invalid: Monday April 20th (outside range)
+        with self.assertRaisesRegex(ValidationError, "outside the event's availability ranges"):
+             create_booking(self.event, "Outside", "out@ex.com", self.monday + timedelta(days=14))

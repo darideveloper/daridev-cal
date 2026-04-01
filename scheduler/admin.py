@@ -12,6 +12,7 @@ class BusinessHoursInline(TabularInline):
     model = BusinessHours
     extra = 0
     show_change_link = True
+    tab = True
 
     def get_extra(self, request, obj=None, **kwargs):
         if obj and obj.business_hours.exists():
@@ -38,11 +39,31 @@ class CompanyProfileAdmin(ModelAdminUnfoldBase):
 class EventTypeAdmin(ModelAdminUnfoldBase):
     list_display = ("title", "payment_model", "allow_overlap")
 
-class EventAvailabilityInline(StackedInline):
+class EventAvailabilityInline(TabularInline):
     model = EventAvailability
     extra = 1
     show_change_link = True
     tab = True
+
+class AvailabilitySlotInline(TabularInline):
+    model = AvailabilitySlot
+    extra = 0
+    show_change_link = True
+    tab = True
+
+    def get_extra(self, request, obj=None, **kwargs):
+        if obj and obj.availability_slots.exists():
+            return 0
+        return 7
+
+    def get_formset(self, request, obj=None, **kwargs):
+        FormSet = super().get_formset(request, obj, **kwargs)
+        class InitialFormSet(FormSet):
+            def __init__(self, *args, **kwargs):
+                if not kwargs.get("initial") and (obj is None or not obj.availability_slots.exists()):
+                    kwargs["initial"] = [{"weekday": i} for i in range(7)]
+                super().__init__(*args, **kwargs)
+        return InitialFormSet
 
 class BookingInline(TabularInline):
     model = Booking
@@ -56,43 +77,21 @@ class BookingInline(TabularInline):
 class EventAdmin(ModelAdminUnfoldBase):
     list_display = ("title", "event_type", "price", "duration_minutes")
     list_filter = ("event_type",)
-    inlines = [EventAvailabilityInline, BookingInline]
+    inlines = [EventAvailabilityInline, AvailabilitySlotInline, BookingInline]
 
     tabs = [
-        (_("General"), ["title", "event_type", "image", "description", "detailed_description", "price", "duration_minutes"]),
-        (_("Schedule"), ["availability_rules"]), # Relates to EventAvailabilityInline
-        (_("History"), ["bookings"]), # Relates to BookingInline
+        (_("General"), ["title", "event_type", "image", "description", "detailed_description", "price", "duration_minutes", "currency"]),
     ]
 
 class BusinessHoursAdmin(ModelAdminUnfoldBase):
     list_display = ("weekday", "start_time", "end_time")
     list_filter = ("weekday",)
 
-class AvailabilitySlotInline(TabularInline):
-    model = AvailabilitySlot
-    extra = 0
-    show_change_link = True
-
-    def get_extra(self, request, obj=None, **kwargs):
-        if obj and obj.slots.exists():
-            return 0
-        return 7
-
-    def get_formset(self, request, obj=None, **kwargs):
-        FormSet = super().get_formset(request, obj, **kwargs)
-        class InitialFormSet(FormSet):
-            def __init__(self, *args, **kwargs):
-                if not kwargs.get("initial") and (obj is None or not obj.slots.exists()):
-                    kwargs["initial"] = [{"weekday": i} for i in range(7)]
-                super().__init__(*args, **kwargs)
-        return InitialFormSet
-
 class EventAvailabilityAdmin(ModelAdminUnfoldBase):
     list_display = ("event", "start_date", "end_date")
-    inlines = [AvailabilitySlotInline]
 
 class AvailabilitySlotAdmin(ModelAdminUnfoldBase):
-    list_display = ("event_availability", "weekday", "start_time", "end_time")
+    list_display = ("event", "weekday", "start_time", "end_time")
     list_filter = ("weekday",)
 
 class BookingAdmin(ModelAdminUnfoldBase):
@@ -106,7 +105,6 @@ tenant_admin_site.register(Booking, BookingAdmin)
 # BusinessHours is managed via CompanyProfile inline
 # tenant_admin_site.register(BusinessHours, BusinessHoursAdmin)
 tenant_admin_site.register(Event, EventAdmin)
-# EventAvailability is managed via Event inline
-# tenant_admin_site.register(EventAvailability, EventAvailabilityAdmin)
-# AvailabilitySlot is managed via EventAvailability inline
+tenant_admin_site.register(EventAvailability, EventAvailabilityAdmin)
+# AvailabilitySlot is managed via Event inline
 # tenant_admin_site.register(AvailabilitySlot, AvailabilitySlotAdmin)
