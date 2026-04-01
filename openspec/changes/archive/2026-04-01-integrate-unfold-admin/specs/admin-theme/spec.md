@@ -1,8 +1,15 @@
-# admin-theme Specification
+# admin-theme Specification Delta
 
-## Purpose
-TBD - created by archiving change init-daridev-cal-project. Update Purpose after archive.
-## Requirements
+## ADDED Requirements
+### Requirement: ModelAdmin Unfold Base
+The project SHALL provide a base `ModelAdmin` class to standardize Unfold's UI features.
+
+#### Scenario: Base ModelAdmin Configuration
+- **Given** I am in `project/admin.py`
+- **When** `ModelAdminUnfoldBase` is implemented
+- **Then** it SHALL set `compressed_fields = True`, `warn_unsaved_form = True`, and `actions_row = ["edit"]`.
+
+## MODIFIED Requirements
 ### Requirement: Modern Admin Layout
 The project SHALL use `django-unfold` as the primary admin theme.
 
@@ -34,12 +41,3 @@ The Django Admin SHALL be configured to use Unfold's advanced forms and model ad
 - **Given** I am in `project/admin.py`
 - **When** I check the `UserAdmin`
 - **Then** it SHALL inherit from `ModelAdminUnfoldBase` and use Unfold's specialized forms.
-
-### Requirement: ModelAdmin Unfold Base
-The project SHALL provide a base `ModelAdmin` class to standardize Unfold's UI features.
-
-#### Scenario: Base ModelAdmin Configuration
-- **Given** I am in `project/admin.py`
-- **When** `ModelAdminUnfoldBase` is implemented
-- **Then** it SHALL set `compressed_fields = True`, `warn_unsaved_form = True`, and `actions_row = ["edit"]`.
-

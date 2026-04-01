@@ -25,6 +25,9 @@ ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
 
 INSTALLED_APPS = [
     'unfold', # Modern admin theme
+    'unfold.contrib.filters',
+    'unfold.contrib.forms',
+    'unfold.contrib.inlines',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -234,3 +237,71 @@ EMAILS_NOTIFICATIONS = os.getenv("EMAILS_NOTIFICATIONS", "").split(",")
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+from django.templatetags.static import static
+from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
+
+UNFOLD = {
+    "SITE_TITLE": "DARI DEV CAL",
+    "SITE_HEADER": "DARI DEV",
+    "SITE_SUBHEADER": "Appointment System",
+    "SITE_URL": "/",
+    "SITE_ICON": lambda request: static("logo.png"),
+    "SITE_SYMBOL": "calendar_today",
+    "SITE_FAVICONS": [
+        {
+            "rel": "icon",
+            "href": lambda request: static("favicon.ico"),
+        },
+    ],
+    "SHOW_HISTORY": True,
+    "SHOW_VIEW_ON_SITE": True,
+    "ENVIRONMENT": "utils.callbacks.environment_callback",
+    "THEME": "light",
+    "COLORS": {
+        "primary": {
+            "50": "oklch(0.98 0.02 236)",
+            "100": "oklch(0.95 0.04 236)",
+            "200": "oklch(0.91 0.07 236)",
+            "300": "oklch(0.86 0.09 236)",
+            "400": "oklch(0.83 0.10 236)",
+            "500": "oklch(0.81 0.11 236)",  # Main Brand Color: #87d1ff
+            "600": "oklch(0.72 0.10 236)",
+            "700": "oklch(0.63 0.09 236)",
+            "800": "oklch(0.54 0.08 236)",
+            "900": "oklch(0.45 0.07 236)",
+            "950": "oklch(0.36 0.06 236)",
+        },
+    },
+    "SIDEBAR": {
+        "show_search": True,
+        "show_all_applications": False,
+        "navigation": [
+            {
+                "title": _("System"),
+                "separator": True,
+                "items": [
+                    {
+                        "title": _("Users"),
+                        "icon": "person",
+                        "link": reverse_lazy("admin:auth_user_changelist"),
+                    },
+                    {
+                        "title": _("Groups"),
+                        "icon": "group",
+                        "link": reverse_lazy("admin:auth_group_changelist"),
+                    },
+                ],
+            },
+            {
+                "title": _("Booking App"),
+                "separator": True,
+                "collapsible": True,
+                "items": [
+                    # Add your booking models here as they are created
+                ],
+            },
+        ],
+    },
+}
