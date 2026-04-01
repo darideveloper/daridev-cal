@@ -1,6 +1,6 @@
 # Spec: Booking Logic
 
-## MODIFIED Requirements
+## ADDED Requirements
 
 ### Requirement: Link Booking to a Specific Event
 The `Booking` model MUST be directly associated with a specific `Event`, not a general `EventType`.
@@ -17,8 +17,6 @@ The `end_time` of a booking MUST be automatically calculated based on the durati
 - **GIVEN** a booking is made for an `Event` that has a `duration_minutes` of 45
 - **WHEN** the booking's `start_time` is set to "10:00"
 - **THEN** the system automatically sets the booking's `end_time` to "10:45" upon saving.
-
-## ADDED Requirements
 
 ### Requirement: Validate Bookings Against Availability Rules
 The system MUST validate any new or modified booking against the new hierarchical availability rules.

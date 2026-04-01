@@ -5,9 +5,13 @@ from django.conf.urls.static import static
 from django.views.generic import RedirectView
 from rest_framework import routers
 from project.admin import tenant_admin_site
+from scheduler.views import EventViewSet, BookingViewSet, BusinessHoursViewSet
 
 # Initialize DRF Router
 router = routers.DefaultRouter()
+router.register(r"events", EventViewSet, basename="event")
+router.register(r"bookings", BookingViewSet, basename="booking")
+router.register(r"business-hours", BusinessHoursViewSet, basename="business-hours")
 
 urlpatterns = [
     # Admin Interface

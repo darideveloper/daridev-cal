@@ -361,34 +361,57 @@ UNFOLD = {
                 ],
             },
             {
-                "title": _("Booking App"),
+                "title": _("Scheduling"),
+                "separator": True,
+                "items": [
+                    {
+                        "title": _("Bookings"),
+                        "icon": "calendar_month",
+                        "link": safe_reverse_lazy("admin:scheduler_booking_changelist"),
+                        "permission": lambda request: request.tenant.schema_name != "public",
+                    },
+                    {
+                        "title": _("Business Hours"),
+                        "icon": "schedule",
+                        "link": safe_reverse_lazy("admin:scheduler_businesshours_changelist"),
+                        "permission": lambda request: request.tenant.schema_name != "public",
+                    },
+                    {
+                        "title": _("Events"),
+                        "icon": "event",
+                        "link": safe_reverse_lazy("admin:scheduler_event_changelist"),
+                        "permission": lambda request: request.tenant.schema_name != "public",
+                    },
+                ],
+            },
+            {
+                "title": _("Configuration"),
                 "separator": True,
                 "collapsible": True,
                 "items": [
                     {
                         "title": _("Company Profile"),
                         "icon": "settings",
-                        "link": safe_reverse_lazy(
-                            "admin:scheduler_companyprofile_changelist"
-                        ),
-                        "permission": lambda request: request.tenant.schema_name
-                        != "public",
+                        "link": safe_reverse_lazy("admin:scheduler_companyprofile_changelist"),
+                        "permission": lambda request: request.tenant.schema_name != "public",
                     },
                     {
                         "title": _("Event Types"),
-                        "icon": "event_note",
-                        "link": safe_reverse_lazy(
-                            "admin:scheduler_eventtype_changelist"
-                        ),
-                        "permission": lambda request: request.tenant.schema_name
-                        != "public",
+                        "icon": "category",
+                        "link": safe_reverse_lazy("admin:scheduler_eventtype_changelist"),
+                        "permission": lambda request: request.tenant.schema_name != "public",
                     },
                     {
-                        "title": _("Bookings"),
-                        "icon": "calendar_month",
-                        "link": safe_reverse_lazy("admin:scheduler_booking_changelist"),
-                        "permission": lambda request: request.tenant.schema_name
-                        != "public",
+                        "title": _("Availability Rules"),
+                        "icon": "event_available",
+                        "link": safe_reverse_lazy("admin:scheduler_eventavailability_changelist"),
+                        "permission": lambda request: request.tenant.schema_name != "public",
+                    },
+                    {
+                        "title": _("Availability Slots"),
+                        "icon": "more_time",
+                        "link": safe_reverse_lazy("admin:scheduler_availabilityslot_changelist"),
+                        "permission": lambda request: request.tenant.schema_name != "public",
                     },
                 ],
             },

@@ -1,6 +1,6 @@
 # Spec: Company Profile Updates
 
-## MODIFIED Requirements
+## ADDED Requirements
 
 ### Requirement: Add Currency to Company Profile
 The `CompanyProfile` model MUST store the default currency for the business.

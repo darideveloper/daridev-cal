@@ -21,14 +21,31 @@ class CompanyProfile(models.Model):
     google_calendar_id = models.CharField(max_length=255, blank=True, null=True)
     logo = models.ImageField(upload_to="logos/", blank=True, null=True)
 
+    currency = models.CharField(max_length=10, default="USD", help_text="The brand's operating currency.")
+
     def __str__(self):
         return "Company Profile"
 
+class BusinessHours(models.Model):
+    """Normalized storage for default weekly operating hours."""
+    weekday = models.IntegerField(choices=[
+        (0, "Monday"), (1, "Tuesday"), (2, "Wednesday"),
+        (3, "Thursday"), (4, "Friday"), (5, "Saturday"), (6, "Sunday")
+    ])
+    start_time = models.TimeField()
+    end_time = models.TimeField()
+
+    class Meta:
+        verbose_name_plural = "Business Hours"
+        ordering = ["weekday", "start_time"]
+
+    def __str__(self):
+        return f"{self.get_weekday_display()}: {self.start_time} - {self.end_time}"
+
 class EventType(models.Model):
-    """Service definitions for booking."""
+    """Service categories for grouping events."""
     title = models.CharField(max_length=100)
-    duration_minutes = models.PositiveIntegerField(default=30)
-    price = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
+    description = models.TextField(blank=True, null=True)
     payment_model = models.CharField(
         max_length=10, 
         choices=[("PRE-PAID", "Pre-payment"), ("POST-PAID", "Post-payment")], 
@@ -39,9 +56,45 @@ class EventType(models.Model):
     def __str__(self):
         return self.title
 
+class Event(models.Model):
+    """A specific bookable service."""
+    event_type = models.ForeignKey(EventType, on_delete=models.CASCADE, related_name="events")
+    title = models.CharField(max_length=100)
+    image = models.ImageField(upload_to="events/", blank=True, null=True)
+    description = models.CharField(max_length=255, blank=True, null=True)
+    detailed_description = models.TextField(blank=True, null=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    duration_minutes = models.PositiveIntegerField(default=30)
+    format_category = models.CharField(max_length=50, blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.event_type.title}: {self.title}"
+
+class EventAvailability(models.Model):
+    """Date-based availability rules for a specific event."""
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name="availability_rules")
+    start_date = models.DateField(null=True, blank=True, help_text="Start of the rule's validity.")
+    end_date = models.DateField(null=True, blank=True, help_text="End of the rule's validity.")
+
+    def __str__(self):
+        return f"Availability for {self.event.title}"
+
+class AvailabilitySlot(models.Model):
+    """Specific time windows for an EventAvailability set."""
+    event_availability = models.ForeignKey(EventAvailability, on_delete=models.CASCADE, related_name="slots")
+    weekday = models.IntegerField(choices=[
+        (0, "Monday"), (1, "Tuesday"), (2, "Wednesday"),
+        (3, "Thursday"), (4, "Friday"), (5, "Saturday"), (6, "Sunday")
+    ])
+    start_time = models.TimeField()
+    end_time = models.TimeField()
+
+    class Meta:
+        ordering = ["weekday", "start_time"]
+
 class Booking(models.Model):
-    """Individual appointments."""
-    event_type = models.ForeignKey(EventType, on_delete=models.CASCADE, related_name="bookings")
+    """Individual appointments linked to specific events."""
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name="bookings", null=True, blank=True)
     client_name = models.CharField(max_length=255)
     client_email = models.EmailField()
     start_time = models.DateTimeField()
@@ -53,31 +106,30 @@ class Booking(models.Model):
     )
 
     def __str__(self):
-        return f"{self.client_name} - {self.event_type.title}"
+        return f"{self.client_name} - {self.event.title}"
 
     def save(self, *args, **kwargs):
-        # Auto-calculate end_time from start_time + duration
-        if self.start_time and self.event_type:
-            self.end_time = self.start_time + timedelta(minutes=self.event_type.duration_minutes)
+        # Auto-calculate end_time from start_time + event duration
+        if self.start_time and self.event:
+            self.end_time = self.start_time + timedelta(minutes=self.event.duration_minutes)
         super().save(*args, **kwargs)
 
     def clean(self):
         """
-        Validation logic: (NewStart < ExistingEnd) AND (NewEnd > ExistingStart)
-        based on EventType.allow_overlap.
+        Delegates validation to the service layer.
+        For backwards compatibility during refactor, skeletal check remains.
         """
-        # First calculate end_time for the check if not set (or if start_time changed)
-        if self.start_time and self.event_type:
-            self.end_time = self.start_time + timedelta(minutes=self.event_type.duration_minutes)
+        if self.start_time and self.event:
+            self.end_time = self.start_time + timedelta(minutes=self.event.duration_minutes)
             
-            if not self.event_type.allow_overlap:
+            if not self.event.event_type.allow_overlap:
                 overlapping_bookings = Booking.objects.filter(
                     start_time__lt=self.end_time,
                     end_time__gt=self.start_time
+                ).exclude(pk=self.pk) if self.pk else Booking.objects.filter(
+                    start_time__lt=self.end_time,
+                    end_time__gt=self.start_time
                 )
-                
-                if self.pk:
-                    overlapping_bookings = overlapping_bookings.exclude(pk=self.pk)
                     
                 if overlapping_bookings.exists():
                     raise ValidationError("This booking overlaps with an existing appointment.")
