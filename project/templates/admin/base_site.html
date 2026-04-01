@@ -8,6 +8,13 @@
 
 {% block extrahead %}
 {{ block.super }}
+<style>
+    :root {
+        --color-primary-400: {{ brand_colors.400 }};
+        --color-primary-500: {{ brand_colors.500 }};
+        --color-primary-600: {{ brand_colors.600 }};
+    }
+</style>
 <!-- Load markdown libraries -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css" />
 <link rel="stylesheet" href="{% static 'css/style.css' %}" />

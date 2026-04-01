@@ -1,10 +1,14 @@
 from django.contrib import admin
-from project.admin import ModelAdminUnfoldBase
-from project.admin import tenant_admin_site
+from django.db import models
+from django.forms import TextInput
+from project.admin import ModelAdminUnfoldBase, tenant_admin_site
 from .models import CompanyProfile, EventType, Booking
 
 class CompanyProfileAdmin(ModelAdminUnfoldBase):
-    pass
+    def formfield_for_dbfield(self, db_field, request, **kwargs):
+        if db_field.name == "brand_color":
+            kwargs["widget"] = TextInput(attrs={"type": "color"})
+        return super().formfield_for_dbfield(db_field, request, **kwargs)
 
 class EventTypeAdmin(ModelAdminUnfoldBase):
     list_display = ("title", "duration_minutes", "price", "allow_overlap")

@@ -1,10 +1,21 @@
 from datetime import timedelta
 from django.db import models
+from django.core.validators import RegexValidator
 from django.core.exceptions import ValidationError
 from django_cryptography.fields import encrypt
 
 class CompanyProfile(models.Model):
     """Tenant-specific configuration."""
+    brand_color = models.CharField(
+        max_length=50,
+        default="oklch(0.81 0.11 236)",
+        validators=[
+            RegexValidator(
+                regex=r"^(#[0-9a-fA-F]{3}|#[0-9a-fA-F]{6}|oklch\([\d.]+\s[\d.]+\s[\d.]+\))$",
+                message="Enter a valid HEX code or OKLCH function (e.g. #87d1ff or oklch(0.81 0.11 236))",
+            )
+        ],
+    )
     stripe_public_key = models.CharField(max_length=255, null=True, blank=True)
     stripe_secret_key = encrypt(models.CharField(max_length=255, blank=True, null=True))
     google_calendar_id = models.CharField(max_length=255, blank=True, null=True)
