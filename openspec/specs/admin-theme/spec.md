@@ -4,20 +4,21 @@
 TBD - created by archiving change init-daridev-cal-project. Update Purpose after archive.
 ## Requirements
 ### Requirement: Modern Admin Layout
-The project SHALL use `django-unfold` as the primary admin theme.
+The project SHALL use `django-unfold` as the primary admin theme, correctly preserving its layout structure.
 
-#### Scenario: Unfold Integration
-- **Given** I am in `project/templates/admin/base.html`
-- **When** I extend `unfold/layouts/base.html`
-- **Then** it SHALL load the Unfold design system.
+#### Scenario: Unfold Layout Preservation
+- **Given** I am customizing the admin template
+- **When** I extend the admin templates
+- **Then** I SHALL use `project/templates/admin/base_site.html` and extend `"admin/base.html"` to ensure Unfold's structural CSS classes are loaded.
 
 ### Requirement: Admin Static Assets
 The project SHALL enhance Unfold's UI with custom scripts for styling, markdown, and localized filters.
 
 #### Scenario: JS Enhancement Loading
-- **Given** I am in `project/templates/admin/base.html`
+- **Given** I am in `project/templates/admin/base_site.html`
 - **When** I check the `extrahead` block
 - **Then** it SHALL include `add_tailwind_styles.js`, `load_markdown.js`, and `range_date_filter_es.js`.
+- **And** the file `static/js/add_tailwind_styles.js` SHALL exist and apply Tailwind classes to `.btn` and `.img-preview` elements.
 
 ### Requirement: Placeholder Assets
 The project SHALL include the brand's logo and favicon.
@@ -36,12 +37,12 @@ The Django Admin SHALL be configured to use Unfold's advanced forms and model ad
 - **Then** it SHALL inherit from `ModelAdminUnfoldBase` and use Unfold's specialized forms.
 
 ### Requirement: ModelAdmin Unfold Base
-The project SHALL provide a base `ModelAdmin` class to standardize Unfold's UI features.
+The project SHALL provide a base `ModelAdmin` class to standardize Unfold's UI features, and all models SHALL use it.
 
-#### Scenario: Base ModelAdmin Configuration
-- **Given** I am in `project/admin.py`
-- **When** `ModelAdminUnfoldBase` is implemented
-- **Then** it SHALL set `compressed_fields = True`, `warn_unsaved_form = True`, and `actions_row = ["edit"]`.
+#### Scenario: Base ModelAdmin Usage across Apps
+- **Given** the models defined in `companies` and `scheduler` apps
+- **When** they are registered in the admin site
+- **Then** their admin classes (`ClientAdmin`, `DomainAdmin`, `CompanyProfileAdmin`, `EventTypeAdmin`, `BookingAdmin`) SHALL inherit from `project.admin.ModelAdminUnfoldBase` rather than the default Unfold `ModelAdmin`.
 
 ### Requirement: Admin Sidebar Navigation Update SHALL be applied.
 The Admin Sidebar Navigation SHALL be updated.

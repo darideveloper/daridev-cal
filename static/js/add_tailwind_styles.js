@@ -10,10 +10,10 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   ]
   for (const elem_data of classes) {
-    const { selector, classes: classesStr } = elem_data
+    const { selector, classes } = elem_data
     const elems = document.querySelectorAll(selector)
     elems.forEach((elem) => {
-      elem.classList.add(...classesStr.split(" "))
+      elem.classList.add(...classes.split(" "))
     })
   }
 })

@@ -23,12 +23,11 @@ The `Domain` model manages subdomains for each tenant. It must inherit from `dja
 - `domain`: `CharField` (unique, max_length=253).
 - `is_primary`: `BooleanField` (default=True).
 
-### Requirement: Shared Admin Integration 
-The Shared Admin Integration SHALL be implemented.
-Register `Client` and `Domain` models with `django-unfold` admin.
+### Requirement: Shared Admin Integration
+The Shared Admin Integration SHALL be implemented. Register `Client` and `Domain` models with `django-unfold` admin.
 
 #### Scenario: `ClientAdmin` with `TenantAdminMixin`
-- Inherit from `TenantAdminMixin` and `unfold.admin.ModelAdmin`.
+- Inherit from `TenantAdminMixin` and `project.admin.ModelAdminUnfoldBase`.
 - `list_display`: `('schema_name', 'name', 'created_on', 'is_active')`.
 - Search fields: `('schema_name', 'name')`.
 

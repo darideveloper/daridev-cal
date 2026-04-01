@@ -232,9 +232,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 Override the base admin template to inject SimpleMDE and other custom assets.
 
-### project/templates/admin/base.html
+### project/templates/admin/base_site.html
 ```html
-{% extends "unfold/layouts/base.html" %} {% load static %} {% block extrahead %}
+{% extends "admin/base.html" %} {% load static %} {% block extrahead %}
 {{ block.super }}
 <!-- Load markdown libraries -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css" />

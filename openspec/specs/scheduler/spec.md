@@ -40,12 +40,9 @@ Records appointments.
 - If `event_type.allow_overlap` is `False`, perform a query to check for overlapping bookings in the same schema.
 - Conflict logic: `(NewStart < ExistingEnd) AND (NewEnd > ExistingStart)`.
 
-### Requirement: Tenant Admin Integration 
-The Tenant Admin Integration SHALL be implemented.
-Register models with `django-unfold`.
+### Requirement: Tenant Admin Integration
+The Tenant Admin Integration SHALL be implemented. Register models with `django-unfold`.
 
-#### Scenario: `BookingAdmin` features
-- List display with status badges (using Unfold labels).
-- Filter by `start_time`, `status`.
-- Search by `client_name`, `client_email`.
+#### Scenario: Admin Classes Inheritance
+- Inherit from `project.admin.ModelAdminUnfoldBase` for all model admin classes in the `scheduler` app (`CompanyProfileAdmin`, `EventTypeAdmin`, `BookingAdmin`).
 

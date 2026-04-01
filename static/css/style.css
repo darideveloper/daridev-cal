@@ -1,9 +1,116 @@
 /* Custom styles for DariDevCal */
-#page #main {
-  position: relative;
+
+/* SimpleMDE Editor Theming (Dark Mode / Unfold Compatible) */
+
+/* 1. MAIN CONTAINER & TOOLBAR */
+.editor-toolbar {
+    background: #161B22 !important; /* Sidebar Background */
+    border: 1px solid #30363D !important; /* Border/Stroke */
+    border-bottom: none !important;
+    opacity: 1 !important;
 }
 
-#page #main > div:last-child {
-  position: absolute;
-  bottom: 0;
+.editor-toolbar a {
+    color: #8B949E !important; /* Secondary Text */
+    transition: all 0.2s ease;
+}
+
+.editor-toolbar a:hover, 
+.editor-toolbar a.active {
+    background: #1e293b !important; /* Active Highlight */
+    color: oklch(0.81 0.11 236) !important; /* Primary Accent (Light Blue) */
+    border: none !important;
+}
+
+/* 2. THE EDITOR (CODEMIRROR) */
+.CodeMirror {
+    background: #0B0E14 !important; /* Deep Background */
+    color: #E6EDF3 !important;      /* Primary Text */
+    border: 1px solid #30363D !important;
+    font-family: inherit;
+}
+
+/* Cursor and Selection */
+.CodeMirror-cursor {
+    border-left: 1px solid oklch(0.81 0.11 236) !important;
+}
+
+.CodeMirror-selected {
+    background: #1e293b !important;
+}
+
+/* 3. PREVIEW MODE FIXES */
+.editor-toolbar.disabled-for-preview {
+    background: #161B22 !important;
+}
+
+.editor-toolbar.disabled-for-preview a {
+    color: #30363D !important;
+    opacity: 0.4;
+}
+
+.editor-toolbar.disabled-for-preview a.no-disable {
+    opacity: 1;
+    color: #8B949E !important;
+}
+
+.editor-toolbar.disabled-for-preview a.fa-eye.active {
+    background: #1e293b !important;
+    color: oklch(0.81 0.11 236) !important;
+    opacity: 1;
+}
+
+.editor-preview, .editor-preview-side {
+    background: #0D1117 !important;
+    color: #E6EDF3 !important;
+}
+
+/* 4. STATUS BAR */
+.editor-statusbar {
+    background: #161B22 !important;
+    color: #8B949E !important;
+    border: 1px solid #30363D !important;
+    border-top: none !important;
+}
+
+/* 5. MARKDOWN PREVIEW STYLES */
+.editor-preview, 
+.editor-preview-side,
+.editor-preview-active {
+    background: #0D1117 !important;
+    color: #E6EDF3 !important;
+    font-family: inherit !important;
+    line-height: 1.6 !important;
+    padding: 20px !important;
+}
+
+.editor-preview h1, .editor-preview-side h1,
+.editor-preview h2, .editor-preview-side h2,
+.editor-preview h3, .editor-preview-side h3 {
+    color: oklch(0.81 0.11 236) !important;
+    margin-top: 24px !important;
+    margin-bottom: 16px !important;
+    font-weight: 600 !important;
+    border-bottom: 1px solid #30363D !important;
+    padding-bottom: 0.3em !important;
+}
+
+.editor-preview a, .editor-preview-side a {
+    color: oklch(0.81 0.11 236) !important;
+    text-decoration: none !important;
+}
+
+.editor-preview blockquote, .editor-preview-side blockquote {
+    padding: 0 1em !important;
+    color: #8B949E !important;
+    border-left: 0.25em solid oklch(0.81 0.11 236) !important;
+    margin: 0 0 16px 0 !important;
+}
+
+/* IMAGE PREVIEWS */
+.img-preview {
+    width: auto;
+    height: 64px;
+    border-radius: 12px;
+    object-fit: cover;
 }
