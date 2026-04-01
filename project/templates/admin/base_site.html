@@ -1,5 +1,11 @@
 {% extends "admin/base.html" %} {% load static %}
 
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block branding %}
+    {% include "unfold/helpers/site_branding.html" %}
+{% endblock %}
+
 {% block extrahead %}
 {{ block.super }}
 <!-- Load markdown libraries -->
@@ -12,3 +18,4 @@
 <script src="{% static 'js/load_markdown.js' %}"></script>
 <script src="{% static 'js/range_date_filter_es.js' %}"></script>
 {% endblock %}
+

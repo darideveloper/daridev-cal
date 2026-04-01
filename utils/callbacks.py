@@ -16,8 +16,11 @@ def is_tenant_request(request):
 def get_tenant_profile(request):
     if is_tenant_request(request):
         from scheduler.models import CompanyProfile
-        return CompanyProfile.objects.first()
+        from django_tenants.utils import schema_context
+        with schema_context(request.tenant.schema_name):
+            return CompanyProfile.objects.first()
     return None
+
 
 def site_title_callback(request):
     if is_tenant_request(request):
