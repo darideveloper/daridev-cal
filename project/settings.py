@@ -342,7 +342,6 @@ UNFOLD = {
             {
                 "title": _("Multi-Tenancy"),
                 "separator": True,
-                "collapsible": True,
                 "items": [
                     {
                         "title": _("Clients (Tenants)"),
@@ -387,7 +386,6 @@ UNFOLD = {
             {
                 "title": _("Configuration"),
                 "separator": True,
-                "collapsible": True,
                 "items": [
                     {
                         "title": _("Company Profile"),
