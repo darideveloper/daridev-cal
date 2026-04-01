@@ -4,6 +4,7 @@ from django.contrib.auth.admin import GroupAdmin as BaseGroupAdmin
 from django.contrib.auth.models import User, Group
 from django.shortcuts import redirect
 from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 from unfold.forms import AdminPasswordChangeForm, UserChangeForm, UserCreationForm
 from unfold.admin import ModelAdmin
 from unfold.sites import UnfoldAdminSite
@@ -32,7 +33,7 @@ class ModelAdminUnfoldBase(ModelAdmin):
     
     actions_row = ["edit"]
 
-    @action(description="Edit", permissions=["change"])
+    @action(description=_("Edit"), permissions=["change"])
     def edit(self, request, object_id):
         return redirect(reverse(f"admin:{self.model._meta.app_label}_{self.model._meta.model_name}_change", args=[object_id]))
 

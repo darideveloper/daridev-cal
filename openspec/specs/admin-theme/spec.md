@@ -17,7 +17,7 @@ The project SHALL enhance Unfold's UI with custom scripts for styling, markdown,
 #### Scenario: JS Enhancement Loading
 - **Given** I am in `project/templates/admin/base_site.html`
 - **When** I check the `extrahead` block
-- **Then** it SHALL include `add_tailwind_styles.js`, `load_markdown.js`, and `range_date_filter_es.js`.
+- **Then** it SHALL include `add_tailwind_styles.js`, `load_markdown.js`, and `range_date_filter.js`.
 - **And** the file `static/js/add_tailwind_styles.js` SHALL exist and apply Tailwind classes to `.btn` and `.img-preview` elements.
 
 ### Requirement: Placeholder Assets
@@ -53,7 +53,17 @@ Update the `UNFOLD['SIDEBAR']['navigation']` to include the new models.
 - Add `scheduler.EventType` and `scheduler.Booking` under a "Scheduling" group.
 - Icons SHALL be assigned: `business` (Client), `link` (Domain), `event_note` (EventType), `calendar_month` (Booking).
 
-### Requirement: Dynamic Tenant Branding SHALL be implemented.
+### Requirement: Display Language Switcher
+The Unfold admin theme MUST display a UI control for switching languages.
+
+#### Scenario: Admin Interface
+- **GIVEN** the `UNFOLD` settings dictionary
+- **WHEN** an admin page is rendered
+- **THEN** the `SHOW_LANGUAGES` key must be set to `True`.
+- **AND** the `LANGUAGES` key must be a dictionary containing `navigation` with `name_local` labels to correctly display capitalized language names (e.g., "Español").
+
+### Requirement: Admin Static Assets
+
 The `django-unfold` interface SHALL dynamically reflect the active tenant's branding using callback strings in `settings.py` mapped to functions in `utils.callbacks`. To ensure textual branding (headline) correctly displays, the `SITE_LOGO` option SHALL NOT be declared in `UNFOLD`.
 
 #### Scenario: Dynamic Header and Icon

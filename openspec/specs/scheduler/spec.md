@@ -41,6 +41,20 @@ Records appointments.
 - If `event_type.allow_overlap` is `False`, perform a query to check for overlapping bookings in the same schema.
 - Conflict logic: `(NewStart < ExistingEnd) AND (NewEnd > ExistingStart)`.
 
+### Requirement: Model and Service Localization
+The project SHALL provide translated names for models, fields, choices, and validation messages in the `scheduler` app.
+
+#### Scenario: Translatable Metadata and Choices
+- **Given** I am in `scheduler/models.py`
+- **When** I check the models and their choices (e.g., Weekday, Status)
+- **Then** they SHALL be wrapped in `gettext_lazy`.
+- **AND** their `verbose_name` and `help_text` SHALL be translatable.
+
+#### Scenario: Service Layer Translations
+- **Given** I am in `scheduler/services.py`
+- **When** a `ValidationError` is raised
+- **Then** the message SHALL be translatable using `gettext_lazy`.
+
 ### Requirement: Tenant Admin Integration
 The Tenant Admin Integration SHALL be implemented. Register models with `django-unfold`.
 

@@ -2,41 +2,48 @@ from datetime import timedelta
 from django.db import models
 from django.core.validators import RegexValidator
 from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
 from django_cryptography.fields import encrypt
 
 class CompanyProfile(models.Model):
     """Tenant-specific configuration."""
     brand_color = models.CharField(
+        _("brand color"),
         max_length=50,
         default="oklch(0.81 0.11 236)",
         validators=[
             RegexValidator(
                 regex=r"^(#[0-9a-fA-F]{3}|#[0-9a-fA-F]{6}|oklch\([\d.]+\s[\d.]+\s[\d.]+\))$",
-                message="Enter a valid HEX code or OKLCH function (e.g. #87d1ff or oklch(0.81 0.11 236))",
+                message=_("Enter a valid HEX code or OKLCH function (e.g. #87d1ff or oklch(0.81 0.11 236))"),
             )
         ],
     )
-    stripe_public_key = models.CharField(max_length=255, null=True, blank=True)
-    stripe_secret_key = encrypt(models.CharField(max_length=255, blank=True, null=True))
-    google_calendar_id = models.CharField(max_length=255, blank=True, null=True)
-    logo = models.ImageField(upload_to="logos/", blank=True, null=True)
+    stripe_public_key = models.CharField(_("Stripe public key"), max_length=255, null=True, blank=True)
+    stripe_secret_key = encrypt(models.CharField(_("Stripe secret key"), max_length=255, blank=True, null=True))
+    google_calendar_id = models.CharField(_("Google Calendar ID"), max_length=255, blank=True, null=True)
+    logo = models.ImageField(_("logo"), upload_to="logos/", blank=True, null=True)
 
-    currency = models.CharField(max_length=10, default="USD", help_text="The brand's operating currency.")
+    currency = models.CharField(_("currency"), max_length=10, default="USD", help_text=_("The brand's operating currency."))
+
+    class Meta:
+        verbose_name = _("Company Profile")
+        verbose_name_plural = _("Company Profiles")
 
     def __str__(self):
-        return "Company Profile"
+        return str(_("Company Profile"))
 
 class BusinessHours(models.Model):
     """Normalized storage for default weekly operating hours."""
-    weekday = models.IntegerField(choices=[
-        (0, "Monday"), (1, "Tuesday"), (2, "Wednesday"),
-        (3, "Thursday"), (4, "Friday"), (5, "Saturday"), (6, "Sunday")
+    weekday = models.IntegerField(_("weekday"), choices=[
+        (0, _("Monday")), (1, _("Tuesday")), (2, _("Wednesday")),
+        (3, _("Thursday")), (4, _("Friday")), (5, _("Saturday")), (6, _("Sunday"))
     ])
-    start_time = models.TimeField()
-    end_time = models.TimeField()
+    start_time = models.TimeField(_("start time"))
+    end_time = models.TimeField(_("end time"))
 
     class Meta:
-        verbose_name_plural = "Business Hours"
+        verbose_name = _("Business Hour")
+        verbose_name_plural = _("Business Hours")
         ordering = ["weekday", "start_time"]
 
     def __str__(self):
@@ -44,66 +51,86 @@ class BusinessHours(models.Model):
 
 class EventType(models.Model):
     """Service categories for grouping events."""
-    title = models.CharField(max_length=100)
-    description = models.TextField(blank=True, null=True)
+    title = models.CharField(_("title"), max_length=100)
+    description = models.TextField(_("description"), blank=True, null=True)
     payment_model = models.CharField(
+        _("payment model"),
         max_length=10, 
-        choices=[("PRE-PAID", "Pre-payment"), ("POST-PAID", "Post-payment")], 
+        choices=[("PRE-PAID", _("Pre-payment")), ("POST-PAID", _("Post-payment"))], 
         default="POST-PAID"
     )
-    allow_overlap = models.BooleanField(default=False)
+    allow_overlap = models.BooleanField(_("allow overlap"), default=False)
+
+    class Meta:
+        verbose_name = _("Event Type")
+        verbose_name_plural = _("Event Types")
 
     def __str__(self):
         return self.title
 
 class Event(models.Model):
     """A specific bookable service."""
-    event_type = models.ForeignKey(EventType, on_delete=models.CASCADE, related_name="events")
-    title = models.CharField(max_length=100)
-    image = models.ImageField(upload_to="events/", blank=True, null=True)
-    description = models.CharField(max_length=255, blank=True, null=True)
-    detailed_description = models.TextField(blank=True, null=True)
-    price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-    duration_minutes = models.PositiveIntegerField(default=30)
-    format_category = models.CharField(max_length=50, blank=True, null=True)
+    event_type = models.ForeignKey(EventType, on_delete=models.CASCADE, related_name="events", verbose_name=_("event type"))
+    title = models.CharField(_("title"), max_length=100)
+    image = models.ImageField(_("image"), upload_to="events/", blank=True, null=True)
+    description = models.CharField(_("description"), max_length=255, blank=True, null=True)
+    detailed_description = models.TextField(_("detailed description"), blank=True, null=True)
+    price = models.DecimalField(_("price"), max_digits=10, decimal_places=2, null=True, blank=True)
+    duration_minutes = models.PositiveIntegerField(_("duration (minutes)"), default=30)
+    format_category = models.CharField(_("format category"), max_length=50, blank=True, null=True)
+
+    class Meta:
+        verbose_name = _("Event")
+        verbose_name_plural = _("Events")
 
     def __str__(self):
         return f"{self.event_type.title}: {self.title}"
 
 class EventAvailability(models.Model):
     """Date-based availability rules for a specific event."""
-    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name="availability_rules")
-    start_date = models.DateField(null=True, blank=True, help_text="Start of the rule's validity.")
-    end_date = models.DateField(null=True, blank=True, help_text="End of the rule's validity.")
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name="availability_rules", verbose_name=_("event"))
+    start_date = models.DateField(_("start date"), null=True, blank=True, help_text=_("Start of the rule's validity."))
+    end_date = models.DateField(_("end date"), null=True, blank=True, help_text=_("End of the rule's validity."))
+
+    class Meta:
+        verbose_name = _("Event Availability")
+        verbose_name_plural = _("Event Availabilities")
 
     def __str__(self):
-        return f"Availability for {self.event.title}"
+        return f"{_('Availability for')} {self.event.title}"
 
 class AvailabilitySlot(models.Model):
     """Specific time windows for an EventAvailability set."""
-    event_availability = models.ForeignKey(EventAvailability, on_delete=models.CASCADE, related_name="slots")
-    weekday = models.IntegerField(choices=[
-        (0, "Monday"), (1, "Tuesday"), (2, "Wednesday"),
-        (3, "Thursday"), (4, "Friday"), (5, "Saturday"), (6, "Sunday")
+    event_availability = models.ForeignKey(EventAvailability, on_delete=models.CASCADE, related_name="slots", verbose_name=_("event availability"))
+    weekday = models.IntegerField(_("weekday"), choices=[
+        (0, _("Monday")), (1, _("Tuesday")), (2, _("Wednesday")),
+        (3, _("Thursday")), (4, _("Friday")), (5, _("Saturday")), (6, _("Sunday"))
     ])
-    start_time = models.TimeField()
-    end_time = models.TimeField()
+    start_time = models.TimeField(_("start time"))
+    end_time = models.TimeField(_("end time"))
 
     class Meta:
+        verbose_name = _("Availability Slot")
+        verbose_name_plural = _("Availability Slots")
         ordering = ["weekday", "start_time"]
 
 class Booking(models.Model):
     """Individual appointments linked to specific events."""
-    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name="bookings", null=True, blank=True)
-    client_name = models.CharField(max_length=255)
-    client_email = models.EmailField()
-    start_time = models.DateTimeField()
-    end_time = models.DateTimeField(null=True, blank=True)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name="bookings", null=True, blank=True, verbose_name=_("event"))
+    client_name = models.CharField(_("client name"), max_length=255)
+    client_email = models.EmailField(_("client email"))
+    start_time = models.DateTimeField(_("start time"))
+    end_time = models.DateTimeField(_("end time"), null=True, blank=True)
     status = models.CharField(
+        _("status"),
         max_length=20, 
-        choices=[("PENDING", "Pending"), ("CONFIRMED", "Confirmed"), ("PAID", "Paid")], 
+        choices=[("PENDING", _("Pending")), ("CONFIRMED", _("Confirmed")), ("PAID", _("Paid"))], 
         default="PENDING"
     )
+
+    class Meta:
+        verbose_name = _("Booking")
+        verbose_name_plural = _("Bookings")
 
     def __str__(self):
         return f"{self.client_name} - {self.event.title}"
@@ -132,5 +159,5 @@ class Booking(models.Model):
                 )
                     
                 if overlapping_bookings.exists():
-                    raise ValidationError("This booking overlaps with an existing appointment.")
+                    raise ValidationError(_("This booking overlaps with an existing appointment."))
         super().clean()

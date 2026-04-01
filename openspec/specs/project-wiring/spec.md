@@ -10,13 +10,24 @@ The project's URLs SHALL be correctly configured to include the Django Admin and
 - **Given** I am in `project/urls_public.py`
 - **When** I check the `urlpatterns`
 - **Then** the `admin/` route SHALL map to `PublicAdminSite`.
-- **And** the root redirect to admin SHALL be mapped accurately.
+- **And** the `i18n/` URL SHALL be included for language switching.
+- **And** the root redirect to admin SHALL use `pattern_name="admin:index"` for language awareness.
 
 #### Scenario: Tenant URLs
 - **Given** I am in `project/urls.py`
 - **When** I check the `urlpatterns`
 - **Then** the `admin/` route SHALL map to `TenantAdminSite`.
+- **And** the `i18n/` URL SHALL be included for language switching.
 - **And** the `api/` route SHALL map to the REST API router.
+- **And** the root redirect to admin SHALL use `pattern_name="admin:index"` for language awareness.
+
+### Requirement: i18n URL Prefixes
+The project SHALL use language-prefixed URLs for its admin and home interfaces.
+
+#### Scenario: Language Prefixed Patterns
+- **Given** I am in `project/urls.py` or `project/urls_public.py`
+- **When** I check the `urlpatterns`
+- **Then** `admin/` and root patterns SHALL be wrapped in `i18n_patterns`.
 
 ### Requirement: API Support
 The project SHALL include custom pagination and exception handling for its API.

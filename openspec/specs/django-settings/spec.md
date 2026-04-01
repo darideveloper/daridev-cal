@@ -33,12 +33,16 @@ The project SHALL support both local and cloud-based file storage.
 - **Then** it SHALL be stored in an AWS S3 bucket.
 
 ### Requirement: Localization
-The project SHALL be configured with a specific time zone and language.
+The project SHALL be configured with a specific time zone and language, supporting multi-language interfaces.
 
-#### Scenario: Time Zone Setup
-- **Given** `TIME_ZONE` is set to `America/Mexico_City`
+#### Scenario: i18n/l10n Configuration
+- **Given** I am in `project/settings.py`
 - **When** I check the project configuration
 - **Then** `TIME_ZONE` and `USE_TZ` SHALL be correctly configured.
+- **AND** `USE_I18N` SHALL be set to `True`.
+- **AND** `LANGUAGES` SHALL include at least English and Spanish.
+- **AND** `LOCALE_PATHS` SHALL point to the project's `locale` directory.
+- **AND** `django.middleware.locale.LocaleMiddleware` SHALL be inserted in `MIDDLEWARE` after `SessionMiddleware`.
 
 ### Requirement: Unfold Brand Customization
 The project SHALL configure `django-unfold` in `settings.py` with custom branding and operational features.

@@ -1,6 +1,8 @@
-{% extends "admin/base.html" %} {% load static %}
+{% extends "admin/base.html" %} {% load static i18n %}
 
 {% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+<body class="{% block bodyclass %}{% endblock %}" data-label-from="{% translate 'From' %}" data-label-to="{% translate 'To' %}">
 
 {% block branding %}
     {% include "unfold/helpers/site_branding.html" %}
@@ -16,6 +18,6 @@
 <!-- Load Unfold custom scripts -->
 <script src="{% static 'js/add_tailwind_styles.js' %}"></script>
 <script src="{% static 'js/load_markdown.js' %}"></script>
-<script src="{% static 'js/range_date_filter_es.js' %}"></script>
+<script src="{% static 'js/range_date_filter.js' %}"></script>
 {% endblock %}
 

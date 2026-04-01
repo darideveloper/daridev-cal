@@ -1,6 +1,7 @@
 from datetime import datetime, time
 from django.core.exceptions import ValidationError
 from django.db.models import Q
+from django.utils.translation import gettext_lazy as _
 from .models import BusinessHours, EventAvailability, AvailabilitySlot, Booking
 
 def validate_booking_time(event, start_time, end_time):
@@ -24,7 +25,7 @@ def validate_booking_time(event, start_time, end_time):
         active_rules = availability_rules.filter(date_query)
         
         if not active_rules.exists():
-            raise ValidationError(f"Event is not available on {start_time.date()}.")
+            raise ValidationError(_("Event is not available on %(date)s.") % {'date': start_time.date()})
 
         # Check for slots within these active rules
         slots = AvailabilitySlot.objects.filter(
@@ -35,7 +36,7 @@ def validate_booking_time(event, start_time, end_time):
         )
         
         if not slots.exists():
-            raise ValidationError(f"Booking time {b_start}-{b_end} is outside allowed event availability.")
+            raise ValidationError(_("Booking time %(start)s-%(end)s is outside allowed event availability.") % {'start': b_start, 'end': b_end})
         
         return True
 
@@ -47,7 +48,11 @@ def validate_booking_time(event, start_time, end_time):
     )
     
     if not business_hours.exists():
-        raise ValidationError(f"Booking time {b_start}-{b_end} is outside business hours for {start_time.strftime('%A')}.")
+        raise ValidationError(_("Booking time %(start)s-%(end)s is outside business hours for %(day)s.") % {
+            'start': b_start, 
+            'end': b_end, 
+            'day': start_time.strftime('%A')
+        })
 
     return True
 
@@ -67,7 +72,7 @@ def create_booking(event, client_name, client_email, start_time, end_time=None):
             end_time__gt=start_time
         ).exists()
         if overlapping:
-            raise ValidationError("This time slot is already booked.")
+            raise ValidationError(_("This time slot is already booked."))
 
     # 2. Availability Check
     validate_booking_time(event, start_time, end_time)

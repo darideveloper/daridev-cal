@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from django.utils.translation import gettext_lazy as _
 from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -71,6 +72,7 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",  # Static file serving
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.locale.LocaleMiddleware",  # i18n support
     "corsheaders.middleware.CorsMiddleware",  # CORS handling
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -165,6 +167,15 @@ TIME_ZONE = "America/Mexico_City"
 USE_I18N = True
 
 USE_TZ = True
+
+LANGUAGES = [
+    ("en", _("English")),
+    ("es", _("Spanish")),
+]
+
+LOCALE_PATHS = [
+    BASE_DIR / "locale",
+]
 
 
 # Static files (CSS, JavaScript, Images)
@@ -269,7 +280,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 from django.templatetags.static import static
 from django.urls import reverse, NoReverseMatch
 from django.utils.functional import lazy
-from django.utils.translation import gettext_lazy as _
 
 
 def safe_reverse(viewname, *args, **kwargs):
@@ -298,6 +308,13 @@ UNFOLD = {
     ],
     "SHOW_HISTORY": True,
     "SHOW_VIEW_ON_SITE": True,
+    "SHOW_LANGUAGES": True,
+    "LANGUAGES": {
+        "navigation": [
+            {"code": "en", "name_local": "English"},
+            {"code": "es", "name_local": "Español"},
+        ],
+    },
     "ENVIRONMENT": "utils.callbacks.environment_callback",
     "THEME": "light",
     "COLORS": {

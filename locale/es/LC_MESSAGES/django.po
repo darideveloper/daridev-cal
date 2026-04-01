@@ -1,0 +1,407 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-01 11:33-0600\n"
+"PO-Revision-Date: 2026-04-01 11:40-0600\n"
+"Last-Translator: Gemini CLI\n"
+"Language-Team: Spanish\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: booking/apps.py:8 scheduler/models.py:132
+msgid "Booking"
+msgstr "Reserva"
+
+#: companies/apps.py:8
+msgid "Companies"
+msgstr "Empresas"
+
+#: companies/models.py:6
+msgid "schema name"
+msgstr "nombre del esquema"
+
+#: companies/models.py:7
+msgid "name"
+msgstr "nombre"
+
+#: companies/models.py:8
+msgid "created on"
+msgstr "creado el"
+
+#: companies/models.py:9
+msgid "is active"
+msgstr "está activo"
+
+#: companies/models.py:15
+msgid "Client"
+msgstr "Cliente"
+
+#: companies/models.py:16
+msgid "Clients"
+msgstr "Clientes"
+
+#: companies/models.py:22
+msgid "domain"
+msgstr "dominio"
+
+#: companies/models.py:23
+msgid "tenant"
+msgstr "inquilino"
+
+#: companies/models.py:24
+msgid "is primary"
+msgstr "es primario"
+
+#: companies/models.py:27
+msgid "Domain"
+msgstr "Dominio"
+
+#: companies/models.py:28 project/settings.py:365
+msgid "Domains"
+msgstr "Dominios"
+
+#: project/admin.py:36
+msgid "Edit"
+msgstr "Editar"
+
+#: project/settings.py:172
+msgid "English"
+msgstr "Inglés"
+
+#: project/settings.py:173
+msgid "Spanish"
+msgstr "Español"
+
+#: project/settings.py:334
+msgid "System"
+msgstr "Sistema"
+
+#: project/settings.py:338
+msgid "Users"
+msgstr "Usuarios"
+
+#: project/settings.py:345
+msgid "Groups"
+msgstr "Grupos"
+
+#: project/settings.py:354
+msgid "Multi-Tenancy"
+msgstr "Multi-Inquilinato"
+
+#: project/settings.py:358
+msgid "Clients (Tenants)"
+msgstr "Clientes (Inquilinos)"
+
+#: project/settings.py:374
+msgid "Scheduling"
+msgstr "Programación"
+
+#: project/settings.py:378 scheduler/models.py:133
+msgid "Bookings"
+msgstr "Reservas"
+
+#: project/settings.py:384 scheduler/models.py:46
+msgid "Business Hours"
+msgstr "Horas de oficina"
+
+#: project/settings.py:390 scheduler/models.py:84
+msgid "Events"
+msgstr "Eventos"
+
+#: project/settings.py:398
+msgid "Configuration"
+msgstr "Configuración"
+
+#: project/settings.py:402 scheduler/models.py:29 scheduler/models.py:33
+msgid "Company Profile"
+msgstr "Perfil de la empresa"
+
+#: project/settings.py:408 scheduler/models.py:66
+msgid "Event Types"
+msgstr "Tipos de eventos"
+
+#: project/settings.py:414
+msgid "Availability Rules"
+msgstr "Reglas de disponibilidad"
+
+#: project/settings.py:420 scheduler/models.py:114
+msgid "Availability Slots"
+msgstr "Espacios de disponibilidad"
+
+#: project/templates/admin/base_site.html:3
+msgid "Django site admin"
+msgstr "Administración del sitio Django"
+
+#: project/templates/admin/base_site.html:5
+msgid "From"
+msgstr "Desde"
+
+#: project/templates/admin/base_site.html:5
+msgid "To"
+msgstr "Hasta"
+
+#: scheduler/apps.py:8
+msgid "Scheduler"
+msgstr "Programador"
+
+#: scheduler/models.py:11
+msgid "brand color"
+msgstr "color de la marca"
+
+#: scheduler/models.py:17
+msgid ""
+"Enter a valid HEX code or OKLCH function (e.g. #87d1ff or oklch(0.81 0.11 "
+"236))"
+msgstr "Ingrese un código HEX o función OKLCH válido (p. ej., #87d1ff o oklch(0.81 0.11 236))"
+
+#: scheduler/models.py:21
+msgid "Stripe public key"
+msgstr "Clave pública de Stripe"
+
+#: scheduler/models.py:22
+msgid "Stripe secret key"
+msgstr "Clave secreta de Stripe"
+
+#: scheduler/models.py:23
+msgid "Google Calendar ID"
+msgstr "ID de Google Calendar"
+
+#: scheduler/models.py:24
+msgid "logo"
+msgstr "logotipo"
+
+#: scheduler/models.py:26
+msgid "currency"
+msgstr "moneda"
+
+#: scheduler/models.py:26
+msgid "The brand's operating currency."
+msgstr "La moneda operativa de la marca."
+
+#: scheduler/models.py:30
+msgid "Company Profiles"
+msgstr "Perfiles de la empresa"
+
+#: scheduler/models.py:37 scheduler/models.py:105
+msgid "weekday"
+msgstr "día de la semana"
+
+#: scheduler/models.py:38 scheduler/models.py:106
+msgid "Monday"
+msgstr "Lunes"
+
+#: scheduler/models.py:38 scheduler/models.py:106
+msgid "Tuesday"
+msgstr "Martes"
+
+#: scheduler/models.py:38 scheduler/models.py:106
+msgid "Wednesday"
+msgstr "Miércoles"
+
+#: scheduler/models.py:39 scheduler/models.py:107
+msgid "Thursday"
+msgstr "Jueves"
+
+#: scheduler/models.py:39 scheduler/models.py:107
+msgid "Friday"
+msgstr "Viernes"
+
+#: scheduler/models.py:39 scheduler/models.py:107
+msgid "Saturday"
+msgstr "Sábado"
+
+#: scheduler/models.py:39 scheduler/models.py:107
+msgid "Sunday"
+msgstr "Domingo"
+
+#: scheduler/models.py:41 scheduler/models.py:109 scheduler/models.py:122
+msgid "start time"
+msgstr "hora de inicio"
+
+#: scheduler/models.py:42 scheduler/models.py:110 scheduler/models.py:123
+msgid "end time"
+msgstr "hora de finalización"
+
+#: scheduler/models.py:45
+msgid "Business Hour"
+msgstr "Hora de oficina"
+
+#: scheduler/models.py:54 scheduler/models.py:74
+msgid "title"
+msgstr "título"
+
+#: scheduler/models.py:55 scheduler/models.py:76
+msgid "description"
+msgstr "descripción"
+
+#: scheduler/models.py:57
+msgid "payment model"
+msgstr "modelo de pago"
+
+#: scheduler/models.py:59
+msgid "Pre-payment"
+msgstr "Prepago"
+
+#: scheduler/models.py:59
+msgid "Post-payment"
+msgstr "Postpago"
+
+#: scheduler/models.py:62
+msgid "allow overlap"
+msgstr "permitir superposición"
+
+#: scheduler/models.py:65
+msgid "Event Type"
+msgstr "Tipo de evento"
+
+#: scheduler/models.py:73
+msgid "event type"
+msgstr "tipo de evento"
+
+#: scheduler/models.py:75
+msgid "image"
+msgstr "imagen"
+
+#: scheduler/models.py:77
+msgid "detailed description"
+msgstr "descripción detallada"
+
+#: scheduler/models.py:78
+msgid "price"
+msgstr "precio"
+
+#: scheduler/models.py:79
+msgid "duration (minutes)"
+msgstr "duración (minutos)"
+
+#: scheduler/models.py:80
+msgid "format category"
+msgstr "categoría de formato"
+
+#: scheduler/models.py:83
+msgid "Event"
+msgstr "Evento"
+
+#: scheduler/models.py:91 scheduler/models.py:119
+msgid "event"
+msgstr "evento"
+
+#: scheduler/models.py:92
+msgid "start date"
+msgstr "fecha de inicio"
+
+#: scheduler/models.py:92
+msgid "Start of the rule's validity."
+msgstr "Inicio de la validez de la regla."
+
+#: scheduler/models.py:93
+msgid "end date"
+msgstr "fecha de finalización"
+
+#: scheduler/models.py:93
+msgid "End of the rule's validity."
+msgstr "Fin de la validez de la regla."
+
+#: scheduler/models.py:96
+msgid "Event Availability"
+msgstr "Disponibilidad del evento"
+
+#: scheduler/models.py:97
+msgid "Event Availabilities"
+msgstr "Disponibilidades de los eventos"
+
+#: scheduler/models.py:104
+msgid "event availability"
+msgstr "disponibilidad del evento"
+
+#: scheduler/models.py:113
+msgid "Availability Slot"
+msgstr "Espacio de disponibilidad"
+
+#: scheduler/models.py:120
+msgid "client name"
+msgstr "nombre del cliente"
+
+#: scheduler/models.py:121
+msgid "client email"
+msgstr "correo electrónico del cliente"
+
+#: scheduler/models.py:125
+msgid "status"
+msgstr "estado"
+
+#: scheduler/models.py:127
+msgid "Pending"
+msgstr "Pendiente"
+
+#: scheduler/models.py:127
+msgid "Confirmed"
+msgstr "Confirmado"
+
+#: scheduler/models.py:127
+msgid "Paid"
+msgstr "Pagado"
+
+#: scheduler/models.py:162
+msgid "This booking overlaps with an existing appointment."
+msgstr "Esta reserva se superpone con una cita existente."
+
+#: scheduler/services.py:28
+#, python-format
+msgid "Event is not available on %(date)s."
+msgstr "El evento no está disponible el %(date)s."
+
+#: scheduler/services.py:39
+#, python-format
+msgid "Booking time %(start)s-%(end)s is outside allowed event availability."
+msgstr "El horario de reserva %(start)s-%(end)s está fuera de la disponibilidad permitida del evento."
+
+#: scheduler/services.py:51
+#, python-format
+msgid "Booking time %(start)s-%(end)s is outside business hours for %(day)s."
+msgstr "El horario de reserva %(start)s-%(end)s está fuera del horario comercial para el %(day)s."
+
+#: scheduler/services.py:75
+msgid "This time slot is already booked."
+msgstr "Este horario ya está reservado."
+
+#: utils/callbacks.py:7
+msgid "Production"
+msgstr "Producción"
+
+#: utils/callbacks.py:8
+msgid "Staging"
+msgstr "Pruebas"
+
+#: utils/callbacks.py:9
+msgid "Development"
+msgstr "Desarrollo"
+
+#: utils/callbacks.py:10
+msgid "Local"
+msgstr "Local"
+
+#: utils/callbacks.py:12
+msgid "Unknown"
+msgstr "Desconocido"
+
+#: utils/callbacks.py:29
+msgid "DARI DEV CAL"
+msgstr "CALENDARIO DARI DEV"
+
+#: utils/callbacks.py:34
+msgid "DARI DEV"
+msgstr "DARI DEV"
+
+#: utils/callbacks.py:39
+msgid "Appointment System"
+msgstr "Sistema de Citas"

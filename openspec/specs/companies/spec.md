@@ -23,6 +23,15 @@ The `Domain` model manages subdomains for each tenant. It must inherit from `dja
 - `domain`: `CharField` (unique, max_length=253).
 - `is_primary`: `BooleanField` (default=True).
 
+### Requirement: Model Localization
+The project SHALL provide translated names for models and fields in the `companies` app.
+
+#### Scenario: Translatable Metadata
+- **Given** I am in `companies/models.py`
+- **When** I check the `Client` and `Domain` models
+- **Then** their `verbose_name` and `verbose_name_plural` SHALL be translatable.
+- **AND** their fields SHALL have translatable names and help texts.
+
 ### Requirement: Shared Admin Integration
 The Shared Admin Integration SHALL be implemented. Register `Client` and `Domain` models with `django-unfold` admin.
 

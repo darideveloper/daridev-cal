@@ -1,14 +1,15 @@
 import os
+from django.utils.translation import gettext_lazy as _
 
 def environment_callback(request):
     env = os.getenv("ENV", "dev")
     env_mapping = {
-        "prod": ["Production", "danger"],
-        "staging": ["Staging", "warning"],
-        "dev": ["Development", "info"],
-        "local": ["Local", "success"],
+        "prod": [_("Production"), "danger"],
+        "staging": [_("Staging"), "warning"],
+        "dev": [_("Development"), "info"],
+        "local": [_("Local"), "success"],
     }
-    return env_mapping.get(env, ["Unknown", "info"])
+    return env_mapping.get(env, [_("Unknown"), "info"])
 
 def is_tenant_request(request):
     return hasattr(request, "tenant") and getattr(request.tenant, "schema_name", "public") != "public"
@@ -25,17 +26,17 @@ def get_tenant_profile(request):
 def site_title_callback(request):
     if is_tenant_request(request):
         return request.tenant.name
-    return "DARI DEV CAL"
+    return str(_("DARI DEV CAL"))
 
 def site_header_callback(request):
     if is_tenant_request(request):
         return request.tenant.name
-    return "DARI DEV"
+    return str(_("DARI DEV"))
 
 def site_subheader_callback(request):
     if is_tenant_request(request):
         return request.get_host()
-    return "Appointment System"
+    return str(_("Appointment System"))
 
 def site_icon_callback(request):
     from django.templatetags.static import static
