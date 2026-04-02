@@ -1,8 +1,10 @@
-# event-availability Specification
+# Specification Delta: event-availability
 
-## Purpose
-TBD - created by archiving change refactor-booking-event-models. Update Purpose after archive.
-## Requirements
+## Why
+Availability models need to follow a common structure via abstract classes to support both the Provider (Company) and Entity (Event) levels uniformly.
+
+## MODIFIED Requirements
+
 ### Requirement: Define Optional, Granular Event Availability
 The `EventAvailability` model MUST inherit from `BaseAvailabilityRange` to define specific validity periods for an `Event`.
 
@@ -25,4 +27,3 @@ The `EventAvailability` model MUST inherit from `BaseAvailabilityRange` to defin
 - **AND** `tuesday_end_time` and `thursday_end_time` are set to "18:00"
 - **THEN** a booking request for Wednesday, July 17th at 3 PM is rejected.
 - **AND** a booking request for Tuesday, July 16th at 3 PM is accepted.
-

@@ -1,8 +1,10 @@
-# business-hours Specification
+# Specification Delta: business-hours
 
-## Purpose
-TBD - created by archiving change refactor-booking-event-models. Update Purpose after archive.
-## Requirements
+## Why
+`BusinessHours` is being refactored into a more powerful, hierarchical system using `CompanyWeekdaySlot` which shares logic with Event-level units.
+
+## MODIFIED Requirements
+
 ### Requirement: Define Global Business Hours
 The `CompanyProfile` MUST store recurring weekly operating hours using `CompanyWeekdaySlot` which inherits from `BaseAvailabilitySlot`.
 
@@ -11,4 +13,3 @@ The `CompanyProfile` MUST store recurring weekly operating hours using `CompanyW
 - **WHEN** they create a `CompanyWeekdaySlot` entry
 - **THEN** it MUST be associated with the `CompanyProfile` singleton via a `ForeignKey`.
 - **AND** the record SHALL store the `weekday`, `start_time`, and `end_time`.
-

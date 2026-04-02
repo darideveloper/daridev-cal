@@ -1,16 +1,9 @@
-# validation-logic Specification
+# Specification Delta: validation-logic
 
-## Purpose
-Centralize booking availability validation logic within a unified service layer to ensure consistent enforcement of the priority-based hierarchy (Override > Range > Weekly Pattern > Business Hours).
-## Requirements
-### Requirement: Consolidate Availability Validation Logic
-Booking validation logic MUST be centralized in `scheduler.services.validate_booking_time`.
+## Why
+Validation logic MUST be hierarchical to check Provider (Company) rules if Entity (Event) rules do not explicitly allow/deny a booking slot.
 
-#### Scenario: Unified Validation Result
-- **GIVEN** a booking attempt is made for an event with a date override
-- **WHEN** `Booking.clean()` is called in `models.py`
-- **THEN** it MUST invoke `validate_booking_time()` to determine availability.
-- **AND** any validation error raised by the service MUST be propagated as a `ValidationError`.
+## MODIFIED Requirements
 
 ### Requirement: Priority-Based Availability Matrix
 The system MUST follow a strict priority when checking availability: Event Overrides > Event Slots > Event Ranges > Company Overrides > Company Slots > Company Ranges.
@@ -25,4 +18,3 @@ The system MUST follow a strict priority when checking availability: Event Overr
 - **AND** `Event` has a specific `AvailabilitySlot` for 10:00-11:00 on Mondays
 - **WHEN** booking is requested for 14:00 on Monday
 - **THEN** the system MUST reject it as the Event slot has priority over the global business hours.
-

@@ -1,8 +1,10 @@
-# date-override Specification
+# Specification Delta: date-override
 
-## Purpose
-Define and manage granular operating hour overrides for specific dates, allowing events to have unique availability windows that bypass standard weekly patterns and date ranges.
-## Requirements
+## Why
+Date overrides MUST share an abstract model `BaseDateOverride` to ensure consistent handling of exceptions at both Entity (Event) and Provider (Company) levels.
+
+## MODIFIED Requirements
+
 ### Requirement: Event Date Overrides MUST support custom hours
 `EventDateOverride` MUST inherit from `BaseDateOverride` and optionally include `start_time` and `end_time` to override standard weekly slots.
 
@@ -23,12 +25,3 @@ Define and manage granular operating hour overrides for specific dates, allowing
 - **WHEN** an `EventDateOverride` is created for April 20th with `is_available=True`
 - **AND** NO custom hours are provided
 - **THEN** a booking for 10:00 MUST be accepted if it matches normal weekly slots.
-
-### Requirement: Admin UI MUST provide hierarchy clarifications
-The Django admin MUST display `help_text` in both English and Spanish that explains the priority relationship between overrides, ranges, and slots.
-
-#### Scenario: User clarifies priority in Spanish
-- **GIVEN** an administrator is viewing an Event in Spanish
-- **WHEN** they look at the `Date Overrides` section
-- **THEN** they MUST see a text explaining that it has maximum priority ("máxima prioridad").
-

@@ -5,6 +5,51 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from django_cryptography.fields import encrypt
 
+class BaseAvailabilityRange(models.Model):
+    """Abstract base for date-based availability ranges."""
+    start_date = models.DateField(
+        _("start date"), 
+        null=True, 
+        blank=True, 
+        help_text=_("Defines the beginning of the validity period.")
+    )
+    end_date = models.DateField(
+        _("end date"), 
+        null=True, 
+        blank=True, 
+        help_text=_("Defines the end of the validity period.")
+    )
+
+    class Meta:
+        abstract = True
+
+class BaseAvailabilitySlot(models.Model):
+    """Abstract base for weekly recurring time windows."""
+    weekday = models.IntegerField(_("weekday"), choices=[
+        (0, _("Monday")), (1, _("Tuesday")), (2, _("Wednesday")),
+        (3, _("Thursday")), (4, _("Friday")), (5, _("Saturday")), (6, _("Sunday"))
+    ])
+    start_time = models.TimeField(_("start time"))
+    end_time = models.TimeField(_("end time"))
+
+    class Meta:
+        abstract = True
+        ordering = ["weekday", "start_time"]
+
+class BaseDateOverride(models.Model):
+    """Abstract base for specific date exceptions."""
+    date = models.DateField(_("Date"))
+    is_available = models.BooleanField(
+        _("Is available"), 
+        default=False, 
+        help_text=_("Individual date exception. Highest priority override. If start/end times are set, they override weekly slots.")
+    )
+    start_time = models.TimeField(_("start time"), null=True, blank=True)
+    end_time = models.TimeField(_("end time"), null=True, blank=True)
+
+    class Meta:
+        abstract = True
+
 class CompanyProfile(models.Model):
     """Tenant-specific configuration."""
     brand_color = models.CharField(
@@ -63,14 +108,64 @@ class CompanyProfile(models.Model):
     def __str__(self):
         return str(_("Company Profile"))
 
+class CompanyAvailability(BaseAvailabilityRange):
+    """Global date-based availability ranges for a company."""
+    company_profile = models.ForeignKey(
+        CompanyProfile, 
+        on_delete=models.CASCADE, 
+        related_name="availability_rules", 
+        verbose_name=_("company profile")
+    )
+
+    class Meta:
+        verbose_name = _("Company Date Range")
+        verbose_name_plural = _("Company Date Ranges")
+
+    def __str__(self):
+        return _("Global range for %(company)s") % {"company": "Company"}
+
+class CompanyWeekdaySlot(BaseAvailabilitySlot):
+    """Global weekly time windows for a company."""
+    company_profile = models.ForeignKey(
+        CompanyProfile, 
+        on_delete=models.CASCADE, 
+        related_name="weekday_slots", 
+        verbose_name=_("company profile")
+    )
+
+    class Meta(BaseAvailabilitySlot.Meta):
+        verbose_name = _("Business Hour")
+        verbose_name_plural = _("Business Hours")
+
+    def __str__(self):
+        return f"{self.get_weekday_display()}: {self.start_time} - {self.end_time}"
+
+class CompanyDateOverride(BaseDateOverride):
+    """Global date-based exceptions for a company."""
+    company_profile = models.ForeignKey(
+        CompanyProfile, 
+        on_delete=models.CASCADE, 
+        related_name="date_overrides", 
+        verbose_name=_("company profile")
+    )
+
+    class Meta:
+        verbose_name = _("Company Date Override")
+        verbose_name_plural = _("Company Date Overrides")
+        unique_together = ["company_profile", "date"]
+
+    def __str__(self):
+        status = _("Available") if self.is_available else _("Blocked")
+        return f"{self.date}: {status}"
+
 class BusinessHours(models.Model):
-    """Normalized storage for default weekly operating hours."""
+    """Normalized storage for default weekly operating hours (Legacy - to be migrated)."""
     company_profile = models.ForeignKey(
         CompanyProfile, 
         on_delete=models.CASCADE, 
         related_name="business_hours", 
         verbose_name=_("company profile"),
-        null=True, # For migration safety with existing data
+        null=True,
         blank=True
     )
     weekday = models.IntegerField(_("weekday"), choices=[
@@ -81,8 +176,8 @@ class BusinessHours(models.Model):
     end_time = models.TimeField(_("end time"))
 
     class Meta:
-        verbose_name = _("Operating Hour")
-        verbose_name_plural = _("Operating Hours")
+        verbose_name = _("Operating Hour (Legacy)")
+        verbose_name_plural = _("Operating Hours (Legacy)")
         ordering = ["weekday", "start_time"]
 
     def __str__(self):
@@ -139,11 +234,9 @@ class Event(models.Model):
     def __str__(self):
         return f"{self.event_type.title}: {self.title}"
 
-class EventAvailability(models.Model):
+class EventAvailability(BaseAvailabilityRange):
     """Date-based availability rules (ranges) for a specific event."""
     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name="availability_rules", verbose_name=_("event"))
-    start_date = models.DateField(_("start date"), null=True, blank=True, help_text=_("Defines the validity period of the event. Note: You still need to define 'Bookable Slots' below for these days to be active."))
-    end_date = models.DateField(_("end date"), null=True, blank=True, help_text=_("End of the rule's validity."))
 
     class Meta:
         verbose_name = _("Date Range")
@@ -152,7 +245,7 @@ class EventAvailability(models.Model):
     def __str__(self):
         return _("Availability for %(event)s") % {"event": self.event.title}
 
-class EventDateOverride(models.Model):
+class EventDateOverride(BaseDateOverride):
     """Specific dates that are either explicitly allowed or blocked for an event."""
     event = models.ForeignKey(
         Event, 
@@ -160,14 +253,6 @@ class EventDateOverride(models.Model):
         related_name="date_overrides", 
         verbose_name=_("event")
     )
-    date = models.DateField(_("Date"))
-    is_available = models.BooleanField(
-        _("Is available"), 
-        default=False, 
-        help_text=_("Individual date exception. It has the highest priority and overrides Date Ranges. If start/end times are set, they override weekly slots.")
-    )
-    start_time = models.TimeField(_("start time"), null=True, blank=True)
-    end_time = models.TimeField(_("end time"), null=True, blank=True)
 
     class Meta:
         verbose_name = _("Date Override")
@@ -178,7 +263,7 @@ class EventDateOverride(models.Model):
         status = _("Available") if self.is_available else _("Blocked")
         return f"{self.date}: {status}"
 
-class AvailabilitySlot(models.Model):
+class AvailabilitySlot(BaseAvailabilitySlot):
     """Specific weekly time windows for an Event."""
     event = models.ForeignKey(
         Event, 
@@ -187,6 +272,7 @@ class AvailabilitySlot(models.Model):
         verbose_name=_("event"),
         help_text=_("Weekly pattern for this service. If any slot is defined here, the company's global 'Operating Hours' will be ignored for this event.")
     )
+
     weekday = models.IntegerField(_("weekday"), choices=[
         (0, _("Monday")), (1, _("Tuesday")), (2, _("Wednesday")),
         (3, _("Thursday")), (4, _("Friday")), (5, _("Saturday")), (6, _("Sunday"))
