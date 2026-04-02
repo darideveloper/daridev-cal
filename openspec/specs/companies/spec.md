@@ -31,6 +31,11 @@ The project SHALL provide translated names for models and fields in the `compani
 - **When** I check the `Client` and `Domain` models
 - **Then** their `verbose_name` and `verbose_name_plural` SHALL be translatable.
 - **AND** their fields SHALL have translatable names and help texts.
+- **AND** `Client.schema_name` SHALL have verbose_name = _("tenant ID") and help_text = _("Internal identifier used to isolate data. Must be unique and lowercase.")
+- **AND** `Client.name` SHALL have verbose_name = _("company name") and help_text = _("Official display name of the tenant.")
+- **AND** `Client.is_active` SHALL have verbose_name = _("active status") and help_text = _("Uncheck to suspend all tenant operations.")
+- **AND** `Domain.domain` SHALL have verbose_name = _("web address") and help_text = _("The URL where users will access the booking portal (e.g., tenant.com).")
+- **AND** `Domain.is_primary` SHALL have verbose_name = _("primary URL") and help_text = _("If multiple domains exist, this is the main address.")
 
 ### Requirement: Shared Admin Integration
 The Shared Admin Integration SHALL be implemented. Register `Client` and `Domain` models with `django-unfold` admin.

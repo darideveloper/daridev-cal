@@ -8,7 +8,7 @@ from django_cryptography.fields import encrypt
 class CompanyProfile(models.Model):
     """Tenant-specific configuration."""
     brand_color = models.CharField(
-        _("brand color"),
+        _("brand primary color"),
         max_length=50,
         default="oklch(0.81 0.11 236)",
         validators=[
@@ -17,18 +17,43 @@ class CompanyProfile(models.Model):
                 message=_("Enter a valid HEX code or OKLCH function (e.g. #87d1ff or oklch(0.81 0.11 236))"),
             )
         ],
+        help_text=_("The main color for the booking page. Supports HEX and OKLCH format (e.g., oklch(0.8 0.1 240)).")
     )
-    stripe_public_key = models.CharField(_("Stripe public key"), max_length=255, null=True, blank=True)
-    stripe_secret_key = encrypt(models.CharField(_("Stripe secret key"), max_length=255, blank=True, null=True))
-    google_calendar_id = models.CharField(_("Google Calendar ID"), max_length=255, blank=True, null=True)
-    logo = models.ImageField(_("logo"), upload_to="logos/", blank=True, null=True)
+    stripe_public_key = models.CharField(
+        _("Stripe public key"), 
+        max_length=255, 
+        null=True, 
+        blank=True,
+        help_text=_("Your Stripe Publishable Key found in the Developer Dashboard.")
+    )
+    stripe_secret_key = encrypt(models.CharField(
+        _("Stripe secret key"), 
+        max_length=255, 
+        blank=True, 
+        null=True,
+        help_text=_("Your Stripe Secret Key. This field is encrypted.")
+    ))
+    google_calendar_id = models.CharField(
+        _("Google Calendar ID"), 
+        max_length=255, 
+        blank=True, 
+        null=True,
+        help_text=_("Calendar ID (usually an email address) for Google Calendar synchronization.")
+    )
+    logo = models.ImageField(
+        _("logo"), 
+        upload_to="logos/", 
+        blank=True, 
+        null=True,
+        help_text=_("Recommended dimensions: 200x200 pixels.")
+    )
 
     currency = models.CharField(
         _("currency"), 
         max_length=10, 
         choices=[("MXN", _("MXN")), ("USD", _("USD")), ("EUR", _("EUR"))],
         default="USD",
-        help_text=_("The brand's operating currency.")
+        help_text=_("Default currency for all services offered by the company.")
     )
 
     class Meta:
@@ -56,8 +81,8 @@ class BusinessHours(models.Model):
     end_time = models.TimeField(_("end time"))
 
     class Meta:
-        verbose_name = _("Business Hour")
-        verbose_name_plural = _("Business Hours")
+        verbose_name = _("Operating Hour")
+        verbose_name_plural = _("Operating Hours")
         ordering = ["weekday", "start_time"]
 
     def __str__(self):
@@ -73,7 +98,11 @@ class EventType(models.Model):
         choices=[("PRE-PAID", _("Pre-payment")), ("POST-PAID", _("Post-payment"))], 
         default="POST-PAID"
     )
-    allow_overlap = models.BooleanField(_("allow overlap"), default=False)
+    allow_overlap = models.BooleanField(
+        _("allow overlap"), 
+        default=False,
+        help_text=_("Allows multiple bookings for the same time slot (useful for classes or group events).")
+    )
 
     class Meta:
         verbose_name = _("Event Type")
@@ -89,8 +118,19 @@ class Event(models.Model):
     image = models.ImageField(_("image"), upload_to="events/", blank=True, null=True)
     description = models.CharField(_("description"), max_length=255, blank=True, null=True)
     detailed_description = models.TextField(_("detailed description"), blank=True, null=True)
-    price = models.DecimalField(_("price"), max_digits=10, decimal_places=2, null=True, blank=True)
-    duration_minutes = models.PositiveIntegerField(_("duration (minutes)"), default=30)
+    price = models.DecimalField(
+        _("price"), 
+        max_digits=10, 
+        decimal_places=2, 
+        null=True, 
+        blank=True,
+        help_text=_("The base cost of the service.")
+    )
+    duration_minutes = models.PositiveIntegerField(
+        _("duration"), 
+        default=30,
+        help_text=_("Duration of the service in minutes.")
+    )
     currency = models.CharField(
         _("currency"), 
         max_length=10, 
@@ -134,8 +174,8 @@ class AvailabilitySlot(models.Model):
     end_time = models.TimeField(_("end time"))
 
     class Meta:
-        verbose_name = _("Week Day")
-        verbose_name_plural = _("Week Days")
+        verbose_name = _("Bookable Slot")
+        verbose_name_plural = _("Bookable Slots")
         ordering = ["weekday", "start_time"]
 
     def __str__(self):
@@ -146,13 +186,17 @@ class Booking(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name="bookings", null=True, blank=True, verbose_name=_("event"))
     client_name = models.CharField(_("client name"), max_length=255)
     client_email = models.EmailField(_("client email"))
-    start_time = models.DateTimeField(_("start time"))
+    start_time = models.DateTimeField(
+        _("start time"),
+        help_text=_("The date and time the appointment begins.")
+    )
     end_time = models.DateTimeField(_("end time"), null=True, blank=True)
     status = models.CharField(
         _("status"),
         max_length=20, 
         choices=[("PENDING", _("Pending")), ("CONFIRMED", _("Confirmed")), ("PAID", _("Paid"))], 
-        default="PENDING"
+        default="PENDING",
+        help_text=_("Confirmed bookings trigger automated notifications.")
     )
 
     class Meta:
