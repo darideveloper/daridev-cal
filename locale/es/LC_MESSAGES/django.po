@@ -153,7 +153,7 @@ msgstr "Hasta"
 #: scheduler/admin.py:62
 #: venv/lib/python3.12/site-packages/unfold/templates/unfold/helpers/tab_items.html:16
 msgid "General"
-msgstr ""
+msgstr "General"
 
 #: scheduler/admin.py:63
 #, fuzzy
@@ -164,7 +164,7 @@ msgstr "Agenda"
 #: scheduler/admin.py:64
 #: venv/lib/python3.12/site-packages/unfold/templates/admin/change_form_object_tools.html:6
 msgid "History"
-msgstr ""
+msgstr "Historial"
 
 #: scheduler/apps.py:8
 msgid "Scheduler"
@@ -356,24 +356,24 @@ msgid "End of the rule's validity."
 msgstr "Fin de la validez de la regla."
 
 #: scheduler/models.py:109
-msgid "Event Availability"
-msgstr "Disponibilidad del evento"
+msgid "Date Range"
+msgstr "Rango de fechas"
 
 #: scheduler/models.py:110
-msgid "Event Availabilities"
-msgstr "Disponibilidades de los eventos"
+msgid "Date Ranges"
+msgstr "Rangos de fechas"
 
 #: scheduler/models.py:117
 msgid "event availability"
 msgstr "disponibilidad del evento"
 
 #: scheduler/models.py:126
-msgid "Availability Slot"
-msgstr "Espacio de disponibilidad"
+msgid "Week Day"
+msgstr "Día de la semana"
 
 #: scheduler/models.py:127
-msgid "Availability Slots"
-msgstr "Espacios de disponibilidad"
+msgid "Week Days"
+msgstr "Días de la semana"
 
 #: scheduler/models.py:133
 msgid "client name"

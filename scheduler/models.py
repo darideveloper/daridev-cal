@@ -112,8 +112,8 @@ class EventAvailability(models.Model):
     end_date = models.DateField(_("end date"), null=True, blank=True, help_text=_("End of the rule's validity."))
 
     class Meta:
-        verbose_name = _("Event Availability")
-        verbose_name_plural = _("Event Availabilities")
+        verbose_name = _("Date Range")
+        verbose_name_plural = _("Date Ranges")
 
     def __str__(self):
         return f"{_('Availability for')} {self.event.title}"
@@ -134,8 +134,8 @@ class AvailabilitySlot(models.Model):
     end_time = models.TimeField(_("end time"))
 
     class Meta:
-        verbose_name = _("Availability Slot")
-        verbose_name_plural = _("Availability Slots")
+        verbose_name = _("Week Day")
+        verbose_name_plural = _("Week Days")
         ordering = ["weekday", "start_time"]
 
     def __str__(self):
