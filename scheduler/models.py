@@ -142,7 +142,7 @@ class Event(models.Model):
 class EventAvailability(models.Model):
     """Date-based availability rules (ranges) for a specific event."""
     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name="availability_rules", verbose_name=_("event"))
-    start_date = models.DateField(_("start date"), null=True, blank=True, help_text=_("Start of the rule's validity."))
+    start_date = models.DateField(_("start date"), null=True, blank=True, help_text=_("Defines the validity period of the event. Note: You still need to define 'Bookable Slots' below for these days to be active."))
     end_date = models.DateField(_("end date"), null=True, blank=True, help_text=_("End of the rule's validity."))
 
     class Meta:
@@ -164,8 +164,10 @@ class EventDateOverride(models.Model):
     is_available = models.BooleanField(
         _("Is available"), 
         default=False, 
-        help_text=_("If unchecked, this date will be blocked even if it falls within a valid range. If checked, it will be available even if outside valid ranges.")
+        help_text=_("Individual date exception. It has the highest priority and overrides Date Ranges. If start/end times are set, they override weekly slots.")
     )
+    start_time = models.TimeField(_("start time"), null=True, blank=True)
+    end_time = models.TimeField(_("end time"), null=True, blank=True)
 
     class Meta:
         verbose_name = _("Date Override")
@@ -182,7 +184,8 @@ class AvailabilitySlot(models.Model):
         Event, 
         on_delete=models.CASCADE, 
         related_name="availability_slots", 
-        verbose_name=_("event")
+        verbose_name=_("event"),
+        help_text=_("Weekly pattern for this service. If any slot is defined here, the company's global 'Operating Hours' will be ignored for this event.")
     )
     weekday = models.IntegerField(_("weekday"), choices=[
         (0, _("Monday")), (1, _("Tuesday")), (2, _("Wednesday")),
@@ -232,64 +235,24 @@ class Booking(models.Model):
 
     def clean(self):
         """
-        Matrix-based validation:
-        1. Date must fall within an EventAvailability range (if any exist).
-        2. Time/Weekday must match an AvailabilitySlot record.
-        3. Check for overlapping bookings (unless event type allows it).
+        Consolidated validation:
+        1. All availability logic is now in `scheduler.services.validate_booking_time`.
+        2. Overlap check remains here.
         """
         if not self.start_time or not self.event:
             super().clean()
             return
 
+        # Dynamically import to avoid circular dependency: models <-> services
+        from scheduler.services import validate_booking_time
+        
+        # Ensure end_time is calculated before validation
         self.end_time = self.start_time + timedelta(minutes=self.event.duration_minutes)
-        booking_date = self.start_time.date()
-        booking_weekday = self.start_time.weekday()
-        booking_start_time = self.start_time.time()
-        booking_end_time = self.end_time.time()
-
-        # 1. Date Validity (Intersection Rule with Overrides)
-        override = self.event.date_overrides.filter(date=booking_date).first()
-        is_date_valid = False
-
-        if override:
-            if not override.is_available:
-                raise ValidationError(_("This date is blocked for this event."))
-            is_date_valid = True
-        else:
-            date_ranges = self.event.availability_rules.all()
-            if date_ranges.exists():
-                for rule in date_ranges:
-                    in_range = True
-                    if rule.start_date and booking_date < rule.start_date:
-                        in_range = False
-                    if rule.end_date and booking_date > rule.end_date:
-                        in_range = False
-                    
-                    if in_range:
-                        is_date_valid = True
-                        break
-            else:
-                is_date_valid = True
         
-        if not is_date_valid:
-            raise ValidationError(_("This date is outside the event's availability ranges."))
+        # 1. Availability validation
+        validate_booking_time(self.event, self.start_time, self.end_time)
 
-        # 2. Time Validity (Weekly Slots)
-        slots = self.event.availability_slots.filter(weekday=booking_weekday)
-        if not slots.exists():
-            raise ValidationError(_("No availability slots defined for this weekday."))
-        
-        is_time_valid = False
-        for slot in slots:
-            # Check if booking fits within slot
-            if booking_start_time >= slot.start_time and booking_end_time <= slot.end_time:
-                is_time_valid = True
-                break
-        
-        if not is_time_valid:
-            raise ValidationError(_("The requested time is outside the defined availability slots for this day."))
-
-        # 3. Overlap Check
+        # 2. Overlap Check
         if not self.event.event_type.allow_overlap:
             overlapping_bookings = Booking.objects.filter(
                 event=self.event,

@@ -47,6 +47,7 @@ class EventAvailabilityInline(TabularInline):
 
 class EventDateOverrideInline(TabularInline):
     model = EventDateOverride
+    fields = ("date", "is_available", "start_time", "end_time")
     extra = 1
     show_change_link = True
     tab = True

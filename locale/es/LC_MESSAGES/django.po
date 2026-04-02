@@ -390,6 +390,18 @@ msgstr "fecha de finalización"
 msgid "End of the rule's validity."
 msgstr "Fin de la validez de la regla."
 
+#: scheduler/models.py:151
+msgid "Defines the validity period of the event. Note: You still need to define 'Bookable Slots' below for these days to be active."
+msgstr "Define el periodo de validez del evento. Nota: Aún debe definir 'Espacios Reservables' abajo para que estos días estén activos."
+
+#: scheduler/models.py:164
+msgid "Individual date exception. It has the highest priority and overrides Date Ranges. If start/end times are set, they override weekly slots."
+msgstr "Excepción de fecha individual. Tiene la máxima prioridad y anula los Rangos de Fechas. Si se establecen horas de inicio/fin, estas anularán los espacios semanales."
+
+#: scheduler/models.py:181
+msgid "Weekly pattern for this service. If any slot is defined here, the company's global 'Operating Hours' will be ignored for this event."
+msgstr "Patrón semanal para este servicio. Si se define algún espacio aquí, se ignorarán las 'Horas de Operación' globales de la empresa para este evento."
+
 #: scheduler/models.py:155
 msgid "Date Range"
 msgstr "Rango de fechas"

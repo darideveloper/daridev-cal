@@ -21,3 +21,4 @@ info.txt
 /docs 
 *.temp
 .windsurf/
+start_portless.sh

@@ -16,7 +16,7 @@ class EventAvailabilitySerializer(serializers.ModelSerializer):
 class EventDateOverrideSerializer(serializers.ModelSerializer):
     class Meta:
         model = EventDateOverride
-        fields = ["date", "is_available"]
+        fields = ["date", "is_available", "start_time", "end_time"]
 
 class EventSerializer(serializers.ModelSerializer):
     availability_rules = EventAvailabilitySerializer(many=True, read_only=True)
