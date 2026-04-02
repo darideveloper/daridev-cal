@@ -85,3 +85,27 @@ class BookingServiceTest(TestCase):
         # Invalid: Monday April 20th (outside range)
         with self.assertRaisesRegex(ValidationError, "outside the event's availability ranges"):
              create_booking(self.event, "Outside", "out@ex.com", self.monday + timedelta(days=14))
+
+    def test_date_override(self):
+        # Set slots for Mondays 9-17
+        AvailabilitySlot.objects.create(event=self.event, weekday=0, start_time=time(9, 0), end_time=time(17, 0))
+        
+        # Set active range: April 1st to April 15th, 2026
+        EventAvailability.objects.create(
+            event=self.event, 
+            start_date=datetime(2026, 4, 1).date(), 
+            end_date=datetime(2026, 4, 15).date()
+        )
+        
+        # 1. Test Blocked Date (within valid range)
+        # April 6th is a Monday within range.
+        EventDateOverride.objects.create(event=self.event, date=self.monday.date(), is_available=False)
+        with self.assertRaisesRegex(ValidationError, "blocked for this event"):
+            create_booking(self.event, "Blocked", "b@ex.com", self.monday)
+            
+        # 2. Test Allowed Date (outside valid range)
+        # April 20th is a Monday OUTSIDE range.
+        outside_date = self.monday + timedelta(days=14)
+        EventDateOverride.objects.create(event=self.event, date=outside_date.date(), is_available=True)
+        booking = create_booking(self.event, "Forced", "f@ex.com", outside_date)
+        self.assertEqual(booking.client_name, "Forced")

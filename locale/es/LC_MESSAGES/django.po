@@ -179,7 +179,7 @@ msgid ""
 "236))"
 msgstr ""
 "Ingrese un código HEX o función OKLCH válido (p. ej., #87d1ff o oklch(0.81 "
-"0.11 236))"
+"236))"
 
 #: scheduler/models.py:20
 msgid ""
@@ -403,6 +403,34 @@ msgstr "Rangos de fechas"
 msgid "Availability for %(event)s"
 msgstr "Disponibilidad para %(event)s"
 
+#: scheduler/models.py:161
+msgid "Date"
+msgstr "Fecha"
+
+#: scheduler/models.py:162
+msgid "Is available"
+msgstr "Está disponible"
+
+#: scheduler/models.py:164
+msgid "If unchecked, this date will be blocked even if it falls within a valid range. If checked, it will be available even if outside valid ranges."
+msgstr "Si no se marca, esta fecha se bloqueará incluso si cae dentro de un rango válido. Si se marca, estará disponible incluso si está fuera de los rangos válidos."
+
+#: scheduler/models.py:168
+msgid "Date Override"
+msgstr "Excepción de fecha"
+
+#: scheduler/models.py:169
+msgid "Date Overrides"
+msgstr "Excepciones de fecha"
+
+#: scheduler/models.py:173
+msgid "Available"
+msgstr "Disponible"
+
+#: scheduler/models.py:173
+msgid "Blocked"
+msgstr "Bloqueado"
+
 #: scheduler/models.py:177
 msgid "Bookable Slot"
 msgstr "Espacio reservable"
@@ -443,6 +471,10 @@ msgstr "Pagado"
 msgid "Confirmed bookings trigger automated notifications."
 msgstr "Las reservas confirmadas activan notificaciones automáticas."
 
+#: scheduler/models.py:228
+msgid "This date is blocked for this event."
+msgstr "Esta fecha está bloqueada para este evento."
+
 #: scheduler/models.py:248
 msgid "This date is outside the event's availability ranges."
 msgstr "Esta fecha está fuera de los rangos de disponibilidad del evento."
@@ -462,6 +494,11 @@ msgstr ""
 #: scheduler/models.py:278
 msgid "This booking overlaps with an existing appointment."
 msgstr "Esta reserva se superpone con una cita existente."
+
+#: scheduler/services.py:33
+#, python-format
+msgid "Event is blocked on %(date)s."
+msgstr "El evento está bloqueado el %(date)s."
 
 #: scheduler/services.py:38
 #, python-format

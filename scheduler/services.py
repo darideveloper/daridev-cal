@@ -19,23 +19,32 @@ def validate_booking_time(event, start_time, end_time):
     b_start = start_time.time()
     b_end = end_time.time()
 
-    # 1. Date Range Check (EventAvailability)
-    availability_rules = event.availability_rules.all()
-    if availability_rules.exists():
-        is_date_valid = False
-        for rule in availability_rules:
-            in_range = True
-            if rule.start_date and booking_date < rule.start_date:
-                in_range = False
-            if rule.end_date and booking_date > rule.end_date:
-                in_range = False
-            
-            if in_range:
-                is_date_valid = True
-                break
-        
-        if not is_date_valid:
-            raise ValidationError(_("Event is not available on %(date)s.") % {'date': booking_date})
+    # 1. Date Range Check (EventAvailability with Overrides)
+    override = event.date_overrides.filter(date=booking_date).first()
+    is_date_valid = False
+
+    if override:
+        if not override.is_available:
+            raise ValidationError(_("Event is blocked on %(date)s.") % {'date': booking_date})
+        is_date_valid = True
+    else:
+        availability_rules = event.availability_rules.all()
+        if availability_rules.exists():
+            for rule in availability_rules:
+                in_range = True
+                if rule.start_date and booking_date < rule.start_date:
+                    in_range = False
+                if rule.end_date and booking_date > rule.end_date:
+                    in_range = False
+                
+                if in_range:
+                    is_date_valid = True
+                    break
+        else:
+            is_date_valid = True
+
+    if not is_date_valid:
+        raise ValidationError(_("Event is not available on %(date)s.") % {'date': booking_date})
 
     # 2. Weekly Slots Check (AvailabilitySlot)
     event_slots = event.availability_slots.filter(weekday=weekday)

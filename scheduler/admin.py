@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 from unfold.admin import ModelAdmin, TabularInline, StackedInline
 from unfold.contrib.filters.admin import RangeDateFilter
 from project.admin import ModelAdminUnfoldBase, tenant_admin_site
-from .models import CompanyProfile, EventType, Booking, BusinessHours, Event, EventAvailability, AvailabilitySlot
+from .models import CompanyProfile, EventType, Booking, BusinessHours, Event, EventAvailability, AvailabilitySlot, EventDateOverride
 
 class BusinessHoursInline(TabularInline):
     model = BusinessHours
@@ -45,6 +45,12 @@ class EventAvailabilityInline(TabularInline):
     show_change_link = True
     tab = True
 
+class EventDateOverrideInline(TabularInline):
+    model = EventDateOverride
+    extra = 1
+    show_change_link = True
+    tab = True
+
 class AvailabilitySlotInline(TabularInline):
     model = AvailabilitySlot
     extra = 0
@@ -77,7 +83,7 @@ class BookingInline(TabularInline):
 class EventAdmin(ModelAdminUnfoldBase):
     list_display = ("title", "event_type", "price", "duration_minutes")
     list_filter = ("event_type",)
-    inlines = [EventAvailabilityInline, AvailabilitySlotInline, BookingInline]
+    inlines = [EventAvailabilityInline, EventDateOverrideInline, AvailabilitySlotInline, BookingInline]
 
     tabs = [
         (_("General"), ["title", "event_type", "image", "description", "detailed_description", "price", "duration_minutes", "currency"]),

@@ -158,6 +158,30 @@ class EventAvailability(models.Model):
     def __str__(self):
         return _("Availability for %(event)s") % {"event": self.event.title}
 
+class EventDateOverride(models.Model):
+    """Specific dates that are either explicitly allowed or blocked for an event."""
+    event = models.ForeignKey(
+        Event, 
+        on_delete=models.CASCADE, 
+        related_name="date_overrides", 
+        verbose_name=_("event")
+    )
+    date = models.DateField(_("Date"))
+    is_available = models.BooleanField(
+        _("Is available"), 
+        default=False, 
+        help_text=_("If unchecked, this date will be blocked even if it falls within a valid range. If checked, it will be available even if outside valid ranges.")
+    )
+
+    class Meta:
+        verbose_name = _("Date Override")
+        verbose_name_plural = _("Date Overrides")
+        unique_together = ["event", "date"]
+
+    def __str__(self):
+        status = _("Available") if self.is_available else _("Blocked")
+        return f"{self.date}: {status}"
+
 class AvailabilitySlot(models.Model):
     """Specific weekly time windows for an Event."""
     event = models.ForeignKey(
@@ -229,23 +253,32 @@ class Booking(models.Model):
         booking_start_time = self.start_time.time()
         booking_end_time = self.end_time.time()
 
-        # 1. Date Validity (Intersection Rule)
-        date_ranges = self.event.availability_rules.all()
-        if date_ranges.exists():
-            is_date_valid = False
-            for rule in date_ranges:
-                in_range = True
-                if rule.start_date and booking_date < rule.start_date:
-                    in_range = False
-                if rule.end_date and booking_date > rule.end_date:
-                    in_range = False
-                
-                if in_range:
-                    is_date_valid = True
-                    break
-            
-            if not is_date_valid:
-                raise ValidationError(_("This date is outside the event's availability ranges."))
+        # 1. Date Validity (Intersection Rule with Overrides)
+        override = self.event.date_overrides.filter(date=booking_date).first()
+        is_date_valid = False
+
+        if override:
+            if not override.is_available:
+                raise ValidationError(_("This date is blocked for this event."))
+            is_date_valid = True
+        else:
+            date_ranges = self.event.availability_rules.all()
+            if date_ranges.exists():
+                for rule in date_ranges:
+                    in_range = True
+                    if rule.start_date and booking_date < rule.start_date:
+                        in_range = False
+                    if rule.end_date and booking_date > rule.end_date:
+                        in_range = False
+                    
+                    if in_range:
+                        is_date_valid = True
+                        break
+            else:
+                is_date_valid = True
+        
+        if not is_date_valid:
+            raise ValidationError(_("This date is outside the event's availability ranges."))
 
         # 2. Time Validity (Weekly Slots)
         slots = self.event.availability_slots.filter(weekday=booking_weekday)
