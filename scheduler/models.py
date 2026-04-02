@@ -156,7 +156,7 @@ class EventAvailability(models.Model):
         verbose_name_plural = _("Date Ranges")
 
     def __str__(self):
-        return f"{_('Availability for')} {self.event.title}"
+        return _("Availability for %(event)s") % {"event": self.event.title}
 
 class AvailabilitySlot(models.Model):
     """Specific weekly time windows for an Event."""

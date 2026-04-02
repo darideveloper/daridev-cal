@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-01 18:24-0600\n"
+"POT-Creation-Date: 2026-04-01 18:29-0600\n"
 "PO-Revision-Date: 2026-04-01 11:40-0600\n"
 "Last-Translator: Gemini CLI\n"
 "Language-Team: Spanish\n"
@@ -31,7 +31,9 @@ msgstr "ID del inquilino"
 
 #: companies/models.py:10
 msgid "Internal identifier used to isolate data. Must be unique and lowercase."
-msgstr "Identificador interno utilizado para aislar datos. Debe ser único y estar en minúsculas."
+msgstr ""
+"Identificador interno utilizado para aislar datos. Debe ser único y estar en "
+"minúsculas."
 
 #: companies/models.py:13
 msgid "company name"
@@ -67,7 +69,9 @@ msgstr "dirección web"
 
 #: companies/models.py:39
 msgid "The URL where users will access the booking portal (e.g., tenant.com)."
-msgstr "La URL donde los usuarios accederán al portal de reservas (p. ej., inquilino.com)."
+msgstr ""
+"La URL donde los usuarios accederán al portal de reservas (p. ej., inquilino."
+"com)."
 
 #: companies/models.py:45
 msgid "tenant"
@@ -145,6 +149,18 @@ msgstr "Perfil de la empresa"
 msgid "Event Types"
 msgstr "Tipos de eventos"
 
+#: project/templates/admin/base_site.html:3
+msgid "Django site admin"
+msgstr ""
+
+#: project/templates/admin/base_site.html:5
+msgid "From"
+msgstr ""
+
+#: project/templates/admin/base_site.html:5
+msgid "To"
+msgstr ""
+
 #: scheduler/admin.py:83
 msgid "General"
 msgstr "General"
@@ -170,8 +186,8 @@ msgid ""
 "The main color for the booking page. Supports HEX and OKLCH format (e.g., "
 "oklch(0.8 0.1 240))."
 msgstr ""
-"El color principal de la página de reservas. Admite formato HEX y OKLCH (p. ej., "
-"oklch(0.8 0.1 240))."
+"El color principal de la página de reservas. Admite formato HEX y OKLCH (p. "
+"ej., oklch(0.8 0.1 240))."
 
 #: scheduler/models.py:23
 msgid "Stripe public key"
@@ -179,7 +195,8 @@ msgstr "Clave pública de Stripe"
 
 #: scheduler/models.py:27
 msgid "Your Stripe Publishable Key found in the Developer Dashboard."
-msgstr "Su clave pública de Stripe que se encuentra en el Panel de desarrolladores."
+msgstr ""
+"Su clave pública de Stripe que se encuentra en el Panel de desarrolladores."
 
 #: scheduler/models.py:30
 msgid "Stripe secret key"
@@ -197,7 +214,8 @@ msgstr "ID de Google Calendar"
 msgid ""
 "Calendar ID (usually an email address) for Google Calendar synchronization."
 msgstr ""
-"ID de calendario (generalmente una dirección de correo electrónico) para la sincronización de Google Calendar."
+"ID de calendario (generalmente una dirección de correo electrónico) para la "
+"sincronización de Google Calendar."
 
 #: scheduler/models.py:44
 msgid "logo"
@@ -211,9 +229,22 @@ msgstr "Dimensiones recomendadas: 200x200 píxeles."
 msgid "currency"
 msgstr "moneda"
 
+#: scheduler/models.py:54 scheduler/models.py:137
+msgid "MXN"
+msgstr ""
+
+#: scheduler/models.py:54 scheduler/models.py:137
+msgid "USD"
+msgstr ""
+
+#: scheduler/models.py:54 scheduler/models.py:137
+msgid "EUR"
+msgstr ""
+
 #: scheduler/models.py:56
 msgid "Default currency for all services offered by the company."
-msgstr "Moneda predeterminada para todos los servicios ofrecidos por la empresa."
+msgstr ""
+"Moneda predeterminada para todos los servicios ofrecidos por la empresa."
 
 #: scheduler/models.py:61
 msgid "Company Profiles"
@@ -300,7 +331,8 @@ msgid ""
 "Allows multiple bookings for the same time slot (useful for classes or group "
 "events)."
 msgstr ""
-"Permite múltiples reservas para el mismo intervalo de tiempo (útil para clases o eventos grupales)."
+"Permite múltiples reservas para el mismo intervalo de tiempo (útil para "
+"clases o eventos grupales)."
 
 #: scheduler/models.py:108
 msgid "Event Type"
@@ -366,6 +398,11 @@ msgstr "Rango de fechas"
 msgid "Date Ranges"
 msgstr "Rangos de fechas"
 
+#: scheduler/models.py:159
+#, python-format
+msgid "Availability for %(event)s"
+msgstr "Disponibilidad para %(event)s"
+
 #: scheduler/models.py:177
 msgid "Bookable Slot"
 msgstr "Espacio reservable"
@@ -412,13 +449,15 @@ msgstr "Esta fecha está fuera de los rangos de disponibilidad del evento."
 
 #: scheduler/models.py:253
 msgid "No availability slots defined for this weekday."
-msgstr "No hay espacios de disponibilidad definidos para este día de la semana."
+msgstr ""
+"No hay espacios de disponibilidad definidos para este día de la semana."
 
 #: scheduler/models.py:263
 msgid ""
 "The requested time is outside the defined availability slots for this day."
 msgstr ""
-"El horario solicitado está fuera de los espacios de disponibilidad definidos para este día."
+"El horario solicitado está fuera de los espacios de disponibilidad definidos "
+"para este día."
 
 #: scheduler/models.py:278
 msgid "This booking overlaps with an existing appointment."
@@ -463,6 +502,10 @@ msgstr "Desarrollo"
 msgid "Local"
 msgstr "Local"
 
+#: utils/callbacks.py:12
+msgid "Unknown"
+msgstr ""
+
 #: utils/callbacks.py:29
 msgid "DARI DEV CAL"
 msgstr "CALENDARIO DARI DEV"
@@ -474,3 +517,130 @@ msgstr "DARI DEV"
 #: utils/callbacks.py:39
 msgid "Appointment System"
 msgstr "Sistema de Citas"
+
+#, fuzzy
+#~| msgid "duration"
+#~ msgid "Syndication"
+#~ msgstr "duración"
+
+#, fuzzy
+#~| msgid "duration"
+#~ msgid "Duration"
+#~ msgstr "duración"
+
+#, fuzzy
+#~| msgid "web address"
+#~ msgid "Email address"
+#~ msgstr "dirección web"
+
+#, fuzzy
+#~| msgid "web address"
+#~ msgid "IPv4 address"
+#~ msgstr "dirección web"
+
+#, fuzzy
+#~| msgid "web address"
+#~ msgid "IP address"
+#~ msgstr "dirección web"
+
+#, fuzzy
+#~| msgid "image"
+#~ msgid "Image"
+#~ msgstr "imagen"
+
+#, fuzzy
+#~| msgid "This time slot is already booked."
+#~ msgid "This field is required."
+#~ msgstr "Este horario ya está reservado."
+
+#, fuzzy
+#~| msgid "currency"
+#~ msgid "Currently"
+#~ msgstr "moneda"
+
+#, fuzzy
+#~| msgid "Monday"
+#~ msgid "Mon"
+#~ msgstr "Lunes"
+
+#, fuzzy
+#~| msgid "Tuesday"
+#~ msgid "Tue"
+#~ msgstr "Martes"
+
+#, fuzzy
+#~| msgid "Friday"
+#~ msgid "Fri"
+#~ msgstr "Viernes"
+
+#, fuzzy
+#~| msgid "Sunday"
+#~ msgid "Sun"
+#~ msgstr "Domingo"
+
+#, fuzzy
+#~| msgid "Monday"
+#~ msgid "May"
+#~ msgstr "Lunes"
+
+#, fuzzy
+#~| msgid "Monday"
+#~ msgctxt "abbrev. month"
+#~ msgid "May"
+#~ msgstr "Lunes"
+
+#, fuzzy
+#~| msgid "Monday"
+#~ msgctxt "alt. month"
+#~ msgid "May"
+#~ msgstr "Lunes"
+
+#, fuzzy
+#~| msgid "Date Range"
+#~ msgid "Date out of range"
+#~ msgstr "Rango de fechas"
+
+#, fuzzy
+#~| msgid "end date"
+#~ msgid "Pickled data"
+#~ msgstr "fecha de finalización"
+
+#, fuzzy
+#~| msgid "Pending"
+#~ msgid "Heading"
+#~ msgstr "Pendiente"
+
+#, fuzzy
+#~| msgid "Groups"
+#~ msgid "Group"
+#~ msgstr "Grupos"
+
+#, fuzzy
+#~| msgid "Users"
+#~ msgid "User"
+#~ msgstr "Usuarios"
+
+#, fuzzy
+#~| msgid "Production"
+#~ msgid "Action"
+#~ msgstr "Producción"
+
+#, fuzzy
+#~| msgid "Confirmed"
+#~ msgid "Confirm import"
+#~ msgstr "Confirmado"
+
+#, fuzzy
+#~| msgid "start time"
+#~ msgid "Date/time"
+#~ msgstr "hora de inicio"
+
+#, fuzzy
+#~| msgid "duration"
+#~ msgid "More actions"
+#~ msgstr "duración"
+
+#, fuzzy
+#~| msgid "currency"
+#~ msgid "Select currency"
+#~ msgstr "moneda"
