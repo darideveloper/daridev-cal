@@ -4,11 +4,11 @@
 TBD - created by archiving change refactor-booking-event-models. Update Purpose after archive.
 ## Requirements
 ### Requirement: Create Specific Event Model
-A new `Event` model MUST be created to represent a specific, bookable service.
+The requirement to select a currency during `Event` creation SHALL be removed.
 
 #### MODIFIED Scenario: Create a New Event
 - **GIVEN** an administrator wants to add a new service
 - **WHEN** they create an `Event` with title "Masterclass: Lifting de Pestañas", link it to the "Masterclass" `EventType`, and provide details like an image, description, price of 150, and duration of 960 minutes.
-- **AND** they select a **currency** from the allowed list: `MXN`, `USD`, `EUR`.
-- **THEN** the system saves a new `Event` record.
+- **THEN** the system SHALL NOT require a currency selection.
+- **AND** the system saves a new `Event` record.
 

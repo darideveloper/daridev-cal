@@ -1,9 +1,9 @@
 # Proposal: Remove Redundant Event Currency
 
-## Problem
+## Why
 The `Event` model currently has a `currency` field that is redundant because each tenant already defines a global `currency` in their `CompanyProfile`. This redundancy leads to potential data inconsistency, a cluttered Admin UI, and complexity in maintaining multiple sources of truth for the same information.
 
-## Solution
+## What Changes
 Consolidate currency handling at the tenant level by:
 1.  Removing the `currency` field from the `Event` model.
 2.  Updating the `EventAdmin` to remove the `currency` field from its forms.

@@ -27,7 +27,7 @@ class EventSerializer(serializers.ModelSerializer):
         fields = [
             "id", "title", "image", "description", 
             "detailed_description", "price", "duration_minutes", 
-            "currency", "availability_rules", "date_overrides"
+            "availability_rules", "date_overrides"
         ]
 
 class BookingSerializer(serializers.ModelSerializer):

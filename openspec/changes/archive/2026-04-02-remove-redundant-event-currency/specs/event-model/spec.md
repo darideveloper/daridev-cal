@@ -1,6 +1,6 @@
 # event-model Specification Delta
 
-## REMOVED Requirements
+## MODIFIED Requirements
 ### Requirement: Create Specific Event Model
 The requirement to select a currency during `Event` creation SHALL be removed.
 

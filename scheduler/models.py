@@ -131,12 +131,6 @@ class Event(models.Model):
         default=30,
         help_text=_("Duration of the service in minutes.")
     )
-    currency = models.CharField(
-        _("currency"), 
-        max_length=10, 
-        choices=[("MXN", _("MXN")), ("USD", _("USD")), ("EUR", _("EUR"))],
-        default="USD"
-    )
 
     class Meta:
         verbose_name = _("Event")

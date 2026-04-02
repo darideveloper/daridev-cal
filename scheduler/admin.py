@@ -86,7 +86,7 @@ class EventAdmin(ModelAdminUnfoldBase):
     inlines = [EventAvailabilityInline, EventDateOverrideInline, AvailabilitySlotInline, BookingInline]
 
     tabs = [
-        (_("General"), ["title", "event_type", "image", "description", "detailed_description", "price", "duration_minutes", "currency"]),
+        (_("General"), ["title", "event_type", "image", "description", "detailed_description", "price", "duration_minutes"]),
     ]
 
 class BusinessHoursAdmin(ModelAdminUnfoldBase):
