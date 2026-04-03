@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const noMarkdownIds = ["google_maps_src", "description"]
+  const noMarkdownIds = ["google_maps_src", "description", "google_calendar_credentials"]
   let textAreasSelector = 'div > textarea'
   const notSelector = noMarkdownIds.map(id => `:not(#id_${id})`).join("")
   textAreasSelector = `div > textarea${notSelector}`

@@ -5,11 +5,13 @@ from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 from unfold.admin import ModelAdmin, TabularInline, StackedInline
 from unfold.contrib.filters.admin import RangeDateFilter
+from unfold.decorators import action
 from project.admin import ModelAdminUnfoldBase, tenant_admin_site
 from .models import (
     CompanyProfile, CompanyAvailability, CompanyWeekdaySlot, CompanyDateOverride,
     EventType, Booking, Event, EventAvailability, AvailabilitySlot, EventDateOverride
 )
+from .google_calendar import sync_booking_to_google
 
 class CompanyAvailabilityInline(TabularInline):
     model = CompanyAvailability
@@ -48,7 +50,7 @@ class CompanyProfileAdmin(ModelAdminUnfoldBase):
     inlines = [CompanyAvailabilityInline, CompanyWeekdaySlotInline, CompanyDateOverrideInline]
 
     tabs = [
-        (_("Business Info"), ["company", "logo", "brand_color", "currency", "stripe_public_key", "stripe_secret_key", "google_calendar_id"]),
+        (_("Business Info"), ["company", "logo", "brand_color", "currency", "stripe_public_key", "stripe_secret_key", "google_calendar_id", "google_calendar_credentials"]),
         (_("Global Date Ranges"), ["scheduler_companyavailability_set"]),
         (_("Standard Business Hours"), ["scheduler_companyweekdayslot_set"]),
         (_("Global Overrides"), ["scheduler_companydateoverride_set"]),
@@ -132,9 +134,17 @@ class AvailabilitySlotAdmin(ModelAdminUnfoldBase):
     list_filter = ("weekday",)
 
 class BookingAdmin(ModelAdminUnfoldBase):
-    list_display = ("client_name", "event", "start_time", "end_time", "status")
-    list_filter = ("start_time", "status")
+    list_display = ("client_name", "event", "start_time", "status", "google_sync_status")
+    list_filter = ("start_time", "status", "google_sync_status")
     search_fields = ("client_name", "client_email")
+    readonly_fields = ("google_event_id", "google_sync_status", "google_sync_error", "last_synced_at")
+    actions = ["retry_google_sync"]
+
+    @action(description=_("Retry Google Calendar Sync"))
+    def retry_google_sync(self, request, queryset):
+        for booking in queryset:
+            sync_booking_to_google(booking)
+        self.message_user(request, _("Google Calendar synchronization triggered for %d bookings.") % queryset.count())
 
 tenant_admin_site.register(CompanyProfile, CompanyProfileAdmin)
 tenant_admin_site.register(EventType, EventTypeAdmin)

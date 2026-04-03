@@ -28,6 +28,9 @@ django-solo>=2.3.0         # Singleton models for configuration
 
 # tools
 requests>=2.32.3           # HTTP library for external API calls
+google-api-python-client>=2.162.0 # Google API client library
+google-auth>=2.38.0        # Google authentication library
+google-auth-httplib2>=0.2.0 # HTTP client for google-auth
 
 # storage
 django-storages==1.14.4    # Custom storage backends (S3, etc.)

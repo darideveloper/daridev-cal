@@ -85,6 +85,12 @@ class CompanyProfile(models.Model):
         null=True,
         help_text=_("Calendar ID (usually an email address) for Google Calendar synchronization.")
     )
+    google_calendar_credentials = encrypt(models.TextField(
+        _("Google Calendar credentials"),
+        blank=True,
+        null=True,
+        help_text=_("JSON credentials for the Google Service Account associated with this tenant's calendar (must be copied from the Service Account JSON key).")
+    ))
     logo = models.ImageField(
         _("logo"), 
         upload_to="logos/", 
@@ -304,6 +310,40 @@ class Booking(models.Model):
         choices=[("PENDING", _("Pending")), ("CONFIRMED", _("Confirmed")), ("PAID", _("Paid"))], 
         default="PENDING",
         help_text=_("Confirmed bookings trigger automated notifications.")
+    )
+    google_event_id = models.CharField(
+        _("Google Event ID"),
+        max_length=255,
+        blank=True,
+        null=True,
+        editable=False,
+        help_text=_("Unique identifier of the event in the Google Calendar.")
+    )
+
+    google_sync_status = models.CharField(
+        _("Google Sync Status"),
+        max_length=20,
+        choices=[
+            ("PENDING", _("Pending")),
+            ("SUCCESS", _("Success")),
+            ("FAILURE", _("Failure")),
+            ("DISABLED", _("Disabled")),
+        ],
+        default="PENDING",
+        help_text=_("Current status of the Google Calendar synchronization.")
+    )
+    google_sync_error = models.TextField(
+        _("Google Sync Error"),
+        blank=True,
+        null=True,
+        help_text=_("Latest error message encountered during synchronization.")
+    )
+    last_synced_at = models.DateTimeField(
+        _("Last Synced At"),
+        blank=True,
+        null=True,
+        editable=False,
+        help_text=_("The date and time this booking was last successfully synchronized.")
     )
 
     class Meta:
