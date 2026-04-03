@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.db import models
 from django.forms import TextInput
+from django.urls import reverse
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 from unfold.admin import ModelAdmin, TabularInline, StackedInline
@@ -50,10 +51,10 @@ class CompanyProfileAdmin(ModelAdminUnfoldBase):
     inlines = [CompanyAvailabilityInline, CompanyWeekdaySlotInline, CompanyDateOverrideInline]
 
     tabs = [
-        (_("Business Info"), ["company", "logo", "brand_color", "currency", "stripe_public_key", "stripe_secret_key", "google_calendar_id", "google_calendar_credentials"]),
-        (_("Global Date Ranges"), ["scheduler_companyavailability_set"]),
-        (_("Standard Business Hours"), ["scheduler_companyweekdayslot_set"]),
-        (_("Global Overrides"), ["scheduler_companydateoverride_set"]),
+        (_("Business Info"), ["logo", "brand_color", "currency", "stripe_public_key", "stripe_secret_key", "google_calendar_id", "google_calendar_credentials"]),
+        (_("Global Date Ranges"), ["availability_rules"]),
+        (_("Standard Business Hours"), ["weekday_slots"]),
+        (_("Global Overrides"), ["date_overrides"]),
     ]
     
     def formfield_for_dbfield(self, db_field, request, **kwargs):
@@ -102,11 +103,24 @@ class AvailabilitySlotInline(TabularInline):
 class BookingInline(TabularInline):
     model = Booking
     extra = 0
-    readonly_fields = ("client_name", "client_email", "start_time", "end_time", "status")
+    max_num = 0
+    hide_title = True
+    fields = ("client_name", "client_email", "start_time", "end_time", "status", "manage_booking")
+    readonly_fields = ("client_name", "client_email", "start_time", "end_time", "status", "manage_booking")
     can_delete = False
-    show_change_link = True
+    show_change_link = False
     tab = True
-    classes = ["collapse"]
+
+    def manage_booking(self, obj):
+        if not obj.pk:
+            return ""
+        url = reverse("admin:scheduler_booking_change", args=[obj.pk])
+        return format_html(
+            '<a class="bg-primary-600 font-medium px-4 py-1 rounded-md text-white text-xs inline-block" href="{}">{}</a>',
+            url,
+            _("Manage")
+        )
+    manage_booking.short_description = _("Action")
 
 class EventAdmin(ModelAdminUnfoldBase):
     list_display = ("title", "event_type", "price", "duration_minutes")
@@ -115,11 +129,23 @@ class EventAdmin(ModelAdminUnfoldBase):
 
     tabs = [
         (_("General"), ["title", "event_type", "image", "description", "detailed_description", "price", "duration_minutes"]),
-        (_("Date Ranges"), ["scheduler_eventavailability_set"]),
-        (_("Weekly Slots"), ["scheduler_availabilityslot_set"]),
-        (_("Date Overrides"), ["scheduler_eventdateoverride_set"]),
-        (_("Bookings"), ["scheduler_booking_set"]),
+        (_("Date Ranges"), ["availability_rules"]),
+        (_("Weekly Slots"), ["availability_slots"]),
+        (_("Date Overrides"), ["date_overrides"]),
+        (_("Bookings"), ["view_bookings_link", "bookings"]),
     ]
+
+    def view_bookings_link(self, obj):
+        if not obj.pk:
+            return ""
+        url = reverse("admin:scheduler_booking_changelist")
+        return format_html(
+            '<a class="bg-primary-600 font-medium px-4 py-2 rounded-md text-white inline-block mb-4" href="{}?event__id__exact={}">{}</a>',
+            url,
+            obj.pk,
+            _("View All Bookings for this Event")
+        )
+    view_bookings_link.short_description = _("All Bookings")
 
 
 class BusinessHoursAdmin(ModelAdminUnfoldBase):
@@ -135,7 +161,12 @@ class AvailabilitySlotAdmin(ModelAdminUnfoldBase):
 
 class BookingAdmin(ModelAdminUnfoldBase):
     list_display = ("client_name", "event", "start_time", "status", "google_sync_status")
-    list_filter = ("start_time", "status", "google_sync_status")
+    list_filter = (
+        ("start_time", RangeDateFilter),
+        "event",
+        "status",
+        "google_sync_status",
+    )
     search_fields = ("client_name", "client_email")
     readonly_fields = ("google_event_id", "google_sync_status", "google_sync_error", "last_synced_at")
     actions = ["retry_google_sync"]

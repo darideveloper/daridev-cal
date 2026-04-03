@@ -12,13 +12,20 @@ The project SHALL use `django-unfold` as the primary admin theme, correctly pres
 - **Then** I SHALL use `project/templates/admin/base_site.html` and extend `"admin/base.html"` to ensure Unfold's structural CSS classes are loaded.
 
 ### Requirement: Admin Static Assets
-The project SHALL enhance Unfold's UI with custom scripts for styling, markdown, and localized filters.
 
-#### Scenario: JS Enhancement Loading
-- **Given** I am in `project/templates/admin/base_site.html`
-- **When** I check the `extrahead` block
-- **Then** it SHALL include `add_tailwind_styles.js`, `load_markdown.js`, and `range_date_filter.js`.
-- **And** the file `static/js/add_tailwind_styles.js` SHALL exist and apply Tailwind classes to `.btn` and `.img-preview` elements.
+The `django-unfold` interface SHALL dynamically reflect the active tenant's branding using callback strings in `settings.py` mapped to functions in `utils.callbacks`. To ensure textual branding (headline) correctly displays, the `SITE_LOGO` option SHALL NOT be declared in `UNFOLD`.
+
+#### Scenario: Dynamic Header and Icon
+- **Given** I am rendering the Unfold admin interface
+- **When** the `SITE_HEADER` and `SITE_TITLE` config is evaluated
+- **Then** they SHALL return the result of `request.tenant.name` from the tenant schema via a callback, and `SITE_LOGO` MUST remain undefined so the text displays.
+- **And** `SITE_ICON` SHALL return the URL of `request.tenant.companyprofile.logo` via a callback if a profile and logo exist, otherwise fallback to the default global icon.
+
+#### Scenario: Dynamic Brand Color
+- **Given** I am rendering the admin template as a tenant
+- **When** a custom `brand_color` is configured in the `CompanyProfile`
+- **Then** the global CSS variables `--color-primary-400`, `--color-primary-500`, and `--color-primary-600` MUST be overridden in the template.
+- **And** the UI (buttons, active states, markdown highlights) MUST update to reflect this color palette dynamically.
 
 ### Requirement: Placeholder Assets
 The project SHALL include the brand's logo and favicon.
@@ -77,4 +84,37 @@ The `django-unfold` interface SHALL dynamically reflect the active tenant's bran
 - **When** a custom `brand_color` is configured in the `CompanyProfile`
 - **Then** the global CSS variables `--color-primary-400`, `--color-primary-500`, and `--color-primary-600` MUST be overridden in the template.
 - **And** the UI (buttons, active states, markdown highlights) MUST update to reflect this color palette dynamically.
+
+### Requirement: Event Admin Booking Management
+The `Event` admin ChangeForm SHALL provide a read-only summary of linked bookings and a direct link to the full filtered `Booking` changelist.
+
+#### Scenario: Read-only Booking Inline
+- **Given** an existing `Event` in the admin
+- **When** I navigate to the "Bookings" tab
+- **Then** the `BookingInline` SHALL display bookings in a read-only format.
+- **And** it SHALL NOT allow adding or deleting bookings directly from this inline.
+
+#### Scenario: Link to Full Booking Table
+- **Given** an existing `Event` in the admin
+- **When** I navigate to the "Bookings" tab
+- **Then** a "View All Bookings" button/link SHALL be visible.
+- **And** clicking this link SHALL redirect to the `Booking` changelist with the filter `event__id__exact` applied for the current event.
+
+### Requirement: Booking Changelist Filtering
+The `Booking` admin changelist SHALL provide robust filtering capabilities to facilitate management.
+
+#### Scenario: Booking Table Filters
+- **Given** I am in the `Booking` changelist
+- **When** I open the filter sidebar
+- **Then** I SHALL see filters for `Event`, `Status`, and a date range filter for `Start Time`.
+
+### Requirement: Styled Booking Inline Actions
+The `BookingInline` in the `Event` admin SHALL include a dedicated column for a styled "Manage" button, improving the user interface for booking management.
+
+#### Scenario: Manage Button in Booking Inline
+- **Given** an existing `Event` in the admin
+- **When** I navigate to the "Bookings" tab
+- **Then** the `BookingInline` SHALL display a "Manage" button for each booking record.
+- **And** clicking this button SHALL take me to the full edit form for that specific booking.
+- **And** the default Django "Change" link SHALL NOT be visible.
 
