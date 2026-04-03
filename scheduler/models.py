@@ -78,6 +78,13 @@ class CompanyProfile(models.Model):
         null=True,
         help_text=_("Your Stripe Secret Key. This field is encrypted.")
     ))
+    stripe_webhook_secret = encrypt(models.CharField(
+        _("Stripe webhook secret"), 
+        max_length=255, 
+        blank=True, 
+        null=True,
+        help_text=_("Your Stripe Webhook Secret for signature verification.")
+    ))
     google_calendar_id = models.CharField(
         _("Google Calendar ID"), 
         max_length=255, 
@@ -97,6 +104,20 @@ class CompanyProfile(models.Model):
         blank=True, 
         null=True,
         help_text=_("Recommended dimensions: 200x200 pixels.")
+    )
+
+    contact_email = models.EmailField(
+        _("contact email"), 
+        blank=True, 
+        null=True,
+        help_text=_("Main business contact email shown to clients.")
+    )
+    contact_phone = models.CharField(
+        _("contact phone"), 
+        max_length=20, 
+        blank=True, 
+        null=True,
+        help_text=_("Main business contact phone shown to clients.")
     )
 
     currency = models.CharField(
@@ -299,6 +320,13 @@ class Booking(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name="bookings", null=True, blank=True, verbose_name=_("event"))
     client_name = models.CharField(_("client name"), max_length=255)
     client_email = models.EmailField(_("client email"))
+    client_phone = models.CharField(
+        _("client phone"), 
+        max_length=20, 
+        blank=True, 
+        null=True,
+        help_text=_("The phone number of the client.")
+    )
     start_time = models.DateTimeField(
         _("start time"),
         help_text=_("The date and time the appointment begins.")

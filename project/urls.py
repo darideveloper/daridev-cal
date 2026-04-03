@@ -6,7 +6,7 @@ from django.conf.urls.static import static
 from django.views.generic import RedirectView
 from rest_framework import routers
 from project.admin import tenant_admin_site
-from scheduler.views import EventViewSet, BookingViewSet, BusinessHoursViewSet
+from scheduler.views import EventViewSet, BookingViewSet, BusinessHoursViewSet, CompanyConfigView, StripeWebhookView
 
 # Initialize DRF Router
 router = routers.DefaultRouter()
@@ -16,6 +16,8 @@ router.register(r"business-hours", BusinessHoursViewSet, basename="business-hour
 
 urlpatterns = [
     # API Endpoints (Not prefixed by language)
+    path("api/config/", CompanyConfigView.as_view(), name="company-config"),
+    path("api/webhooks/stripe/", StripeWebhookView.as_view(), name="stripe-webhook"),
     path("api/", include(router.urls)),
     
     # Language Switcher

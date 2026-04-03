@@ -51,7 +51,12 @@ class CompanyProfileAdmin(ModelAdminUnfoldBase):
     inlines = [CompanyAvailabilityInline, CompanyWeekdaySlotInline, CompanyDateOverrideInline]
 
     tabs = [
-        (_("Business Info"), ["logo", "brand_color", "currency", "stripe_public_key", "stripe_secret_key", "google_calendar_id", "google_calendar_credentials"]),
+        (_("Business Info"), [
+            "logo", "brand_color", "currency", 
+            "contact_email", "contact_phone",
+            "stripe_public_key", "stripe_secret_key", "stripe_webhook_secret",
+            "google_calendar_id", "google_calendar_credentials"
+        ]),
         (_("Global Date Ranges"), ["availability_rules"]),
         (_("Standard Business Hours"), ["weekday_slots"]),
         (_("Global Overrides"), ["date_overrides"]),
