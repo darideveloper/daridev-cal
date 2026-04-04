@@ -1,10 +1,7 @@
-# sync Specification
+## MODIFIED Requirements
 
-## Purpose
-TBD - created by archiving change google-calendar-sync. Update Purpose after archive.
-## Requirements
 ### Requirement: Automated Real-time Synchronization
-The system MUST synchronize booking details with Google Calendar automatically upon creation or update.
+The system MUST synchronize booking details with Google Calendar automatically upon creation or update using the centralized master credentials.
 
 #### Scenario: Insert New Event
 - **GIVEN** a `Booking` is confirmed
@@ -17,11 +14,12 @@ The system MUST synchronize booking details with Google Calendar automatically u
 - **WHEN** its `start_time` or `client_name` is modified and saved
 - **THEN** the system patches the existing event in Google Calendar with the new details.
 
+## ADDED Requirements
+
 ### Requirement: Resilient Authentication
 The integration MUST handle invalid or missing credentials gracefully.
 
 #### Scenario: Missing Credentials
 - **GIVEN** `GOOGLE_CALENDAR_CREDENTIALS` is NOT configured in global settings
 - **WHEN** a new `Booking` is saved
-- **THEN** the system skips the synchronization step with a "FAILURE" or "DISABLED" status but without raising a blocking error for the user.
-
+- **THEN** the system skips the synchronization step with a "FAILURE" status but without raising a blocking error for the user.

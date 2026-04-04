@@ -14,24 +14,72 @@ logger = logging.getLogger(__name__)
 
 SCOPES = ['https://www.googleapis.com/auth/calendar.events']
 
-def get_google_calendar_service(company_profile):
-    """
-    Initializes the Google Calendar API service using credentials 
-    from the CompanyProfile.
-    """
-    if not company_profile.google_calendar_credentials:
-        logger.warning("No Google Calendar credentials found for company profile.")
+def get_google_calendar_service():
+    """Returns an authorized Google Calendar service object."""
+    creds_str = getattr(settings, 'GOOGLE_CALENDAR_CREDENTIALS', None)
+    
+    if not creds_str:
+        logger.error("GOOGLE_CALENDAR_CREDENTIALS is not set or is empty in settings.")
         return None
 
     try:
-        creds_json = json.loads(company_profile.google_calendar_credentials)
+        creds_json = json.loads(creds_str)
         credentials = service_account.Credentials.from_service_account_info(
             creds_json, scopes=SCOPES
         )
         return build('calendar', 'v3', credentials=credentials)
-    except Exception as e:
-        logger.error(f"Failed to initialize Google Calendar service: {str(e)}")
+    except json.JSONDecodeError as e:
+        logger.error(f"GOOGLE_CALENDAR_CREDENTIALS contains invalid JSON: {e}")
         return None
+    except Exception as e:
+        logger.error(f"Failed to initialize centralized Google Calendar service: {e}")
+        return None
+
+def create_tenant_calendar(company_profile):
+    """
+    Programmatically create a new Google Calendar for a tenant using the master account.
+    Returns the new calendar ID or None on failure.
+    """
+    service = get_google_calendar_service()
+    if not service:
+        return None
+
+    try:
+        # 1. Create the Calendar
+        calendar_body = {
+            'summary': f"Scheduler - {company_profile.contact_email or 'Tenant'}",
+            'timeZone': settings.TIME_ZONE
+        }
+        created_calendar = service.calendars().insert(body=calendar_body).execute()
+        calendar_id = created_calendar['id']
+        logger.info(f"Created new Google Calendar {calendar_id} for profile {company_profile.id}")
+
+        # 2. Share with the tenant's email (if provided)
+        if company_profile.contact_email:
+            share_calendar_with_client(calendar_id, company_profile.contact_email)
+        
+        return calendar_id
+    except Exception as e:
+        logger.error(f"Error creating tenant calendar: {str(e)}")
+        return None
+
+def share_calendar_with_client(calendar_id, client_email):
+    """
+    Grants 'reader' access to the tenant's primary email for their new calendar.
+    """
+    service = get_google_calendar_service()
+    if not service:
+        return
+
+    try:
+        rule = {
+            'scope': {'type': 'user', 'value': client_email},
+            'role': 'reader'
+        }
+        service.acl().insert(calendarId=calendar_id, body=rule).execute()
+        logger.info(f"Shared calendar {calendar_id} with {client_email}")
+    except Exception as e:
+        logger.warning(f"Failed to share calendar {calendar_id} with {client_email}: {str(e)}")
 
 def delete_google_calendar_event(booking):
     """
@@ -46,7 +94,7 @@ def delete_google_calendar_event(booking):
             logger.info(f"Skipping deletion for booking {booking.id}: No calendar configured.")
             return
 
-        service = get_google_calendar_service(company_profile)
+        service = get_google_calendar_service()
         if not service:
             return
 
@@ -78,10 +126,10 @@ def sync_booking_to_google(booking, skip_save=False):
             booking.save(update_fields=['google_sync_status'])
         return
 
-    service = get_google_calendar_service(company_profile)
+    service = get_google_calendar_service()
     if not service:
         booking.google_sync_status = "FAILURE"
-        booking.google_sync_error = "Could not initialize Google Calendar service. Check credentials."
+        booking.google_sync_error = "Could not initialize Google Calendar service. Check centralized credentials."
         if not skip_save:
             booking.save(update_fields=['google_sync_status', 'google_sync_error'])
         return

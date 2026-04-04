@@ -10,11 +10,14 @@ from .google_calendar import sync_booking_to_google
 class GoogleCalendarSyncTest(TenantTestCase):
     def setUp(self):
         super().setUp()
+        # Mock global credentials for all tests
+        self.patcher = patch('django.conf.settings.GOOGLE_CALENDAR_CREDENTIALS', '{"type": "service_account", "project_id": "test"}')
+        self.patcher.start()
+        
         with schema_context(self.tenant.schema_name):
-            # Setup company with "fake" credentials
+            # Setup company (google_calendar_credentials field is now removed)
             self.company = CompanyProfile.objects.create(
-                google_calendar_id="test-calendar@gmail.com",
-                google_calendar_credentials='{"type": "service_account", "project_id": "test"}'
+                google_calendar_id="test-calendar@gmail.com"
             )
             self.event_type = EventType.objects.create(title="Testing", allow_overlap=True)
             self.event = Event.objects.create(
@@ -23,6 +26,36 @@ class GoogleCalendarSyncTest(TenantTestCase):
                 duration_minutes=30
             )
             self.start_time = datetime(2026, 6, 1, 10, 0, tzinfo=ZoneInfo(settings.TIME_ZONE))
+
+    def tearDown(self):
+        self.patcher.stop()
+        super().tearDown()
+
+    @patch('scheduler.google_calendar.build')
+    @patch('scheduler.google_calendar.service_account.Credentials.from_service_account_info')
+    def test_profile_signal_creates_calendar(self, mock_creds, mock_build):
+        """
+        Verify that creating a CompanyProfile triggers the creation of a Google Calendar.
+        """
+        mock_service = MagicMock()
+        mock_build.return_value = mock_service
+        # Mocking the calendar creation response
+        mock_service.calendars().insert().execute.return_value = {'id': 'auto_generated_id_789'}
+        
+        with schema_context(self.tenant.schema_name):
+            # Create a profile without calendar_id
+            profile = CompanyProfile.objects.create(
+                contact_email="new-tenant@example.com"
+            )
+            
+            # Check if google_calendar_id was auto-assigned by the signal
+            profile.refresh_from_db()
+            self.assertEqual(profile.google_calendar_id, 'auto_generated_id_789')
+            
+            # Verify insert was called once
+            self.assertTrue(mock_service.calendars().insert.called)
+            # Verify it was shared (acl called)
+            self.assertTrue(mock_service.acl().insert.called)
 
     @patch('scheduler.google_calendar.build')
     @patch('scheduler.google_calendar.service_account.Credentials.from_service_account_info')
@@ -89,25 +122,23 @@ class GoogleCalendarSyncTest(TenantTestCase):
 
     @patch('scheduler.google_calendar.build')
     @patch('scheduler.google_calendar.service_account.Credentials.from_service_account_info')
-    def test_sync_handles_missing_credentials_gracefully(self, mock_creds, mock_build):
+    def test_sync_handles_missing_global_credentials_gracefully(self, mock_creds, mock_build):
         """
-        If credentials are missing, sync should skip without error.
+        If global credentials are missing in settings, sync should skip with FAILURE status.
         """
-        with schema_context(self.tenant.schema_name):
-            # Remove credentials
-            self.company.google_calendar_credentials = None
-            self.company.save()
-            
-            # This should NOT crash and NOT call Google API
-            booking = Booking.objects.create(
-                event=self.event,
-                client_name="NoCreds",
-                client_email="nocreds@test.com",
-                start_time=self.start_time
-            )
-            
-            self.assertFalse(mock_build.called)
-            self.assertIsNone(booking.google_event_id)
+        with patch('django.conf.settings.GOOGLE_CALENDAR_CREDENTIALS', None):
+            with schema_context(self.tenant.schema_name):
+                # This should NOT crash and NOT call Google API build
+                booking = Booking.objects.create(
+                    event=self.event,
+                    client_name="NoCreds",
+                    client_email="nocreds@test.com",
+                    start_time=self.start_time
+                )
+                
+                self.assertFalse(mock_build.called)
+                self.assertEqual(booking.google_sync_status, "FAILURE")
+                self.assertIn("centralized credentials", booking.google_sync_error)
 
     @patch('scheduler.google_calendar.build')
     @patch('scheduler.google_calendar.service_account.Credentials.from_service_account_info')

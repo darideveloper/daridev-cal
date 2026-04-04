@@ -92,12 +92,6 @@ class CompanyProfile(models.Model):
         null=True,
         help_text=_("Calendar ID (usually an email address) for Google Calendar synchronization.")
     )
-    google_calendar_credentials = encrypt(models.TextField(
-        _("Google Calendar credentials"),
-        blank=True,
-        null=True,
-        help_text=_("JSON credentials for the Google Service Account associated with this tenant's calendar (must be copied from the Service Account JSON key).")
-    ))
     logo = models.ImageField(
         _("logo"), 
         upload_to="logos/", 

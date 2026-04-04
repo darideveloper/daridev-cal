@@ -31,3 +31,18 @@ def booking_post_delete(sender, instance, **kwargs):
         delete_google_calendar_event(instance)
     except Exception as e:
         logger.error(f"Failed to delete booking {instance.id} in post_delete signal: {str(e)}")
+@receiver(post_save, sender=CompanyProfile)
+def ensure_tenant_google_calendar(sender, instance, created, **kwargs):
+    """
+    Ensure the tenant has a Google Calendar ID assigned.
+    If not, create one using the master service account.
+    """
+    if not instance.google_calendar_id:
+        from .google_calendar import create_tenant_calendar
+        calendar_id = create_tenant_calendar(instance)
+        if calendar_id:
+            logger.info(f"Assigning new calendar ID {calendar_id} to profile {instance.id}")
+            # Use update_fields to avoid triggering other signals or logic unexpectedly
+            # and to avoid infinite recursion if we were checking for other fields.
+            instance.google_calendar_id = calendar_id
+            instance.save(update_fields=['google_calendar_id'])

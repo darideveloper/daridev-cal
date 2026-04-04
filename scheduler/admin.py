@@ -55,7 +55,7 @@ class CompanyProfileAdmin(ModelAdminUnfoldBase):
             "logo", "brand_color", "currency", 
             "contact_email", "contact_phone",
             "stripe_public_key", "stripe_secret_key", "stripe_webhook_secret",
-            "google_calendar_id", "google_calendar_credentials"
+            "google_calendar_id"
         ]),
         (_("Global Date Ranges"), ["availability_rules"]),
         (_("Standard Business Hours"), ["weekday_slots"]),

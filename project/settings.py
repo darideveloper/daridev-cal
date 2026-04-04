@@ -433,3 +433,6 @@ UNFOLD = {
         ],
     },
 }
+# Google Calendar Centralized Configuration
+GOOGLE_CALENDAR_CREDENTIALS = os.getenv("GOOGLE_CALENDAR_CREDENTIALS")
+MASTER_CALENDAR_EMAIL = os.getenv("MASTER_CALENDAR_EMAIL")
