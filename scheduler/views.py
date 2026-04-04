@@ -31,6 +31,12 @@ class CompanyConfigView(views.APIView):
                 "contact_phone": profile.contact_phone,
                 "company_name": getattr(request.tenant, 'name', 'Company'),
                 "timezone": settings.TIME_ZONE,
+                "event_type_label": profile.event_type_label,
+                "event_label": profile.event_label,
+                "availability_free_label": profile.availability_free_label,
+                "availability_regular_label": profile.availability_regular_label,
+                "availability_no_free_label": profile.availability_no_free_label,
+                "extras_label": profile.extras_label,
             }
             serializer = CompanyConfigSerializer(data, context={'request': request})
             return Response(serializer.data)

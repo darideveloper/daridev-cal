@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-02 07:06-0600\n"
+"POT-Creation-Date: 2026-04-03 14:56-0600\n"
 "PO-Revision-Date: 2026-04-01 11:40-0600\n"
 "Last-Translator: Gemini CLI\n"
 "Language-Team: Spanish\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: booking/apps.py:8 scheduler/models.py:310
+#: booking/apps.py:8 scheduler/models.py:416
 msgid "Booking"
 msgstr "Reserva"
 
@@ -31,9 +31,7 @@ msgstr "ID del inquilino"
 
 #: companies/models.py:10
 msgid "Internal identifier used to isolate data. Must be unique and lowercase."
-msgstr ""
-"Identificador interno utilizado para aislar datos. Debe ser único y estar en "
-"minúsculas."
+msgstr "Identificador interno utilizado para aislar datos. Debe ser único y estar en minúsculas."
 
 #: companies/models.py:13
 msgid "company name"
@@ -69,9 +67,7 @@ msgstr "dirección web"
 
 #: companies/models.py:39
 msgid "The URL where users will access the booking portal (e.g., tenant.com)."
-msgstr ""
-"La URL donde los usuarios accederán al portal de reservas (p. ej., inquilino."
-"com)."
+msgstr "La URL donde los usuarios accederán al portal de reservas (p. ej., inquilino.com)."
 
 #: companies/models.py:45
 msgid "tenant"
@@ -107,49 +103,49 @@ msgstr "Inglés"
 msgid "Spanish"
 msgstr "Español"
 
-#: project/settings.py:340
+#: project/settings.py:365
 #: venv/lib/python3.12/site-packages/unfold/templates/unfold/helpers/theme_switch.html:23
 #: venv/lib/python3.12/site-packages/unfold/templates/unfold/helpers/theme_switch_dropdown.html:30
 msgid "System"
 msgstr "Sistema"
 
-#: project/settings.py:344
+#: project/settings.py:369
 msgid "Users"
 msgstr "Usuarios"
 
-#: project/settings.py:351
+#: project/settings.py:376
 msgid "Groups"
 msgstr "Grupos"
 
-#: project/settings.py:360
+#: project/settings.py:385
 msgid "Multi-Tenancy"
 msgstr "Multi-Inquilinato"
 
-#: project/settings.py:364
+#: project/settings.py:389
 msgid "Clients (Tenants)"
 msgstr "Clientes (Inquilinos)"
 
-#: project/settings.py:373
+#: project/settings.py:398
 msgid "Scheduling"
 msgstr "Programación"
 
-#: project/settings.py:377 scheduler/admin.py:119 scheduler/models.py:311
+#: project/settings.py:402 scheduler/admin.py:145 scheduler/models.py:417
 msgid "Bookings"
 msgstr "Reservas"
 
-#: project/settings.py:383 scheduler/models.py:232
+#: project/settings.py:408 scheduler/models.py:297
 msgid "Events"
 msgstr "Eventos"
 
-#: project/settings.py:391
+#: project/settings.py:416
 msgid "Configuration"
 msgstr "Configuración"
 
-#: project/settings.py:395 scheduler/models.py:105 scheduler/models.py:109
+#: project/settings.py:420 scheduler/models.py:170 scheduler/models.py:174
 msgid "Company Profile"
 msgstr "Perfil de la empresa"
 
-#: project/settings.py:401 scheduler/models.py:204
+#: project/settings.py:426 scheduler/models.py:269
 msgid "Event Types"
 msgstr "Tipos de eventos"
 
@@ -174,37 +170,77 @@ msgstr ""
 msgid "To"
 msgstr ""
 
-#: scheduler/admin.py:51
-msgid "Business Info"msgstr "Información del Negocio"
+#: scheduler/admin.py:54
+msgid "Business Info"
+msgstr "Información del Negocio"
 
-#: scheduler/admin.py:52
+#: scheduler/admin.py:60
 msgid "Global Date Ranges"
 msgstr "Rangos de Fechas Globales"
 
-#: scheduler/admin.py:53
+#: scheduler/admin.py:61
 msgid "Standard Business Hours"
 msgstr "Horarios de Operación"
 
-#: scheduler/admin.py:54
+#: scheduler/admin.py:62
 msgid "Global Overrides"
 msgstr "Excepciones Globales"
 
-#: scheduler/admin.py:115
+#: scheduler/admin.py:63
+msgid "UI Labels"
+msgstr ""
+
+#: scheduler/admin.py:131
+msgid "Manage"
+msgstr "Gestionar"
+
+#: scheduler/admin.py:133
+#: venv/lib/python3.12/site-packages/unfold/contrib/guardian/templates/unfold/guardian/group_form.html:25
+#: venv/lib/python3.12/site-packages/unfold/contrib/guardian/templates/unfold/guardian/group_form.html:49
+#: venv/lib/python3.12/site-packages/unfold/contrib/guardian/templates/unfold/guardian/user_form.html:25
+#: venv/lib/python3.12/site-packages/unfold/contrib/guardian/templates/unfold/guardian/user_form.html:49
+#: venv/lib/python3.12/site-packages/unfold/templates/admin/object_history.html:18
+#: venv/lib/python3.12/site-packages/unfold/templates/admin/object_history.html:34
+msgid "Action"
+msgstr "Acción"
+
+#: scheduler/admin.py:141
 #: venv/lib/python3.12/site-packages/unfold/templates/unfold/helpers/tab_items.html:16
 msgid "General"
 msgstr "General"
 
-#: scheduler/admin.py:116 scheduler/models.py:243
+#: scheduler/admin.py:142 scheduler/models.py:308
 msgid "Date Ranges"
 msgstr "Rangos de Fechas"
 
-#: scheduler/admin.py:117
+#: scheduler/admin.py:143
 msgid "Weekly Slots"
 msgstr "Horarios Específicos"
 
-#: scheduler/admin.py:118 scheduler/models.py:259
+#: scheduler/admin.py:144 scheduler/models.py:324
 msgid "Date Overrides"
 msgstr "Excepciones de Fecha"
+
+#: scheduler/admin.py:156
+msgid "View All Bookings for this Event"
+msgstr ""
+
+#: scheduler/admin.py:158
+#, fuzzy
+#| msgid "Bookings"
+msgid "All Bookings"
+msgstr "Reservas"
+
+#: scheduler/admin.py:184
+#, fuzzy
+#| msgid "Google Calendar ID"
+msgid "Retry Google Calendar Sync"
+msgstr "ID de Google Calendar"
+
+#: scheduler/admin.py:188
+#, python-format
+msgid "Google Calendar synchronization triggered for %d bookings."
+msgstr ""
 
 #: scheduler/apps.py:8
 msgid "Scheduler"
@@ -226,52 +262,52 @@ msgstr "fecha de finalización"
 msgid "Defines the end of the validity period."
 msgstr ""
 
-#: scheduler/models.py:28 scheduler/models.py:171 scheduler/models.py:276
+#: scheduler/models.py:28 scheduler/models.py:236 scheduler/models.py:341
 msgid "weekday"
 msgstr "día de la semana"
 
-#: scheduler/models.py:29 scheduler/models.py:172 scheduler/models.py:277
+#: scheduler/models.py:29 scheduler/models.py:237 scheduler/models.py:342
 #: venv/lib/python3.12/site-packages/django/utils/dates.py:7
 msgid "Monday"
 msgstr "Lunes"
 
-#: scheduler/models.py:29 scheduler/models.py:172 scheduler/models.py:277
+#: scheduler/models.py:29 scheduler/models.py:237 scheduler/models.py:342
 #: venv/lib/python3.12/site-packages/django/utils/dates.py:8
 msgid "Tuesday"
 msgstr "Martes"
 
-#: scheduler/models.py:29 scheduler/models.py:172 scheduler/models.py:277
+#: scheduler/models.py:29 scheduler/models.py:237 scheduler/models.py:342
 #: venv/lib/python3.12/site-packages/django/utils/dates.py:9
 msgid "Wednesday"
 msgstr "Miércoles"
 
-#: scheduler/models.py:30 scheduler/models.py:173 scheduler/models.py:278
+#: scheduler/models.py:30 scheduler/models.py:238 scheduler/models.py:343
 #: venv/lib/python3.12/site-packages/django/utils/dates.py:10
 msgid "Thursday"
 msgstr "Jueves"
 
-#: scheduler/models.py:30 scheduler/models.py:173 scheduler/models.py:278
+#: scheduler/models.py:30 scheduler/models.py:238 scheduler/models.py:343
 #: venv/lib/python3.12/site-packages/django/utils/dates.py:11
 msgid "Friday"
 msgstr "Viernes"
 
-#: scheduler/models.py:30 scheduler/models.py:173 scheduler/models.py:278
+#: scheduler/models.py:30 scheduler/models.py:238 scheduler/models.py:343
 #: venv/lib/python3.12/site-packages/django/utils/dates.py:12
 msgid "Saturday"
 msgstr "Sábado"
 
-#: scheduler/models.py:30 scheduler/models.py:173 scheduler/models.py:278
+#: scheduler/models.py:30 scheduler/models.py:238 scheduler/models.py:343
 #: venv/lib/python3.12/site-packages/django/utils/dates.py:13
 msgid "Sunday"
 msgstr "Domingo"
 
-#: scheduler/models.py:32 scheduler/models.py:47 scheduler/models.py:175
-#: scheduler/models.py:280 scheduler/models.py:297
+#: scheduler/models.py:32 scheduler/models.py:47 scheduler/models.py:240
+#: scheduler/models.py:345 scheduler/models.py:369
 msgid "start time"
 msgstr "hora de inicio"
 
-#: scheduler/models.py:33 scheduler/models.py:48 scheduler/models.py:176
-#: scheduler/models.py:281 scheduler/models.py:300
+#: scheduler/models.py:33 scheduler/models.py:48 scheduler/models.py:241
+#: scheduler/models.py:346 scheduler/models.py:372
 msgid "end time"
 msgstr "hora de finalización"
 
@@ -287,36 +323,21 @@ msgstr "Está disponible"
 
 #: scheduler/models.py:45
 #, fuzzy
-#| msgid ""
-#| "Individual date exception. It has the highest priority and overrides Date "
-#| "Ranges. If start/end times are set, they override weekly slots."
-msgid ""
-"Individual date exception. Highest priority override. If start/end times are "
-"set, they override weekly slots."
-msgstr ""
-"Excepción de fecha individual. Tiene la máxima prioridad y anula los Rangos "
-"de Fechas. Si se establecen horas de inicio/fin, estas anularán los espacios "
-"semanales."
+#| msgid "Individual date exception. It has the highest priority and overrides Date Ranges. If start/end times are set, they override weekly slots."
+msgid "Individual date exception. Highest priority override. If start/end times are set, they override weekly slots."
+msgstr "Excepción de fecha individual. Tiene la máxima prioridad y anula los Rangos de Fechas. Si se establecen horas de inicio/fin, estas anularán los espacios semanales."
 
 #: scheduler/models.py:56
 msgid "brand primary color"
 msgstr "color primario de la marca"
 
 #: scheduler/models.py:62
-msgid ""
-"Enter a valid HEX code or OKLCH function (e.g. #87d1ff or oklch(0.81 0.11 "
-"236))"
-msgstr ""
-"Ingrese un código HEX o función OKLCH válido (p. ej., #87d1ff o oklch(0.81 "
-"236))"
+msgid "Enter a valid HEX code or OKLCH function (e.g. #87d1ff or oklch(0.81 0.11 236))"
+msgstr "Ingrese un código HEX o función OKLCH válido (p. ej., #87d1ff o oklch(0.81 236))"
 
 #: scheduler/models.py:65
-msgid ""
-"The main color for the booking page. Supports HEX and OKLCH format (e.g., "
-"oklch(0.8 0.1 240))."
-msgstr ""
-"El color principal de la página de reservas. Admite formato HEX y OKLCH (p. "
-"ej., oklch(0.8 0.1 240))."
+msgid "The main color for the booking page. Supports HEX and OKLCH format (e.g., oklch(0.8 0.1 240))."
+msgstr "El color principal de la página de reservas. Admite formato HEX y OKLCH (p. ej., oklch(0.8 0.1 240))."
 
 #: scheduler/models.py:68
 msgid "Stripe public key"
@@ -324,8 +345,7 @@ msgstr "Clave pública de Stripe"
 
 #: scheduler/models.py:72
 msgid "Your Stripe Publishable Key found in the Developer Dashboard."
-msgstr ""
-"Su clave pública de Stripe que se encuentra en el Panel de desarrolladores."
+msgstr "Su clave pública de Stripe que se encuentra en el Panel de desarrolladores."
 
 #: scheduler/models.py:75
 msgid "Stripe secret key"
@@ -336,315 +356,437 @@ msgid "Your Stripe Secret Key. This field is encrypted."
 msgstr "Su clave secreta de Stripe. Este campo está cifrado."
 
 #: scheduler/models.py:82
+#, fuzzy
+#| msgid "Stripe secret key"
+msgid "Stripe webhook secret"
+msgstr "Clave secreta de Stripe"
+
+#: scheduler/models.py:86
+msgid "Your Stripe Webhook Secret for signature verification."
+msgstr ""
+
+#: scheduler/models.py:89
 msgid "Google Calendar ID"
 msgstr "ID de Google Calendar"
 
-#: scheduler/models.py:86
-msgid ""
-"Calendar ID (usually an email address) for Google Calendar synchronization."
-msgstr ""
-"ID de calendario (generalmente una dirección de correo electrónico) para la "
-"sincronización de Google Calendar."
+#: scheduler/models.py:93
+msgid "Calendar ID (usually an email address) for Google Calendar synchronization."
+msgstr "ID de calendario (generalmente una dirección de correo electrónico) para la sincronización de Google Calendar."
 
-#: scheduler/models.py:89
+#: scheduler/models.py:96
+#, fuzzy
+#| msgid "Google Calendar ID"
+msgid "Google Calendar credentials"
+msgstr "ID de Google Calendar"
+
+#: scheduler/models.py:99
+msgid "JSON credentials for the Google Service Account associated with this tenant's calendar (must be copied from the Service Account JSON key)."
+msgstr ""
+
+#: scheduler/models.py:102
 msgid "logo"
 msgstr "logotipo"
 
-#: scheduler/models.py:93
+#: scheduler/models.py:106
 msgid "Recommended dimensions: 200x200 pixels."
 msgstr "Dimensiones recomendadas: 200x200 píxeles."
 
-#: scheduler/models.py:97
+#: scheduler/models.py:110
+#, fuzzy
+#| msgid "client email"
+msgid "contact email"
+msgstr "correo electrónico del cliente"
+
+#: scheduler/models.py:113
+msgid "Main business contact email shown to clients."
+msgstr ""
+
+#: scheduler/models.py:116
+msgid "contact phone"
+msgstr ""
+
+#: scheduler/models.py:120
+msgid "Main business contact phone shown to clients."
+msgstr ""
+
+#: scheduler/models.py:124
 msgid "currency"
 msgstr "moneda"
 
-#: scheduler/models.py:99
+#: scheduler/models.py:126
 msgid "MXN"
 msgstr ""
 
-#: scheduler/models.py:99
+#: scheduler/models.py:126
 msgid "USD"
 msgstr ""
 
-#: scheduler/models.py:99
+#: scheduler/models.py:126
 msgid "EUR"
 msgstr ""
 
-#: scheduler/models.py:101
+#: scheduler/models.py:128
 msgid "Default currency for all services offered by the company."
-msgstr ""
-"Moneda predeterminada para todos los servicios ofrecidos por la empresa."
+msgstr "Moneda predeterminada para todos los servicios ofrecidos por la empresa."
 
-#: scheduler/models.py:106
+#: scheduler/models.py:133
+msgid "event type label"
+msgstr "etiqueta de tipo de evento"
+
+#: scheduler/models.py:135 scheduler/models.py:268
+msgid "Event Type"
+msgstr "Tipo de evento"
+
+#: scheduler/models.py:136
+msgid "Label for each Event Type in the UI (e.g., Tour Type, Service Category)."
+msgstr "Etiqueta para cada Tipo de Evento en la interfaz (ej: Tipo de Tour, Categoría de Servicio)."
+
+#: scheduler/models.py:139
+msgid "event label"
+msgstr "etiqueta de evento"
+
+#: scheduler/models.py:141 scheduler/models.py:296
+msgid "Event"
+msgstr "Evento"
+
+#: scheduler/models.py:142
+msgid "The name of the events in the UI (e.g., Tour, Service, Consultation)."
+msgstr "El nombre de los eventos en la interfaz (ej: Tour, Servicio, Consulta)."
+
+#: scheduler/models.py:145
+msgid "availability free label"
+msgstr "etiqueta de disponibilidad libre"
+
+#: scheduler/models.py:147
+msgid "Free"
+msgstr "Libre"
+
+#: scheduler/models.py:148
+msgid "Text to show for the color label when a slot is free."
+msgstr "Texto a mostrar para la etiqueta de color cuando un horario está libre."
+
+#: scheduler/models.py:151
+msgid "availability regular label"
+msgstr "etiqueta de disponibilidad regular"
+
+#: scheduler/models.py:153
+msgid "Regular"
+msgstr "Regular"
+
+#: scheduler/models.py:154
+msgid "Text to show for the color label when a slot has some bookings."
+msgstr "Texto a mostrar para la etiqueta de color cuando un horario ya tiene algunas reservas."
+
+#: scheduler/models.py:157
+msgid "availability no free label"
+msgstr "etiqueta de disponibilidad sin espacio"
+
+#: scheduler/models.py:159
+msgid "Full"
+msgstr "Lleno"
+
+#: scheduler/models.py:160
+msgid "Text to show for the color label when a slot is no longer free."
+msgstr "Texto a mostrar para la etiqueta de color cuando un horario ya no tiene espacios libres."
+
+#: scheduler/models.py:163
+msgid "extras label"
+msgstr "etiqueta de extras"
+
+#: scheduler/models.py:165
+msgid "Extras"
+msgstr "Extras"
+
+#: scheduler/models.py:166
+msgid "Label for special petitions or extras in the service."
+msgstr "Etiqueta para peticiones especiales o extras en el servicio."
+
+#: scheduler/models.py:171
 msgid "Company Profiles"
 msgstr "Perfiles de la empresa"
 
-#: scheduler/models.py:117 scheduler/models.py:133 scheduler/models.py:149
-#: scheduler/models.py:167
+#: scheduler/models.py:182 scheduler/models.py:198 scheduler/models.py:214
+#: scheduler/models.py:232
 msgid "company profile"
 msgstr "perfil de la empresa"
 
-#: scheduler/models.py:121
+#: scheduler/models.py:186
 msgid "Company Date Range"
 msgstr "Rango de fechas"
 
-#: scheduler/models.py:122
+#: scheduler/models.py:187
 msgid "Company Date Ranges"
 msgstr "Rangos de fechas"
 
-#: scheduler/models.py:125
+#: scheduler/models.py:190
 #, python-format
 msgid "Global range for %(company)s"
 msgstr ""
 
-#: scheduler/models.py:137
+#: scheduler/models.py:202
 msgid "Business Hour"
 msgstr "Hora de Negocio"
 
-#: scheduler/models.py:138
+#: scheduler/models.py:203
 msgid "Business Hours"
 msgstr "Horas de Negocio"
 
-#: scheduler/models.py:153
+#: scheduler/models.py:218
 msgid "Company Date Override"
 msgstr "Excepción de fecha"
 
-#: scheduler/models.py:154
+#: scheduler/models.py:219
 msgid "Company Date Overrides"
 msgstr "Excepciones de fecha"
 
-#: scheduler/models.py:158 scheduler/models.py:263
+#: scheduler/models.py:223 scheduler/models.py:328
 msgid "Available"
 msgstr "Disponible"
 
-#: scheduler/models.py:158 scheduler/models.py:263
+#: scheduler/models.py:223 scheduler/models.py:328
 msgid "Blocked"
 msgstr "Bloqueado"
 
-#: scheduler/models.py:179
+#: scheduler/models.py:244
 #, fuzzy
 #| msgid "Operating Hour"
 msgid "Operating Hour (Legacy)"
 msgstr "Horario de operación"
 
-#: scheduler/models.py:180
+#: scheduler/models.py:245
 #, fuzzy
 #| msgid "Operating Hours"
 msgid "Operating Hours (Legacy)"
 msgstr "Horarios de operación"
 
-#: scheduler/models.py:188 scheduler/models.py:212
+#: scheduler/models.py:253 scheduler/models.py:277
 msgid "title"
 msgstr "título"
 
-#: scheduler/models.py:189 scheduler/models.py:214
+#: scheduler/models.py:254 scheduler/models.py:279
 msgid "description"
 msgstr "descripción"
 
-#: scheduler/models.py:191
+#: scheduler/models.py:256
 msgid "payment model"
 msgstr "modelo de pago"
 
-#: scheduler/models.py:193
+#: scheduler/models.py:258
 msgid "Pre-payment"
 msgstr "Prepago"
 
-#: scheduler/models.py:193
+#: scheduler/models.py:258
 msgid "Post-payment"
 msgstr "Postpago"
 
-#: scheduler/models.py:197
+#: scheduler/models.py:262
 msgid "allow overlap"
 msgstr "permitir superposición"
 
-#: scheduler/models.py:199
-msgid ""
-"Allows multiple bookings for the same time slot (useful for classes or group "
-"events)."
-msgstr ""
-"Permite múltiples reservas para el mismo intervalo de tiempo (útil para "
-"clases o eventos grupales)."
+#: scheduler/models.py:264
+msgid "Allows multiple bookings for the same time slot (useful for classes or group events)."
+msgstr "Permite múltiples reservas para el mismo intervalo de tiempo (útil para clases o eventos grupales)."
 
-#: scheduler/models.py:203
-msgid "Event Type"
-msgstr "Tipo de evento"
-
-#: scheduler/models.py:211
+#: scheduler/models.py:276
 msgid "event type"
 msgstr "tipo de evento"
 
-#: scheduler/models.py:213
+#: scheduler/models.py:278
 msgid "image"
 msgstr "imagen"
 
-#: scheduler/models.py:215
+#: scheduler/models.py:280
 msgid "detailed description"
 msgstr "descripción detallada"
 
-#: scheduler/models.py:217
+#: scheduler/models.py:282
 msgid "price"
 msgstr "precio"
 
-#: scheduler/models.py:222
+#: scheduler/models.py:287
 msgid "The base cost of the service."
 msgstr "El costo base del servicio."
 
-#: scheduler/models.py:225
+#: scheduler/models.py:290
 msgid "duration"
 msgstr "duración"
 
-#: scheduler/models.py:227
+#: scheduler/models.py:292
 msgid "Duration of the service in minutes."
 msgstr "Duración del servicio en minutos."
 
-#: scheduler/models.py:231
-msgid "Event"
-msgstr "Evento"
-
-#: scheduler/models.py:239 scheduler/models.py:254 scheduler/models.py:272
-#: scheduler/models.py:293
+#: scheduler/models.py:304 scheduler/models.py:319 scheduler/models.py:337
+#: scheduler/models.py:358
 msgid "event"
 msgstr "evento"
 
-#: scheduler/models.py:242
+#: scheduler/models.py:307
 msgid "Date Range"
 msgstr "Rango de fechas"
 
-#: scheduler/models.py:246
+#: scheduler/models.py:311
 #, python-format
 msgid "Availability for %(event)s"
 msgstr "Disponibilidad para %(event)s"
 
-#: scheduler/models.py:258
+#: scheduler/models.py:323
 msgid "Date Override"
 msgstr "Excepción de fecha"
 
-#: scheduler/models.py:273
-msgid ""
-"Weekly pattern for this service. If any slot is defined here, the company's "
-"global 'Operating Hours' will be ignored for this event."
-msgstr ""
-"Patrón semanal para este servicio. Si se define algún espacio aquí, se "
-"ignorarán las 'Horas de Operación' globales de la empresa para este evento."
+#: scheduler/models.py:338
+msgid "Weekly pattern for this service. If any slot is defined here, the company's global 'Operating Hours' will be ignored for this event."
+msgstr "Patrón semanal para este servicio. Si se define algún espacio aquí, se ignorarán las 'Horas de Operación' globales de la empresa para este evento."
 
-#: scheduler/models.py:284
+#: scheduler/models.py:349
 msgid "Bookable Slot"
 msgstr "Espacio reservable"
 
-#: scheduler/models.py:285
+#: scheduler/models.py:350
 msgid "Bookable Slots"
 msgstr "Espacios reservables"
 
-#: scheduler/models.py:294
+#: scheduler/models.py:359
 msgid "client name"
 msgstr "nombre del cliente"
 
-#: scheduler/models.py:295
+#: scheduler/models.py:360
 msgid "client email"
 msgstr "correo electrónico del cliente"
 
-#: scheduler/models.py:298
+#: scheduler/models.py:362
+#, fuzzy
+#| msgid "client name"
+msgid "client phone"
+msgstr "nombre del cliente"
+
+#: scheduler/models.py:366
+msgid "The phone number of the client."
+msgstr ""
+
+#: scheduler/models.py:370
 msgid "The date and time the appointment begins."
 msgstr "La fecha y hora en que comienza la cita."
 
-#: scheduler/models.py:302
+#: scheduler/models.py:374
 msgid "status"
 msgstr "estado"
 
-#: scheduler/models.py:304
+#: scheduler/models.py:376 scheduler/models.py:393
 msgid "Pending"
 msgstr "Pendiente"
 
-#: scheduler/models.py:304
+#: scheduler/models.py:376
 msgid "Confirmed"
 msgstr "Confirmado"
 
-#: scheduler/models.py:304
+#: scheduler/models.py:376
 msgid "Paid"
 msgstr "Pagado"
 
-#: scheduler/models.py:306
+#: scheduler/models.py:378
 msgid "Confirmed bookings trigger automated notifications."
 msgstr "Las reservas confirmadas activan notificaciones automáticas."
 
-#: scheduler/models.py:354
+#: scheduler/models.py:381
+#, fuzzy
+#| msgid "Google Calendar ID"
+msgid "Google Event ID"
+msgstr "ID de Google Calendar"
+
+#: scheduler/models.py:386
+msgid "Unique identifier of the event in the Google Calendar."
+msgstr ""
+
+#: scheduler/models.py:390
+msgid "Google Sync Status"
+msgstr ""
+
+#: scheduler/models.py:394
+msgid "Success"
+msgstr ""
+
+#: scheduler/models.py:395
+msgid "Failure"
+msgstr ""
+
+#: scheduler/models.py:396
+msgid "Disabled"
+msgstr ""
+
+#: scheduler/models.py:399
+#, fuzzy
+#| msgid "Calendar ID (usually an email address) for Google Calendar synchronization."
+msgid "Current status of the Google Calendar synchronization."
+msgstr "ID de calendario (generalmente una dirección de correo electrónico) para la sincronización de Google Calendar."
+
+#: scheduler/models.py:402
+msgid "Google Sync Error"
+msgstr ""
+
+#: scheduler/models.py:405
+msgid "Latest error message encountered during synchronization."
+msgstr ""
+
+#: scheduler/models.py:408
+msgid "Last Synced At"
+msgstr ""
+
+#: scheduler/models.py:412
+msgid "The date and time this booking was last successfully synchronized."
+msgstr ""
+
+#: scheduler/models.py:460
 msgid "This booking overlaps with an existing appointment."
 msgstr "Esta reserva se superpone con una cita existente."
 
-#: scheduler/services.py:28
+#: scheduler/services.py:161
 #, fuzzy, python-format
 #| msgid "Event is blocked on %(date)s."
 msgid "Event is specifically blocked on %(date)s."
 msgstr "El evento está bloqueado el %(date)s."
 
-#: scheduler/services.py:34
-#, fuzzy
-#| msgid ""
-#| "Booking time %(start)s-%(end)s is outside business hours for %(day)s."
-msgid "Booking time is outside the custom hours for this event today."
-msgstr ""
-"El horario de reserva %(start)s-%(end)s está fuera del horario comercial "
-"para el %(day)s."
-
-#: scheduler/services.py:45
-#, fuzzy
-#| msgid "This date is outside the event's availability ranges."
-msgid "Booking time is outside the event's regular weekly availability."
-msgstr "Esta fecha está fuera de los rangos de disponibilidad del evento."
-
-#: scheduler/services.py:56
-#, fuzzy, python-format
-#| msgid "Event is not available on %(date)s."
-msgid "Event is not valid for bookings on %(date)s."
-msgstr "El evento no está disponible el %(date)s."
-
-#: scheduler/services.py:68
-#, fuzzy, python-format
-#| msgid "Event is not available on %(date)s."
-msgid "Event is not active on %(date)s."
-msgstr "El evento no está disponible el %(date)s."
-
-#: scheduler/services.py:76
-msgid "Provider configuration is missing."
-msgstr ""
-
-#: scheduler/services.py:82
+#: scheduler/services.py:168
 #, fuzzy, python-format
 #| msgid "Event is blocked on %(date)s."
 msgid "Provider is closed on %(date)s."
 msgstr "El evento está bloqueado el %(date)s."
 
-#: scheduler/services.py:87
+#: scheduler/services.py:172
+#, python-format
+msgid "No operating hours are configured for this provider on %(date)s."
+msgstr ""
+
+#: scheduler/services.py:180
 #, fuzzy
-#| msgid ""
-#| "Booking time %(start)s-%(end)s is outside business hours for %(day)s."
-msgid "Booking time is outside the provider's special hours for today."
-msgstr ""
-"El horario de reserva %(start)s-%(end)s está fuera del horario comercial "
-"para el %(day)s."
+#| msgid "Booking time %(start)s-%(end)s is outside business hours for %(day)s."
+msgid "Booking time is outside the available hours for this service today."
+msgstr "El horario de reserva %(start)s-%(end)s está fuera del horario comercial para el %(day)s."
 
-#: scheduler/services.py:102
-#, fuzzy
-#| msgid ""
-#| "Booking time %(start)s-%(end)s is outside business hours for %(day)s."
-msgid "Booking time is outside of standard business hours."
-msgstr ""
-"El horario de reserva %(start)s-%(end)s está fuera del horario comercial "
-"para el %(day)s."
-
-#: scheduler/services.py:113
-#, fuzzy, python-format
-#| msgid "Event is not available on %(date)s."
-msgid "Provider is not accepting bookings on %(date)s."
-msgstr "El evento no está disponible el %(date)s."
-
-#: scheduler/services.py:116
-msgid "No operating hours are configured for this provider."
-msgstr ""
-
-#: scheduler/services.py:140
+#: scheduler/services.py:203
 msgid "This time slot is already booked."
 msgstr "Este horario ya está reservado."
+
+#: scheduler/views.py:44
+msgid "Provider configuration is missing."
+msgstr ""
+
+#: scheduler/views.py:65
+msgid "Invalid year or month."
+msgstr ""
+
+#: scheduler/views.py:78
+#, fuzzy
+#| msgid "This time slot is already booked."
+msgid "Date parameter is required."
+msgstr "Este horario ya está reservado."
+
+#: scheduler/views.py:82
+msgid "Invalid date format. Use YYYY-MM-DD."
+msgstr ""
+
+#: scheduler/views.py:123
+msgid "success_url and cancel_url are required for pre-paid bookings."
+msgstr ""
 
 #: utils/callbacks.py:7
 msgid "Production"
@@ -741,14 +883,11 @@ msgstr "dirección web"
 
 #. Translators: "letters" means latin letters: a-z and A-Z.
 #: venv/lib/python3.12/site-packages/django/core/validators.py:289
-msgid ""
-"Enter a valid “slug” consisting of letters, numbers, underscores or hyphens."
+msgid "Enter a valid “slug” consisting of letters, numbers, underscores or hyphens."
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/django/core/validators.py:297
-msgid ""
-"Enter a valid “slug” consisting of Unicode letters, numbers, underscores, or "
-"hyphens."
+msgid "Enter a valid “slug” consisting of Unicode letters, numbers, underscores, or hyphens."
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/django/core/validators.py:309
@@ -798,30 +937,20 @@ msgstr ""
 
 #: venv/lib/python3.12/site-packages/django/core/validators.py:441
 #, python-format
-msgid ""
-"Ensure this value is a multiple of step size %(limit_value)s, starting from "
-"%(offset)s, e.g. %(offset)s, %(valid_value1)s, %(valid_value2)s, and so on."
+msgid "Ensure this value is a multiple of step size %(limit_value)s, starting from %(offset)s, e.g. %(offset)s, %(valid_value1)s, %(valid_value2)s, and so on."
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/django/core/validators.py:473
 #, python-format
-msgid ""
-"Ensure this value has at least %(limit_value)d character (it has "
-"%(show_value)d)."
-msgid_plural ""
-"Ensure this value has at least %(limit_value)d characters (it has "
-"%(show_value)d)."
+msgid "Ensure this value has at least %(limit_value)d character (it has %(show_value)d)."
+msgid_plural "Ensure this value has at least %(limit_value)d characters (it has %(show_value)d)."
 msgstr[0] ""
 msgstr[1] ""
 
 #: venv/lib/python3.12/site-packages/django/core/validators.py:491
 #, python-format
-msgid ""
-"Ensure this value has at most %(limit_value)d character (it has "
-"%(show_value)d)."
-msgid_plural ""
-"Ensure this value has at most %(limit_value)d characters (it has "
-"%(show_value)d)."
+msgid "Ensure this value has at most %(limit_value)d character (it has %(show_value)d)."
+msgid_plural "Ensure this value has at most %(limit_value)d characters (it has %(show_value)d)."
 msgstr[0] ""
 msgstr[1] ""
 
@@ -847,18 +976,14 @@ msgstr[1] ""
 
 #: venv/lib/python3.12/site-packages/django/core/validators.py:526
 #, python-format
-msgid ""
-"Ensure that there are no more than %(max)s digit before the decimal point."
-msgid_plural ""
-"Ensure that there are no more than %(max)s digits before the decimal point."
+msgid "Ensure that there are no more than %(max)s digit before the decimal point."
+msgid_plural "Ensure that there are no more than %(max)s digits before the decimal point."
 msgstr[0] ""
 msgstr[1] ""
 
 #: venv/lib/python3.12/site-packages/django/core/validators.py:597
 #, python-format
-msgid ""
-"File extension “%(extension)s” is not allowed. Allowed extensions are: "
-"%(allowed_extensions)s."
+msgid "File extension “%(extension)s” is not allowed. Allowed extensions are: %(allowed_extensions)s."
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/django/core/validators.py:659
@@ -905,8 +1030,7 @@ msgstr ""
 #. 'month'. Eg: "Title must be unique for pub_date year"
 #: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:141
 #, python-format
-msgid ""
-"%(field_label)s must be unique for %(date_field_label)s %(lookup_type)s."
+msgid "%(field_label)s must be unique for %(date_field_label)s %(lookup_type)s."
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:180
@@ -943,17 +1067,13 @@ msgstr ""
 
 #: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:1427
 #, python-format
-msgid ""
-"“%(value)s” value has an invalid date format. It must be in YYYY-MM-DD "
-"format."
+msgid "“%(value)s” value has an invalid date format. It must be in YYYY-MM-DD format."
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:1431
 #: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:1566
 #, python-format
-msgid ""
-"“%(value)s” value has the correct format (YYYY-MM-DD) but it is an invalid "
-"date."
+msgid "“%(value)s” value has the correct format (YYYY-MM-DD) but it is an invalid date."
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:1435
@@ -962,16 +1082,12 @@ msgstr ""
 
 #: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:1562
 #, python-format
-msgid ""
-"“%(value)s” value has an invalid format. It must be in YYYY-MM-DD HH:MM[:ss[."
-"uuuuuu]][TZ] format."
+msgid "“%(value)s” value has an invalid format. It must be in YYYY-MM-DD HH:MM[:ss[.uuuuuu]][TZ] format."
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:1570
 #, python-format
-msgid ""
-"“%(value)s” value has the correct format (YYYY-MM-DD HH:MM[:ss[.uuuuuu]]"
-"[TZ]) but it is an invalid date/time."
+msgid "“%(value)s” value has the correct format (YYYY-MM-DD HH:MM[:ss[.uuuuuu]][TZ]) but it is an invalid date/time."
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:1575
@@ -991,9 +1107,7 @@ msgstr ""
 
 #: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:1864
 #, python-format
-msgid ""
-"“%(value)s” value has an invalid format. It must be in [DD] [[HH:]MM:]ss[."
-"uuuuuu] format."
+msgid "“%(value)s” value has an invalid format. It must be in [DD] [[HH:]MM:]ss[.uuuuuu] format."
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:1868
@@ -1083,16 +1197,12 @@ msgstr ""
 
 #: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:2526
 #, python-format
-msgid ""
-"“%(value)s” value has an invalid format. It must be in HH:MM[:ss[.uuuuuu]] "
-"format."
+msgid "“%(value)s” value has an invalid format. It must be in HH:MM[:ss[.uuuuuu]] format."
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:2530
 #, python-format
-msgid ""
-"“%(value)s” value has the correct format (HH:MM[:ss[.uuuuuu]]) but it is an "
-"invalid time."
+msgid "“%(value)s” value has the correct format (HH:MM[:ss[.uuuuuu]]) but it is an invalid time."
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:2534
@@ -1219,8 +1329,7 @@ msgstr ""
 #: venv/lib/python3.12/site-packages/django/forms/fields.py:643
 #, python-format
 msgid "Ensure this filename has at most %(max)d character (it has %(length)d)."
-msgid_plural ""
-"Ensure this filename has at most %(max)d characters (it has %(length)d)."
+msgid_plural "Ensure this filename has at most %(max)d characters (it has %(length)d)."
 msgstr[0] ""
 msgstr[1] ""
 
@@ -1229,9 +1338,7 @@ msgid "Please either submit a file or check the clear checkbox, not both."
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/django/forms/fields.py:716
-msgid ""
-"Upload a valid image. The file you uploaded was either not an image or a "
-"corrupted image."
+msgid "Upload a valid image. The file you uploaded was either not an image or a corrupted image."
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/django/forms/fields.py:879
@@ -1271,9 +1378,7 @@ msgstr ""
 
 #: venv/lib/python3.12/site-packages/django/forms/formsets.py:61
 #, python-format
-msgid ""
-"ManagementForm data is missing or has been tampered with. Missing fields: "
-"%(field_names)s. You may need to file a bug report if the issue persists."
+msgid "ManagementForm data is missing or has been tampered with. Missing fields: %(field_names)s. You may need to file a bug report if the issue persists."
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/django/forms/formsets.py:65
@@ -1313,9 +1418,7 @@ msgstr ""
 
 #: venv/lib/python3.12/site-packages/django/forms/models.py:913
 #, python-format
-msgid ""
-"Please correct the duplicate data for %(field_name)s which must be unique "
-"for the %(lookup)s in %(date_field)s."
+msgid "Please correct the duplicate data for %(field_name)s which must be unique for the %(lookup)s in %(date_field)s."
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/django/forms/models.py:922
@@ -1337,9 +1440,7 @@ msgstr ""
 
 #: venv/lib/python3.12/site-packages/django/forms/utils.py:229
 #, python-format
-msgid ""
-"%(datetime)s couldn’t be interpreted in time zone %(current_timezone)s; it "
-"may be ambiguous or it may not exist."
+msgid "%(datetime)s couldn’t be interpreted in time zone %(current_timezone)s; it may be ambiguous or it may not exist."
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/django/forms/widgets.py:527
@@ -1768,40 +1869,23 @@ msgid "CSRF verification failed. Request aborted."
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/django/views/csrf.py:34
-msgid ""
-"You are seeing this message because this HTTPS site requires a “Referer "
-"header” to be sent by your web browser, but none was sent. This header is "
-"required for security reasons, to ensure that your browser is not being "
-"hijacked by third parties."
+msgid "You are seeing this message because this HTTPS site requires a “Referer header” to be sent by your web browser, but none was sent. This header is required for security reasons, to ensure that your browser is not being hijacked by third parties."
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/django/views/csrf.py:40
-msgid ""
-"If you have configured your browser to disable “Referer” headers, please re-"
-"enable them, at least for this site, or for HTTPS connections, or for “same-"
-"origin” requests."
+msgid "If you have configured your browser to disable “Referer” headers, please re-enable them, at least for this site, or for HTTPS connections, or for “same-origin” requests."
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/django/views/csrf.py:45
-msgid ""
-"If you are using the <meta name=\"referrer\" content=\"no-referrer\"> tag or "
-"including the “Referrer-Policy: no-referrer” header, please remove them. The "
-"CSRF protection requires the “Referer” header to do strict referer checking. "
-"If you’re concerned about privacy, use alternatives like <a "
-"rel=\"noreferrer\" …> for links to third-party sites."
+msgid "If you are using the <meta name=\"referrer\" content=\"no-referrer\"> tag or including the “Referrer-Policy: no-referrer” header, please remove them. The CSRF protection requires the “Referer” header to do strict referer checking. If you’re concerned about privacy, use alternatives like <a rel=\"noreferrer\" …> for links to third-party sites."
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/django/views/csrf.py:54
-msgid ""
-"You are seeing this message because this site requires a CSRF cookie when "
-"submitting forms. This cookie is required for security reasons, to ensure "
-"that your browser is not being hijacked by third parties."
+msgid "You are seeing this message because this site requires a CSRF cookie when submitting forms. This cookie is required for security reasons, to ensure that your browser is not being hijacked by third parties."
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/django/views/csrf.py:60
-msgid ""
-"If you have configured your browser to disable cookies, please re-enable "
-"them, at least for this site, or for “same-origin” requests."
+msgid "If you have configured your browser to disable cookies, please re-enable them, at least for this site, or for “same-origin” requests."
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/django/views/csrf.py:66
@@ -1840,9 +1924,7 @@ msgstr ""
 
 #: venv/lib/python3.12/site-packages/django/views/generic/dates.py:680
 #, python-format
-msgid ""
-"Future %(verbose_name_plural)s not available because %(class_name)s."
-"allow_future is False."
+msgid "Future %(verbose_name_plural)s not available because %(class_name)s.allow_future is False."
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/django/views/generic/dates.py:720
@@ -1892,18 +1974,12 @@ msgstr ""
 
 #: venv/lib/python3.12/site-packages/django/views/templates/default_urlconf.html:206
 #, python-format
-msgid ""
-"View <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
-"target=\"_blank\" rel=\"noopener\">release notes</a> for Django %(version)s"
+msgid "View <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" target=\"_blank\" rel=\"noopener\">release notes</a> for Django %(version)s"
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/django/views/templates/default_urlconf.html:208
 #, python-format
-msgid ""
-"You are seeing this page because <a href=\"https://docs.djangoproject.com/en/"
-"%(version)s/ref/settings/#debug\" target=\"_blank\" "
-"rel=\"noopener\">DEBUG=True</a> is in your settings file and you have not "
-"configured any URLs."
+msgid "You are seeing this page because <a href=\"https://docs.djangoproject.com/en/%(version)s/ref/settings/#debug\" target=\"_blank\" rel=\"noopener\">DEBUG=True</a> is in your settings file and you have not configured any URLs."
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/django/views/templates/default_urlconf.html:217
@@ -1983,13 +2059,40 @@ msgid "You don’t have permission to view or edit anything."
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/django_tenants/templates/admin/django_tenants/tenant/change_form.html:10
-msgid ""
-"Can't update tenant outside it's own schema or the public schema. Current "
-"schema is "
+msgid "Can't update tenant outside it's own schema or the public schema. Current schema is "
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/django_tenants/templates/admin/index.html:72
 msgid "You don't have permission to view or edit anything."
+msgstr ""
+
+#: venv/lib/python3.12/site-packages/httplib2/__init__.py:407
+#, python-format
+msgid "Content purported to be compressed with %s but failed to decompress."
+msgstr ""
+
+#: venv/lib/python3.12/site-packages/httplib2/__init__.py:571
+#, python-format
+msgid "Unsupported value for qop: %s."
+msgstr ""
+
+#: venv/lib/python3.12/site-packages/httplib2/__init__.py:575
+#: venv/lib/python3.12/site-packages/httplib2/__init__.py:653
+#, python-format
+msgid "Unsupported value for algorithm: %s."
+msgstr ""
+
+#: venv/lib/python3.12/site-packages/httplib2/__init__.py:648
+msgid "The challenge doesn't contain a server nonce, or this one is empty."
+msgstr ""
+
+#: venv/lib/python3.12/site-packages/httplib2/__init__.py:658
+#, python-format
+msgid "Unsupported value for pw-algorithm: %s."
+msgstr ""
+
+#: venv/lib/python3.12/site-packages/httplib2/__init__.py:1471
+msgid "Redirected but the response is missing a Location: header."
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/unfold/admin.py:45
@@ -2191,18 +2294,6 @@ msgstr "Usuarios"
 msgid "Group permissions"
 msgstr ""
 
-#: venv/lib/python3.12/site-packages/unfold/contrib/guardian/templates/unfold/guardian/group_form.html:25
-#: venv/lib/python3.12/site-packages/unfold/contrib/guardian/templates/unfold/guardian/group_form.html:49
-#: venv/lib/python3.12/site-packages/unfold/contrib/guardian/templates/unfold/guardian/user_form.html:25
-#: venv/lib/python3.12/site-packages/unfold/contrib/guardian/templates/unfold/guardian/user_form.html:49
-#: venv/lib/python3.12/site-packages/unfold/templates/admin/object_history.html:18
-#: venv/lib/python3.12/site-packages/unfold/templates/admin/object_history.html:34
-msgid "Action"
-msgstr "Acción"
-
-msgid "Manage"
-msgstr "Gestionar"
-
 #: venv/lib/python3.12/site-packages/unfold/contrib/guardian/templates/unfold/guardian/group_form.html:67
 msgid "Manage group"
 msgstr ""
@@ -2247,9 +2338,7 @@ msgid "Submit"
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/unfold/contrib/import_export/templates/admin/import_export/import_confirm.html:10
-msgid ""
-"Below is a preview of data to be imported. If you are satisfied with the "
-"results, click 'Confirm import'"
+msgid "Below is a preview of data to be imported. If you are satisfied with the results, click 'Confirm import'"
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/unfold/contrib/import_export/templates/admin/import_export/import_confirm.html:15
@@ -2279,9 +2368,7 @@ msgid "Some rows failed to validate"
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/unfold/contrib/import_export/templates/admin/import_export/import_validation.html:10
-msgid ""
-"Please correct these errors in your data where possible, then reupload it "
-"using the form above."
+msgid "Please correct these errors in your data where possible, then reupload it using the form above."
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/unfold/contrib/import_export/templates/admin/import_export/import_validation.html:22
@@ -2315,15 +2402,11 @@ msgstr ""
 
 #: venv/lib/python3.12/site-packages/unfold/contrib/inlines/admin.py:111
 #, python-format
-msgid ""
-"Deleting %(class_name)s %(instance)s would require deleting the following "
-"protected related objects: %(related_objects)s"
+msgid "Deleting %(class_name)s %(instance)s would require deleting the following protected related objects: %(related_objects)s"
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/unfold/contrib/simple_history/templates/simple_history/object_history.html:8
-msgid ""
-"Choose a date from the list below to revert to a previous version of this "
-"object."
+msgid "Choose a date from the list below to revert to a previous version of this object."
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/unfold/contrib/simple_history/templates/simple_history/object_history.html:28
@@ -2338,8 +2421,7 @@ msgid "This object doesn't have a change history."
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/unfold/contrib/simple_history/templates/simple_history/object_history_form.html:16
-msgid ""
-"Press the 'Revert' button below to revert to this version of the object."
+msgid "Press the 'Revert' button below to revert to this version of the object."
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/unfold/contrib/simple_history/templates/simple_history/object_history_form.html:20
@@ -2397,10 +2479,7 @@ msgid "Select action to run"
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/unfold/forms.py:137
-msgid ""
-"Raw passwords are not stored, so there is no way to see this user’s "
-"password, but you can change the password using <a href=\"{}\" class=\"text-"
-"primary-600 dark:text-primary-500\">this form</a>."
+msgid "Raw passwords are not stored, so there is no way to see this user’s password, but you can change the password using <a href=\"{}\" class=\"text-primary-600 dark:text-primary-500\">this form</a>."
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/unfold/mixins/base_model_admin.py:57
@@ -2473,24 +2552,17 @@ msgstr ""
 
 #: venv/lib/python3.12/site-packages/unfold/templates/admin/delete_confirmation.html:16
 #, python-format
-msgid ""
-"Deleting the %(object_name)s '%(escaped_object)s' would result in deleting "
-"related objects, but your account doesn't have permission to delete the "
-"following types of objects:"
+msgid "Deleting the %(object_name)s '%(escaped_object)s' would result in deleting related objects, but your account doesn't have permission to delete the following types of objects:"
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/unfold/templates/admin/delete_confirmation.html:32
 #, python-format
-msgid ""
-"Deleting the %(object_name)s '%(escaped_object)s' would require deleting the "
-"following protected related objects:"
+msgid "Deleting the %(object_name)s '%(escaped_object)s' would require deleting the following protected related objects:"
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/unfold/templates/admin/delete_confirmation.html:48
 #, python-format
-msgid ""
-"Are you sure you want to delete the %(object_name)s \"%(escaped_object)s\"? "
-"All of the following related items will be deleted:"
+msgid "Are you sure you want to delete the %(object_name)s \"%(escaped_object)s\"? All of the following related items will be deleted:"
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/unfold/templates/admin/delete_confirmation.html:55
@@ -2500,24 +2572,17 @@ msgstr ""
 
 #: venv/lib/python3.12/site-packages/unfold/templates/admin/delete_selected_confirmation.html:15
 #, python-format
-msgid ""
-"Deleting the selected %(objects_name)s would result in deleting related "
-"objects, but your account doesn't have permission to delete the following "
-"types of objects:"
+msgid "Deleting the selected %(objects_name)s would result in deleting related objects, but your account doesn't have permission to delete the following types of objects:"
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/unfold/templates/admin/delete_selected_confirmation.html:28
 #, python-format
-msgid ""
-"Deleting the selected %(objects_name)s would require deleting the following "
-"protected related objects:"
+msgid "Deleting the selected %(objects_name)s would require deleting the following protected related objects:"
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/unfold/templates/admin/delete_selected_confirmation.html:42
 #, python-format
-msgid ""
-"Are you sure you want to delete the selected %(objects_name)s? All of the "
-"following objects and their related items will be deleted:"
+msgid "Are you sure you want to delete the selected %(objects_name)s? All of the following objects and their related items will be deleted:"
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/unfold/templates/admin/includes/object_delete_summary.html:5
@@ -2530,9 +2595,7 @@ msgstr ""
 
 #: venv/lib/python3.12/site-packages/unfold/templates/admin/login.html:26
 #, python-format
-msgid ""
-"You are authenticated as %(username)s, but are not authorized to access this "
-"page. Would you like to login to a different account?"
+msgid "You are authenticated as %(username)s, but are not authorized to access this page. Would you like to login to a different account?"
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/unfold/templates/admin/login.html:47
@@ -2544,9 +2607,7 @@ msgid "Forgotten your password or username?"
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/unfold/templates/admin/object_history.html:60
-msgid ""
-"This object doesn’t have a change history. It probably wasn’t added via this "
-"admin site."
+msgid "This object doesn’t have a change history. It probably wasn’t added via this admin site."
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/unfold/templates/admin/pagination.html:12
@@ -2592,9 +2653,7 @@ msgid "Your password was changed."
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/unfold/templates/registration/password_change_form.html:18
-msgid ""
-"Please enter your old password, for security’s sake, and then enter your new "
-"password twice so we can verify you typed it in correctly."
+msgid "Please enter your old password, for security’s sake, and then enter your new password twice so we can verify you typed it in correctly."
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/unfold/templates/unfold/components/table.html:93
@@ -2721,8 +2780,7 @@ msgid "No results found"
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/unfold/templates/unfold/helpers/empty_results.html:18
-msgid ""
-"This page yielded into no results. Create a new item or reset your filters."
+msgid "This page yielded into no results. Create a new item or reset your filters."
 msgstr ""
 
 #: venv/lib/python3.12/site-packages/unfold/templates/unfold/helpers/empty_results.html:32
@@ -2855,6 +2913,36 @@ msgstr ""
 msgid "Select currency"
 msgstr "moneda"
 
+#, fuzzy
+#~| msgid "This date is outside the event's availability ranges."
+#~ msgid "Booking time is outside the event's regular weekly availability."
+#~ msgstr "Esta fecha está fuera de los rangos de disponibilidad del evento."
+
+#, fuzzy, python-format
+#~| msgid "Event is not available on %(date)s."
+#~ msgid "Event is not valid for bookings on %(date)s."
+#~ msgstr "El evento no está disponible el %(date)s."
+
+#, fuzzy, python-format
+#~| msgid "Event is not available on %(date)s."
+#~ msgid "Event is not active on %(date)s."
+#~ msgstr "El evento no está disponible el %(date)s."
+
+#, fuzzy
+#~| msgid "Booking time %(start)s-%(end)s is outside business hours for %(day)s."
+#~ msgid "Booking time is outside the provider's special hours for today."
+#~ msgstr "El horario de reserva %(start)s-%(end)s está fuera del horario comercial para el %(day)s."
+
+#, fuzzy
+#~| msgid "Booking time %(start)s-%(end)s is outside business hours for %(day)s."
+#~ msgid "Booking time is outside of standard business hours."
+#~ msgstr "El horario de reserva %(start)s-%(end)s está fuera del horario comercial para el %(day)s."
+
+#, fuzzy, python-format
+#~| msgid "Event is not available on %(date)s."
+#~ msgid "Provider is not accepting bookings on %(date)s."
+#~ msgstr "El evento no está disponible el %(date)s."
+
 #~ msgid "Weekday Slots"
 #~ msgstr "Horarios Semanales"
 
@@ -2864,37 +2952,21 @@ msgstr "moneda"
 #~ msgid "End of the rule's validity."
 #~ msgstr "Fin de la validez de la regla."
 
-#~ msgid ""
-#~ "Defines the validity period of the event. Note: You still need to define "
-#~ "'Bookable Slots' below for these days to be active."
-#~ msgstr ""
-#~ "Define el periodo de validez del evento. Nota: Aún debe definir 'Espacios "
-#~ "Reservables' abajo para que estos días estén activos."
+#~ msgid "Defines the validity period of the event. Note: You still need to define 'Bookable Slots' below for these days to be active."
+#~ msgstr "Define el periodo de validez del evento. Nota: Aún debe definir 'Espacios Reservables' abajo para que estos días estén activos."
 
-#~ msgid ""
-#~ "If unchecked, this date will be blocked even if it falls within a valid "
-#~ "range. If checked, it will be available even if outside valid ranges."
-#~ msgstr ""
-#~ "Si no se marca, esta fecha se bloqueará incluso si cae dentro de un rango "
-#~ "válido. Si se marca, estará disponible incluso si está fuera de los "
-#~ "rangos válidos."
+#~ msgid "If unchecked, this date will be blocked even if it falls within a valid range. If checked, it will be available even if outside valid ranges."
+#~ msgstr "Si no se marca, esta fecha se bloqueará incluso si cae dentro de un rango válido. Si se marca, estará disponible incluso si está fuera de los rangos válidos."
 
 #~ msgid "This date is blocked for this event."
 #~ msgstr "Esta fecha está bloqueada para este evento."
 
 #~ msgid "No availability slots defined for this weekday."
-#~ msgstr ""
-#~ "No hay espacios de disponibilidad definidos para este día de la semana."
+#~ msgstr "No hay espacios de disponibilidad definidos para este día de la semana."
 
-#~ msgid ""
-#~ "The requested time is outside the defined availability slots for this day."
-#~ msgstr ""
-#~ "El horario solicitado está fuera de los espacios de disponibilidad "
-#~ "definidos para este día."
+#~ msgid "The requested time is outside the defined availability slots for this day."
+#~ msgstr "El horario solicitado está fuera de los espacios de disponibilidad definidos para este día."
 
 #, python-format
-#~ msgid ""
-#~ "Booking time %(start)s-%(end)s is outside allowed event availability."
-#~ msgstr ""
-#~ "El horario de reserva %(start)s-%(end)s está fuera de la disponibilidad "
-#~ "permitida del evento."
+#~ msgid "Booking time %(start)s-%(end)s is outside allowed event availability."
+#~ msgstr "El horario de reserva %(start)s-%(end)s está fuera de la disponibilidad permitida del evento."

@@ -60,6 +60,11 @@ class CompanyProfileAdmin(ModelAdminUnfoldBase):
         (_("Global Date Ranges"), ["availability_rules"]),
         (_("Standard Business Hours"), ["weekday_slots"]),
         (_("Global Overrides"), ["date_overrides"]),
+        (_("UI Labels"), [
+            "event_type_label", "event_label", 
+            "availability_free_label", "availability_regular_label", "availability_no_free_label",
+            "extras_label"
+        ]),
     ]
     
     def formfield_for_dbfield(self, db_field, request, **kwargs):

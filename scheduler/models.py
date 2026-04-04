@@ -128,6 +128,44 @@ class CompanyProfile(models.Model):
         help_text=_("Default currency for all services offered by the company.")
     )
 
+    # Custom UI Labels
+    event_type_label = models.CharField(
+        _("event type label"),
+        max_length=100,
+        default=_("Event Type"),
+        help_text=_("Label for each Event Type in the UI (e.g., Tour Type, Service Category).")
+    )
+    event_label = models.CharField(
+        _("event label"),
+        max_length=100,
+        default=_("Event"),
+        help_text=_("The name of the events in the UI (e.g., Tour, Service, Consultation).")
+    )
+    availability_free_label = models.CharField(
+        _("availability free label"),
+        max_length=100,
+        default=_("Free"),
+        help_text=_("Text to show for the color label when a slot is free.")
+    )
+    availability_regular_label = models.CharField(
+        _("availability regular label"),
+        max_length=100,
+        default=_("Regular"),
+        help_text=_("Text to show for the color label when a slot has some bookings.")
+    )
+    availability_no_free_label = models.CharField(
+        _("availability no free label"),
+        max_length=100,
+        default=_("Full"),
+        help_text=_("Text to show for the color label when a slot is no longer free.")
+    )
+    extras_label = models.CharField(
+        _("extras label"),
+        max_length=100,
+        default=_("Extras"),
+        help_text=_("Label for special petitions or extras in the service.")
+    )
+
     class Meta:
         verbose_name = _("Company Profile")
         verbose_name_plural = _("Company Profiles")
